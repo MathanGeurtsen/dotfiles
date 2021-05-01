@@ -15,11 +15,6 @@ compinit
 
 PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{240}%1~%f%b %# ' 
 
-alias -g G="| grep"
-alias -g L="| less"
-alias -g V="| vipe"
-alias -g T=" > >(tee -a tee_stdout.log) 2> >(tee -a tee_stderr.log >&2)"
-
 autoload -Uz compinit && compinit
 
 # setting completion to be case insensitive
@@ -32,23 +27,29 @@ select-word-style bash
 # enabling bash like comments
 setopt interactivecomments
 
+DOTFILES_DIR="$(dirname $0:a)"
+echo "$DOTFILES_DIR"
+
+source "$DOTFILES_DIR/scripts/ssh-setup.sh"
+source "$DOTFILES_DIR/scripts/pingcheck.sh"
+source "$DOTFILES_DIR/.env"
+
+alias -g G="| grep"
+alias -g L="| less"
+alias -g V="| vipe"
+alias -g T=" > >(tee -a tee_stdout.log) 2> >(tee -a tee_stderr.log >&2)"
 
 alias gst='git status -uno'
 alias open='xdg-open'
 alias tempdir='cd $(mktemp -d)'
 alias publicip='curl ifconfig.me'
 alias whatismyip=publicip
-alias copy='bash ~/scripts/xcl.sh'
-alias startt='bash ~/scripts/standard-tmux.sh'
+alias copy='bash $DOTFILES_DIR/scripts/xcl.sh'
+alias startt='bash $DOTFILES_DIR/scripts/standard-tmux.sh'
 alias emnw='emacsclient -nw -a "emacs"'
 alias init_venv='virtualenv venv; . ./venv/bin/activate;pip install -r requirements.txt'
-alias testbox='ssh -i ~/.ssh/testboxssh nextcloud.mathangeurtsen.nl -p 2222 -X -L 5901:localhost:5901'
-
 
 plugins=(git ssh-agent)
-
-source ~/scripts/ssh-setup.sh
-source ~/scripts/pingcheck.sh
 
 function rcd {
   # ranger cd

@@ -8,6 +8,3 @@
 (use-package company-quickhelp
   :ensure t)
 (company-quickhelp-mode)
-
-;; (eval-after-load 'company-etags '(progn (add-to-list 'company-etags-modes 'web-mode)))
-;; (setq company-etags-everywhere '(php-mode html-mode web-mode nxml-mode))

@@ -6,7 +6,7 @@
 
 (use-package dired
   :config
-(define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
-(add-hook 'dired-before-readin-hook 'dired-hide-details-mode)
-(put 'dired-find-alternate-file 'disabled nil))
+  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+  (add-hook 'dired-before-readin-hook 'dired-hide-details-mode)
+  (put 'dired-find-alternate-file 'disabled nil))
 

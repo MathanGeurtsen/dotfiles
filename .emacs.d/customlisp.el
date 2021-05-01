@@ -99,9 +99,6 @@
       (setq my/day-night-switch "doom-one")
       (my/set-transparency 100 100))))
 
-;; maybe run it at a timer, but who cares
-;; (run-at-time "20:30" nil #'my/switch-day-night-theme)
-
 ; sourced from https://stackoverflow.com/a/22872459/8887528
 (defun my/disable-all-themes ()
   "disable all active themes."
@@ -183,16 +180,10 @@ Version 2017-09-01"
             (window-configuration-to-register register)))
     (window-configuration-to-register register)))
 
-(defun function-name (&optional dir)
-  "docstring"
-  (interactive "P")
-  (if dir
-      (message "got arg")
-    (message "no args")))
-
 
 (defun my/tempdir (&optional location)
-  "Creates a directory in location if given, otherwise in /tmp/, and enters it in a dired buffer.  "
+  "Creates a directory in location if given, otherwise in /tmp/,
+and enters it in a dired buffer.  "
   (interactive "P")
   (let ((tmp (shell-command-to-string "mktemp -d"))
         (prefix-length))
@@ -225,7 +216,8 @@ Version 2017-09-01"
     (call-interactively #'fill-paragraph)))
 
 (defun my/rand-chars ()
-  "Create a small random set of chars based on the sha1 of current nanosecond.  "
+  "Create a small random set of chars based on the sha1 of
+current nanosecond.  "
   (interactive)
   (string-join (nthcdr 34 (split-string (sha1 (format-time-string "%N")) ""))))
 
@@ -241,7 +233,7 @@ Version 2017-09-01"
   (set-face-attribute 'default nil :height 160))
 
 (defun my/present-mode (args)
-  "docstring"
+  "makes emacs use bigger font, use lightmode, and disable transparancy. "
   (interactive "P")
   (progn 
     (load-theme 'doom-one-light t) 

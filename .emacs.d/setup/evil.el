@@ -13,7 +13,7 @@
 (setq load-path load-path-no-undo-tree)
 
 (use-package evil
-  ;; :ensure t
+  :ensure nil
   ;; ensure is turned off because of the workaround above
   :init
   (setq evil-disable-insert-state-bindings t)

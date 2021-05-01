@@ -50,7 +50,7 @@
 
 (setq org-catch-invisible-edits nil)
 
-(load "~/.emacs.d/setup/org-bullets")
+;; (load "~/.emacs.d/setup/org-bullets")
 
 (setq org-src-fontify-natively t)
 
@@ -62,8 +62,6 @@
  'org-babel-load-languages  
  '((emacs-lisp . t)
    (python . t)
-   ;; (R . t)
-   ;; (scheme . t)
    (dot . t)
    (haskell . t)
    (ditaa . t)
@@ -72,9 +70,8 @@
 ;; allow image resizing
 (setq org-image-actual-width nil)
 
-;; set latex fragments to be scaled to 2.0
-;; (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
-;; disabled, set via variable customization (see init.el)
+;; set latex fragments to be scaled to 2.0 to be more easily readable
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
 
 (setq reftex-default-bibliography '("~/.emacs.d/bibliography/references.bib"))
 

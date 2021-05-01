@@ -18,8 +18,6 @@
 (use-package json-mode
   :ensure t)
 
-
-
 (add-hook 'prog-mode-hook            'linum-mode)
 (add-hook 'prog-mode-hook            'flycheck-mode)
 (add-hook 'fundamental-mode-hook     'company-mode)

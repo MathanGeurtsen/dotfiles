@@ -3,6 +3,7 @@
   (setq gl-sc/temp     "/tmp/")
   (setq gl-sc/open-dir "nautilus .")
   (setq gl-sc/init     "~/.emacs.d/init.el"))
+
  ((string-equal system-type "windows-nt")
   (setq gl-sc/temp     "~/AppData/Local/Temp/")
   (setq gl-sc/open-dir "start .")
@@ -12,9 +13,9 @@
   (let ((map (make-sparse-keymap)))
 
     (defvar gl-sc/organiser (concat box/org-dir "organiser.org"))
-    (defvar gl-sc/tips (concat box/org-dir "tips.org"))
-    (defvar gl-sc/projects (concat box/org-dir "projects.org"))
-    (defvar gl-sc/days (concat box/org-dir "days.org.gpg"))
+    (defvar gl-sc/tips (concat box/org-dir      "tips.org"))
+    (defvar gl-sc/projects (concat box/org-dir  "projects.org"))
+    (defvar gl-sc/days (concat box/org-dir      "days.org.gpg"))
     (message "mark==")
     (progn (message gl-sc/organiser)
     (message (format-time-string "%H:%M:%S")))

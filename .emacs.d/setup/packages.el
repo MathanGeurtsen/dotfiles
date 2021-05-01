@@ -53,13 +53,26 @@
   :ensure t
   :config
   (atomic-chrome-start-server))
+(use-package elisp-demos
+  :ensure t
+  :config
+  (advice-add 'describe-function-1 :after 
+              #'elisp-demos-advice-describe-function-1))
+(use-package highlight-parentheses
+  :ensure t
+  :config
+  (define-globalized-minor-mode global-highlight-parentheses-mode
+    highlight-parentheses-mode
+    (lambda ()
+      (highlight-parentheses-mode t)))
+  (global-highlight-parentheses-mode t)
+  (highlight-parentheses-mode 1))
+
 (use-package powershell
   :ensure t)
 (use-package hydra
   :ensure t)
 (use-package multiple-cursors
-  :ensure t)
-(use-package workgroups2
   :ensure t)
 (use-package helpful
   :ensure t)
@@ -74,8 +87,6 @@
 (use-package flyspell
   :ensure t)
 (use-package beacon
-  :ensure t)
-(use-package elisp-demos
   :ensure t)
 (use-package ranger
   :ensure t)
