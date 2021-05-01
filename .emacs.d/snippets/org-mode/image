@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: image
+# key: img
+# --
+#+ATTR_ORG: :width ${2:400}

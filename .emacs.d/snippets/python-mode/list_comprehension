@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: list_comprehension 
+# key: lc
+# --
+
+[${1:x} for ${2:x} in $3 ${4:if COND}]

@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name:docstring 
+# key:docstring
+# --
+    """ ${1:explanation of the function}
+
+    keyword arguments:
+    ${2:argument} -- ${3:argument explanation}
+    """

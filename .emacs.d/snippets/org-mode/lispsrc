@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: elisp source block
+# key: lispsrc
+# --
+
+#+BEGIN_SRC elisp :results output :exports none :async
+$1
+#+END_SRC

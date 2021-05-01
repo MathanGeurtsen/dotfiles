@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: centered_equation
+# key: ce
+# --
+`()`
+$$ $1 $$

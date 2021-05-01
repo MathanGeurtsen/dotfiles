@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: with_file
+# key: file
+# --
+with open(${1:"file_name"}, "${2:rw+a}") as f:
+    f.write("")
+    f.writelines([])
+    data = f.read())    

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: longbar 
+# key: lb
+# --
+\overline{$1}

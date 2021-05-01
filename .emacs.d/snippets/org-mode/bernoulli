@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name:bernoulli
+# key: bern
+# --
+${1:f(k;p)} = \left\\{ \begin\{array\}\{cc\}
+${2:p & \text\{ if \} k = 1} \\\\
+${3:q = 1-p & \text\{ if \} k = 0} \\\\
+\end\{array\} 

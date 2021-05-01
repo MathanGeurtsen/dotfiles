@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: python source block
+# key: pysrc
+# --
+
+#+BEGIN_SRC python :results output :exports none :async :tangle ${1:filename}.py :comments ${2:link}
+$3
+#+END_SRC

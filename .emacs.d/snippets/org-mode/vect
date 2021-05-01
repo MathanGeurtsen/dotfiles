@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: vect
+# key: v
+# --
+\overrightarrow{$0}

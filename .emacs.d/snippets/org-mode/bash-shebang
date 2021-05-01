@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bash-shebang
+# key: shb
+# --
+#!/usr/bin/env bash

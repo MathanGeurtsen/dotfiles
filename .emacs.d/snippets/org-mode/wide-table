@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: wide-table 
+# key: wide-table
+# --
+#+name: table-name
+#+ATTR_LATEX: :align l|lp{1cm}|l|lp{1cm}|l|l
+#+caption:
+#+begin_table
+#+LATEX: \caption{}
+#+LATEX: \label{}
+#+LATEX: \centering
+#+LATEX: \adjustbox{max width=\linewidth}{
+#+ATTR_LATEX: :center nil
+$0
+#+end_table   

@@ -1,0 +1,8 @@
+# key: task
+# name: task
+# --
+Task("${1:name}")
+    .IsDependentOn("${2:otherTask}")
+    .Does(() => {
+${3:commands}
+        });

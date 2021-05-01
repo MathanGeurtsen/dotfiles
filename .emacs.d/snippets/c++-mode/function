@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: function 
+# key: fun
+# --
+${1:returnType} ${2:functionname} (${3:argType} ${4:arg}) \{
+ $5 
+\}

@@ -1,0 +1,3 @@
+(defvar box/system "main laptop" "for box specific setup")
+(defvar box/org-dir "~/orgd/" "the location of the org files directory on this box")
+(defvar box/alternate_editor "emacs" "the alternate editor chosen on this box")

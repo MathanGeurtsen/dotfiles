@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: retrospective
+# key: retrospective
+# --
+*Liked*: ${1:What I liked doing}
+
+*Learned*: ${2:What I learned}
+
+*Lacked*: ${3: everything wrong with the world}

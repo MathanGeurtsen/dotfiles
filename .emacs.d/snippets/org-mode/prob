@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: prob
+# key: p
+# --
+P($1|$2)

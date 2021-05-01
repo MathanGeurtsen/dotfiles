@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: fish function
+# key: func
+# --
+function `(setq my/yas-fish-func-name (read-string "function name:"))`
+$1
+end
+funcsave `(princ my/yas-fish-func-name)`

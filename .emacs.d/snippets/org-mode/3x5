@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# name: 3x5 
+# key: 3x5
+# --
+*** 3x5
+***** core seed
+${1:An enticing adventure's elevator pitch, flavored to this particular adventure. A lead without following through.}
+***** 3 potential paths
+  1. ${2: three choices tying back to the seed, either as sequence or hub. should give possibility of improvisation}
+  2. $3
+  3. $4
+***** 3 potential adventure locations
+  1. ${5: iconic locations like battlegrounds or backdrops to important meetings or mystical rituals}
+  2. $6
+  3. $7
+***** actions of important NPCs
+  1. ${8: the world evolves even when the players aren't there, with sometimes big impacts to the players! }
+  2. $9
+  3. $10
+***** actions of enemy NPCs
+  1. ${11: Good villans have a reason for being the way they are and aren't static}
+  2. $12
+  3. $13

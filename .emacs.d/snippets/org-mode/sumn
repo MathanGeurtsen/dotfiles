@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name:sumn 
+# key: sumn
+# --
+\sum\limits_\{${1:i=1}\}^\{${2:n}\}

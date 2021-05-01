@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: funcdoc
+# key: fdoc
+# --
+/**
+ * ${1:explanation}
+ */
