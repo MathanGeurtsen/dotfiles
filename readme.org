@@ -1,0 +1,9 @@
+* dotfiles
+My config files for various programs that I use often. 
+** requirements
+ - emacs 27.1 installed with modules
+ - zsh 5.8
+ - tmux 3.0a
+ - git, moreutils, xclip, ranger, vim, gotop, yakuake
+** installation
+run the =deploy.sh= script. 
