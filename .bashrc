@@ -120,6 +120,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-DOTFILES_DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+DOTFILES_DIR=$(dirname $(realpath ${BASH_SOURCE[0]}))
 
 alias startt="bash $DOTFILES_DIR/scripts/standard-tmux.sh"

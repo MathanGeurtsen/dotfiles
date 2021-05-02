@@ -95,7 +95,7 @@ _]_: vertical increase    _l_: move right _o_: other window
 
     (define-key map (kbd "C->")         'mc/mark-next-like-this)
     (define-key map (kbd "C-<")         'mc/mark-previous-like-this)
-    (define-key map (kbd "C-c y")       'insert-date-today)
+    (define-key map (kbd "C-c y")       'my/insert-date-today)
 
     (define-key map (kbd "C-c <C-tab>") 'yas-expand-from-trigger-key)
     (define-key map (kbd "<C-tab>")     'company-complete)

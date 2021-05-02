@@ -15,6 +15,7 @@
   (add-to-list 'company-backends '(company-reftex-citations)))
 (add-hook 'latex-mode-hook 'my/latex-mode-hook)
 
+(toggle-truncate-lines)
 ;; prevent old precompiled elisp file
 (setq load-prefer-newer t)
 
