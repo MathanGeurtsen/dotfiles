@@ -26,6 +26,7 @@
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(async-shell-command-buffer 'new-buffer)
+ '(auth-source-save-behavior nil)
  '(beacon-mode t)
  '(browse-url-dwim-search-url "https://duckduckgo.com/?q=")
  '(c-basic-offset 2)
@@ -156,10 +157,10 @@
    '(("d" "default" plain #'org-roam-capture--get-point "%?" :file-name "%<%Y%m%d%H%M%S>-${slug}" :head "#+title: ${title}
 #+roam_alias: 
 #+roam_tags:  " :unnarrowed t)))
- '(org-roam-encrypt-files nil t)
+ '(org-roam-encrypt-files nil)
  '(package-check-signature 'allow-unsigned)
  '(package-selected-packages
-   '(ag vterm workgroups2 window-purpose which-key use-package treemacs-all-the-icons ssh-agency speed-type sass-mode ranger projectile powershell pdf-tools org-roam org-bullets omnisharp ob-async multiple-cursors minimap markdown-mode+ lsp-ui lsp-java lsp-ivy json-mode interleave highlight-parentheses hide-lines helpful helm-lsp git-gutter-fringe fish-mode evil-magit evil-collection ess emojify elpy elisp-demos elfeed-goodies ein editorconfig doom-themes doom-modeline direx dired-k dimmer counsel company-quickhelp company-lsp cmake-mode browse-url-dwim beacon atomic-chrome all-the-icons-dired))
+   '(yaml-mode ag vterm workgroups2 window-purpose which-key use-package treemacs-all-the-icons ssh-agency speed-type sass-mode ranger projectile powershell pdf-tools org-roam org-bullets omnisharp ob-async multiple-cursors minimap markdown-mode+ lsp-ui lsp-java lsp-ivy json-mode interleave highlight-parentheses hide-lines helpful helm-lsp git-gutter-fringe fish-mode evil-magit evil-collection ess emojify elpy elisp-demos elfeed-goodies ein editorconfig doom-themes doom-modeline direx dired-k dimmer counsel company-quickhelp company-lsp cmake-mode browse-url-dwim beacon atomic-chrome all-the-icons-dired))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
  '(pos-tip-background-color "#FFFACE")
  '(pos-tip-foreground-color "#272822")
@@ -181,6 +182,7 @@
    '((flycheck-disabled-checkers . emacs-lisp-checkdoc)
      (eval auto-save-mode t)))
  '(sh-basic-offset 2)
+ '(truncate-lines nil)
  '(vc-annotate-background "#282c34")
  '(vc-annotate-color-map
    '((20 . "#F92672")

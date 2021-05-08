@@ -4,7 +4,6 @@
 (unless (server-running-p)
   (server-start))
 (setq inhibit-compacting-font-caches t)
-(set-default 'truncate-lines t)
 
 ;; python
 (setq python-shell-interpreter "python3")
@@ -14,8 +13,7 @@
   (add-to-list 'company-backends '(company-reftex-labels))
   (add-to-list 'company-backends '(company-reftex-citations)))
 (add-hook 'latex-mode-hook 'my/latex-mode-hook)
-
-(toggle-truncate-lines)
+(set-default 'truncate-lines nil)
 ;; prevent old precompiled elisp file
 (setq load-prefer-newer t)
 
@@ -97,7 +95,7 @@
 
 ;; record changes in window configuration
 (winner-mode t)
-(defvar windmove-wrap-around t)
+(setq windmove-wrap-around t)
 
 ;; show opposing parens
 (show-paren-mode)

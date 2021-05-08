@@ -18,7 +18,7 @@
   :custom
   (projectile-mode +1))
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-
+(setq compilation-scroll-output t)
 ;; toggling on windows seems to make it index the projects 
 (projectile-mode)
 (projectile-mode)
