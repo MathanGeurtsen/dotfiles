@@ -28,6 +28,7 @@
   (org-roam-encrypt-files nil)
   :bind (:map org-mode-map
               (("C-c n i" . org-roam-insert)))))
+(org-roam-mode)
 
 ;; org mode wrap text
 (setq org-startup-truncated nil)
