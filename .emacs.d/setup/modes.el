@@ -11,8 +11,10 @@
   :ensure t)
 (use-package yaml-mode
   :ensure t)
-(use-package markdown-mode+
-  :ensure t)
+
+(unless (string-equal system-type "windows-nt")
+  (use-package markdown-mode+
+    :ensure t))
 (use-package fish-mode
   :ensure t)
 (use-package cmake-mode
@@ -21,7 +23,9 @@
   :ensure t)
 
 (add-hook 'prog-mode-hook            'linum-mode)
-(add-hook 'prog-mode-hook            'flycheck-mode)
+
+(unless (string-equal system-type "windows-nt")
+  (add-hook 'prog-mode-hook            'flycheck-mode))
 (add-hook 'fundamental-mode-hook     'company-mode)
 
 (add-hook 'csharp-mode-hook 'omnisharp-mode)

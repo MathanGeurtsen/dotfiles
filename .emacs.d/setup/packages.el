@@ -21,11 +21,6 @@
   (browse-url-dwim-mode 1)
   (setq browse-url-dwim-always-confirm-extraction nil))
 
-(use-package minimap
-  :ensure t
-  :custom
-  (minimap-mode -1))
-
 (use-package yasnippet
   :ensure t)
 (yas-global-mode 1)
@@ -81,8 +76,6 @@
 (use-package hide-lines
   :ensure t)
 (use-package ob-async
-  :ensure t)
-(use-package interleave
   :ensure t)
 (use-package flyspell
   :ensure t)

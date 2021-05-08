@@ -22,12 +22,6 @@
   :config
   (evil-mode 1))
 
-(cond
- ((string-equal system-type "windows-nt")
-  (use-package evil-magit
-    :after evil
-    :ensure t)))
-
 (use-package evil-collection
   :after evil
   :ensure t

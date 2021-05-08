@@ -33,3 +33,5 @@ games/
 bookmarks
 projectile-bookmarks.eld
 temp-lisp.el
+server/
+projectile.cache

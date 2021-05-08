@@ -14,6 +14,9 @@
 (load "~/.emacs.d/box") 
 (load "~/.emacs.d/customlisp")
 
+(load "~/.emacs.d/setup/packages")
+(load "~/.emacs.d/setup/modes")
+
 (load-directory "~/.emacs.d/setup")
 
 (custom-set-variables
