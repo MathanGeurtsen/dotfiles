@@ -7,6 +7,8 @@ My config files for various programs that I use often.
  - git, coreutils, moreutils, xclip, ranger, vim, gotop, yakuake
 ** installation
 provide a =.env= file with hidden environment variables, like =.env.example=, and run the =deploy.sh= script.
+
+Initial emacs setup will install all packages, but require permission for the installation of vterm and epdf. Also run =M-x all-the-icons-install-fonts= to install the icons for the modeline. 
 *** on windows 
 Make sure it's run under normal user. Emacs requires the server
 directory to be owned by the user, fix manually by opening the
