@@ -10,3 +10,4 @@ new-item -itemtype symboliclink -path $env:HOME -name ".bashrc" -value $DOTFILES
 new-item -itemtype symboliclink -path $env:HOME -name ".zshrc" -value $DOTFILES_DIR\.zshrc
 new-item -itemtype symboliclink -path $env:HOME -name ".tmux.conf" -value $DOTFILES_DIR\.tmux.conf
 new-item -itemtype symboliclink -path $env:HOME -name ".emacs.d" -value $DOTFILES_DIR\.emacs.d
+new-item -itemtype symboliclink -path $env:HOME/Documents/WindowsPowerShell/ -name "Microsoft.PowerShell_profile.ps1" -value $DOTFILES_DIR\Microsoft.PowerShell_profile.ps1
