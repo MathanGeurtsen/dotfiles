@@ -118,3 +118,16 @@ function pyve {
     echo "no venv found, searched three levels up"
   fi
 }
+
+
+
+function psh {
+  # WSL specific convenience function, starts powershell in current dir 
+  powershell.exe -NoExit -Command cd $windows_dir
+}
+
+function wem {
+  # WSL specific convenience function, calls windows emacsclient with argument's converted path
+  windows_path=$(wslpath -w $1)
+  emacsclientw.exe $windows_path
+}
