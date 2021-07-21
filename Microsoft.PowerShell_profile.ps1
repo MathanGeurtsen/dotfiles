@@ -15,7 +15,7 @@ bash -c "tmux"
 }
 
 function gst(){
-    git status
+    git status -uno
 }
 
 function History-Search {
