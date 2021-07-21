@@ -18,8 +18,6 @@ function gst(){
     git status
 }
 
-
-
 function History-Search {
     Param(
         [Alias('p')]
@@ -31,6 +29,16 @@ function History-Search {
     )
     $histFile = "$env:userprofile\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt"
     Get-Content $histFile  | Select-String -Pattern $Pattern -Context $Context | select -Last $max
+}
+
+function rmcd {
+    Param(
+        [Alias('d')]
+        $directory
+    )
+    rm -Force -Recurse -Confirm:$false $directory
+    mkdir $directory
+    cd $directory
 }
 
 function hs {
@@ -49,7 +57,9 @@ function testbox {
     
 }
 
-
+function amIadmin {
+([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")
+}
 
 # git setup
 Import-Module posh-git
@@ -62,16 +72,14 @@ Set-Alias mingw "c:/msys64/mingw64.exe"
 Set-Alias g++ "C:\msys64\mingw64\bin\g++.exe
 "
 
-
-# ssh setup
-
 Set-Variable -Name "SshIsSet" -Value $FALSE -Scope Global
 function Ssh-setup {
     # no known working ssh agent setup exists... 
     # for now: call Ssh-setup when required and input password for key when prompted. least effort maximum "convenience" possible
     if ( -Not $SshIsSet){
-        Set-Service ssh-agent -StartupType Automatic
-        Start-SshAgent -Quiet
+        Get-Service -Name ssh-agent | Set-Service -StartupType Manual
+        # Set-Service ssh-agent -StartupType Automatic
+        Start-Ssh-Agent -Quiet
         ssh-add ~/.ssh/github
         ssh-add ~/.ssh/gitlab_pc
         if( $?)
@@ -82,6 +90,66 @@ function Ssh-setup {
         {
             Write-Host "Could not add github key"
         }
+    }
+}
+
+function msys-setup {
+    $Env:CC="gcc"
+    $Env:FC="gfortran"
+    $Env:CXX="g++"
+    $Env:path += ";C:/msys64/mingw64/bin/;C:\msys64\usr\bin"
+}
+
+function balloon {
+    Param(
+        $title,
+        $text
+    )
+    Add-Type -AssemblyName System.Windows.Forms 
+    $global:balloon = New-Object System.Windows.Forms.NotifyIcon
+    $path = (Get-Process -id $pid).Path
+    $balloon.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($path) 
+    $balloon.BalloonTipIcon = [System.Windows.Forms.ToolTipIcon]::Warning 
+    $balloon.BalloonTipText = $text
+    $balloon.BalloonTipTitle = $title
+    $balloon.Visible = $true 
+    $balloon.ShowBalloonTip(1)
+}
+
+function small-time {
+    Get-Date -Format 'HH:mm:ss'
+}
+
+function background-verify-connection {
+    param(
+    [parameter(Mandatory=$false)]
+    [String]$PingHost
+    )
+
+    if (! $PingHost){
+        $PingHost = "8.8.8.8"
+    }
+
+    while ($true) { 
+        test-connection -Count 1 8.8.8.8 > Out-Null 2>1
+        if (! $?) {
+            Write-Host "$(small-time) connection seems down!"
+            balloon "Connection lost" "checking again in 3 seconds..."
+            while ($true) {
+                test-connection -Count 1 8.8.8.8 > Out-Null 2>1
+                sleep 3
+                if ( $?) {
+                    balloon "Connection reestablished" "resuming normal checking in 10 seconds"
+                    Write-Host "$(small-time) connection up!"
+                    sleep 10
+                    break
+                }
+            }
+        }
+        else {
+            Write-Host "$(small-time) connection up!"
+        }
+        sleep 10
     }
 }
 

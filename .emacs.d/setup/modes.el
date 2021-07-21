@@ -1,17 +1,19 @@
 ;;; mode hooks
 
-(use-package pdf-tools
-  :ensure t
-  :config
-  (pdf-tools-install)
-  (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
-  (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-isearch-minor-mode)))
+(unless (string-equal system-type "windows-nt")
+  (use-package pdf-tools
+    :ensure t
+    :config
+    (pdf-tools-install)
+    (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
+    (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-isearch-minor-mode))))
 
 (use-package sass-mode
   :ensure t)
 (use-package yaml-mode
   :ensure t)
-
+(use-package dockerfile-mode
+  :ensure t)
 
 (use-package fish-mode
   :ensure t)

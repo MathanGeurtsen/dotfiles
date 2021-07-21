@@ -3,7 +3,7 @@
 (cond
  ((string-equal system-type "windows-nt")
   (progn
-    (setq epg-gpg-home-directory "c:/Users/Mathan/.gnupg")))
+    (setq epg-gpg-home-directory "c:/Users/mathan/.gnupg")))
   
   ((string-equal system-type "darwin")
    (progn

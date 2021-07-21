@@ -19,7 +19,7 @@
     (message "mark==")
     (progn (message gl-sc/organiser)
     (message (format-time-string "%H:%M:%S")))
-    (define-key map (kbd "C-c m")       '(lambda () (interactive) (async-shell-command (gl-sc/get-open-dir))))
+    (define-key map (kbd "C-c m")       '(lambda () (interactive) (async-shell-command gl-sc/open-dir)))
     (define-key map (kbd "C-;")
       (defhydra my/main-hydra (:exit t :hint nil)
         "

@@ -6,7 +6,8 @@
 (setq inhibit-compacting-font-caches t)
 
 ;; python
-(setq python-shell-interpreter "python3")
+(unless (eq system-type 'windows-nt)
+  (setq python-shell-interpreter "python3"))
 
 ;; latex
 (defun my/latex-mode-hook ()
@@ -41,6 +42,9 @@
                         (getenv "PATH") path-separator t)))))
     (setenv "PATH" (mapconcat
                     'identity (delete-dups path) path-separator))))
+
+(setenv "PATH" (concat (getenv "PATH") "C:/Python39/"))
+(setq exec-path (append exec-path '("/sw/bin")))
 
 ;; scrolling
 (setq mouse-wheel-scroll-amount '(5 ((shift) . 5) ((control) . nil)))
