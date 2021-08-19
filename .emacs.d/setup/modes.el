@@ -26,6 +26,7 @@
 
 (unless (string-equal system-type "windows-nt")
   (add-hook 'prog-mode-hook            'flycheck-mode))
+
 (add-hook 'fundamental-mode-hook     'company-mode)
 
 (add-hook 'csharp-mode-hook 'omnisharp-mode)
@@ -35,6 +36,10 @@
                             (setq c-basic-offset 2
                                   tab-width 2
                                   indent-tabs-mode t)))
+
+(add-hook 'sh-mode-hook (lambda ()
+                            (company-mode -1)))
+
 
 (setq auto-mode-alist
       (append '(

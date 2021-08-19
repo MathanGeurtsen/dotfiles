@@ -1,13 +1,22 @@
  ;; according to https://emacs-lsp.github.io/lsp-mode/tutorials/CPP-guide/
 
+(setq lsp-signature-auto-activate nil
+      lsp-signature-doc-lines 1
+      lsp-signature-render-documentation nil
+      lsp-eldoc-render-all nil)
+
 (use-package lsp-mode
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-c l")
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (XXX-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
+
+  ;; :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+  ;;        ;; (XXX-mode . lsp)
+  ;;        ;; if you want which-key integration
+  ;;        ;; (lsp-mode . lsp-enable-which-key-integration)
+  ;;        )
+  :config
+  (add-hook 'lsp-mode-hook '(lambda () (interactive) (eldoc-mode -1)))
   :commands lsp)
 
 ;; optionally

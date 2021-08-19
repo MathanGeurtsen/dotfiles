@@ -12,7 +12,7 @@
 (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
       doom-themes-enable-italic t) ; if nil, italics is universally disabled
 (my/night-theme)
-(set-face-attribute 'default nil :height 160)
+(my/standard-font-size)
 
 (require 'frame)
 (defun set-cursor-hook (frame)
