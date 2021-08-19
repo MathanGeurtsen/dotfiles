@@ -11,7 +11,11 @@ function emc($a) {
 }
 
 function tmux() {
-bash -c "tmux"
+bash -c "tmux attach || tmux"
+}
+
+function zsh() {
+bash -c "zsh"
 }
 
 function gst(){
@@ -137,13 +141,14 @@ function background-verify-connection {
             balloon "Connection lost" "checking again in 3 seconds..."
             while ($true) {
                 test-connection -Count 1 8.8.8.8 > Out-Null 2>1
-                sleep 3
                 if ( $?) {
                     balloon "Connection reestablished" "resuming normal checking in 10 seconds"
                     Write-Host "$(small-time) connection up!"
                     sleep 10
                     break
                 }
+                sleep 3
+                Write-Host "$(small-time) connection still down"
             }
         }
         else {

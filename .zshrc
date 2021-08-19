@@ -27,6 +27,9 @@ select-word-style bash
 # enabling bash like comments
 setopt interactivecomments
 
+# disable flow control characters (Free up C-s and C_q)
+stty -ixon -ixoff
+
 DOTFILES_DIR=$(dirname $(realpath ${(%):-%N}))
 
 source "$DOTFILES_DIR/.env"
@@ -34,6 +37,7 @@ source "$DOTFILES_DIR/.env"
 source "$DOTFILES_DIR/scripts/ssh-setup.sh"
 source "$DOTFILES_DIR/scripts/pingcheck.sh"
 
+alias ll='ls -alF'
 
 alias -g G="| grep"
 alias -g L="| less"
@@ -50,6 +54,7 @@ alias startt='bash $DOTFILES_DIR/scripts/standard-tmux.sh'
 alias emnw='emacsclient -nw -a "emacs"'
 alias init_venv='virtualenv venv; . ./venv/bin/activate;pip install -r requirements.txt'
 alias testbox='ssh -i $TESTBOX_SSH_KEYFILE $TESTBOX_URL -p $TESTBOX_SSH_PORT -X -L $TESTBOX_VNC_PORT\:localhost:$TESTBOX_VNC_PORT'
+alias ISO8601="date +%Y%m%dT%H%M%S"
 
 plugins=(git ssh-agent)
 
@@ -123,6 +128,8 @@ function pyve {
 
 function psh {
   # WSL specific convenience function, starts powershell in current dir 
+  windows_dir=$(wslpath -w $(pwd))
+  
   powershell.exe -NoExit -Command cd $windows_dir
 }
 
@@ -131,3 +138,26 @@ function wem {
   windows_path=$(wslpath -w $1)
   emacsclientw.exe $windows_path
 }
+
+  function proc_running {
+  # check if process is still running 
+    procID=$1
+    if [ -z "$2" ] 
+    then
+      timeout=3
+    else
+      timeout=$2
+    fi
+ 
+    while true;
+    do
+      ps | grep $procID > /dev/null 2>&1
+      if [ 0 -eq $? ]; then 
+        echo "$(date +%H:%M:%S): process $procID is still running" 
+        sleep $timeout;
+      else
+        echo "$(date +%H:%M:%S): process $procID has terminated"
+        break;
+      fi
+    done
+  } 

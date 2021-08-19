@@ -120,6 +120,14 @@ if ! shopt -oq posix; then
   fi
 fi
 
+bind 'set completion-ignore-case on'
+
 DOTFILES_DIR=$(dirname $(realpath ${BASH_SOURCE[0]}))
 
 alias startt="bash $DOTFILES_DIR/scripts/standard-tmux.sh"
+
+# write command to history file immediately
+PROMPT_COMMAND='history -a;history -n'
+
+# disable flow control characters (Free up C-s and C_q)
+stty -ixon -ixoff

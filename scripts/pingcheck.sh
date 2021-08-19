@@ -1,4 +1,16 @@
 #!/usr/bin/bash
+
+ext-reb () {
+  RET=0
+  while [ $RET -eq 0 ]; do
+    echo $(date +%H:%M:%S) trying again
+    curl https://extinctionrebellion.nl/ 2>&1 | tee ~/extinctionrebellion.html | grep "Failed to connect"
+  RET=$?
+  sleep 10
+  done
+  echo downloaded
+}
+
 function background-verify-connection {
   # notify when connection is down. defaults to DNS, else $1
   if [ -z "$1" ] 
