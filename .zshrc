@@ -44,7 +44,7 @@ alias -g L="| less"
 alias -g V="| vipe"
 alias -g T=" > >(tee -a tee_stdout.log) 2> >(tee -a tee_stderr.log >&2)"
 
-alias gst='git status -uno'
+alias gst='echo "not on windows"; git status -uno'
 alias open='xdg-open'
 alias tempdir='cd $(mktemp -d)'
 alias publicip='curl ifconfig.me'
@@ -53,10 +53,12 @@ alias copy='bash $DOTFILES_DIR/scripts/xcl.sh'
 alias startt='bash $DOTFILES_DIR/scripts/standard-tmux.sh'
 alias emnw='emacsclient -nw -a "emacs"'
 alias init_venv='virtualenv venv; . ./venv/bin/activate;pip install -r requirements.txt'
-alias testbox='ssh -i $TESTBOX_SSH_KEYFILE $TESTBOX_URL -p $TESTBOX_SSH_PORT -X -L $TESTBOX_VNC_PORT\:localhost:$TESTBOX_VNC_PORT'
+alias testbox='ssh -i $TESTBOX_SSH_KEYFILE mathan@$TESTBOX_URL -p $TESTBOX_SSH_PORT -X -L $TESTBOX_VNC_PORT\:localhost:$TESTBOX_VNC_PORT'
 alias ISO8601="date +%Y%m%dT%H%M%S"
+alias python=python3
 
 plugins=(git ssh-agent)
+
 
 export EDITOR=/usr/bin/vim
 export VISUAL=/usr/local/bin/emacsclient
@@ -123,9 +125,6 @@ function pyve {
     echo "no venv found, searched three levels up"
   fi
 }
-
-
-
 function psh {
   # WSL specific convenience function, starts powershell in current dir 
   windows_dir=$(wslpath -w $(pwd))
