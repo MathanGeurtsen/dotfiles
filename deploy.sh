@@ -5,3 +5,4 @@ ln -s "$DOTFILES_DIR/.zshrc" ~/.zshrc
 ln -s "$DOTFILES_DIR/.tmux.conf" ~/.tmux.conf
 ln -s "$DOTFILES_DIR/.emacs.d" ~/.emacs.d
 ln -s "$DOTFILES_DIR/.xprofile" ~/.xprofile
+ln -s "$DOTFILES_DIR/.vimrc" ~/.vimrc

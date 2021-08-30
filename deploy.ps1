@@ -14,6 +14,7 @@ PowerShellGet\Install-Module posh-git -Scope CurrentUser -Force
 
 new-item -itemtype symboliclink -path $HOME -name ".bashrc" -value $DOTFILES_DIR\.bashrc
 new-item -itemtype symboliclink -path $HOME -name ".zshrc" -value $DOTFILES_DIR\.zshrc
+new-item -itemtype symboliclink -path $HOME -name ".vimrc" -value $DOTFILES_DIR\.vimrc
 new-item -itemtype symboliclink -path $HOME -name ".tmux.conf" -value $DOTFILES_DIR\.tmux.conf
 new-item -itemtype symboliclink -path $env:APPDATA -name ".emacs.d" -value $DOTFILES_DIR\.emacs.d
 
