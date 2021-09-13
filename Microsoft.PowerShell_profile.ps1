@@ -5,11 +5,17 @@ Set-PSReadlineKeyHandler -Key Tab -Function TabCompleteNext
 
 # convenience functions
 function emc($a) {
-
 & emacsclientw.exe -a emacs $a
-
 }
 
+function kill-handles($folder) {
+    $res_pids = @()
+    $res_pids = $(handle.exe -a -u $folder  | awk '{if ($3 ~""^[0-9]+$"") print $3}')   
+    for ($i=0; $i -lt $res_pids.Length; $i++){
+        [int]$r =  $res_pids[$i]
+        echo "taskkill /f /pid $r"
+    }
+}
 function tmux() {
 bash -c "tmux attach || tmux"
 }

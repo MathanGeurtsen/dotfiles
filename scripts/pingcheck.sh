@@ -60,3 +60,57 @@ function background-note-connection {
   done
 }
 
+int_from_col() {
+  # Extract integer from space separated value assignments, only outputs if the cell contains the correct variable name. 
+  # example: 
+  # > int_from_col 2 "a=1 b=3.23" "b"
+  # 3
+  column=$1
+  var_name=$3
+  echo "$2" | awk -v column="$column" -v var_name="$var_name" '{
+    cell = $column; 
+    start_ind = match(cell, "=") + 1;
+    end_ind = match(cell,"\\.");
+    if (end_ind == 0)
+      end_ind = length(cell);
+  
+    if(cell ~ var_name)
+    {
+      print(substr(cell, start_ind, end_ind - start_ind))
+      exit 0
+    } 
+    exit 1
+  }'
+  return $?
+}
+
+ping_time() {
+  site="$1"
+  ping_output="$(ping -c 1 -v "$site")"
+  echo "$ping_output" | while IFS= read -r line ; do
+    temp="$(int_from_col 8 "$line" "time")"
+    if [ "$?" -eq 0 ]; then
+      echo "$temp"
+      break
+    fi
+  done | cat
+}
+
+ping_avg() {
+  site="$1"
+  if [ -z "$2" ]; then n=10; else n="$2"; fi
+  if [ "$3" = "true" ]; then inline=true;  echo ""; else inline=false; fi  
+  i=0
+  avg=0
+  while [ "$i" -le "$n" ]; do
+    cur_ping="$(ping_time "$site")"
+    avg=$(( (avg * i + cur_ping) / (i+1)))
+    if $inline; then
+      echo -e '\e[1A\r\e[K'"avg ping time: $avg"
+    fi
+    i=$((i + 1))
+  done
+  if ! $inline; then
+      echo "$avg"
+  fi
+}
