@@ -8,10 +8,7 @@
   (interactive)
   (insert (format-time-string "%Y-%m-%d")))
 
-(defun lowercase-word ()
-  "renaming because I forget"
-  (interactive)
-  (downcase-word))
+(defalias 'lowercase-word 'downcase-word)
 
 (defun my/re-replace-buffer (pattern replacement)
   (goto-char (point-min))

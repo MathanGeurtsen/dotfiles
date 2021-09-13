@@ -150,7 +150,7 @@
      ("integers" "\\mathbb{Z}" t "&#8484" "Z" "Z" "ℤ")
      ("square" "\\square" t "&#9633" "■" "" "□")))
  '(org-format-latex-options
-   '(:foreground default :background default :scale 2.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+   '(:foreground default :background default  :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\[")))
  '(org-hide-leading-stars t)
  '(org-latex-packages-alist '(("" "amsmath" nil)))

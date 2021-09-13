@@ -14,6 +14,11 @@
 (my/night-theme)
 (my/standard-font-size)
 
+(tab-bar-mode 1)
+(defalias 'tabe 'tab-bar-new-tab-to)
+(defalias 'tabc 'tab-bar-close-tab)
+
+
 (require 'frame)
 (defun set-cursor-hook (frame)
   (modify-frame-parameters

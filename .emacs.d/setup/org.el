@@ -72,7 +72,7 @@
 (setq org-image-actual-width nil)
 
 ;; set latex fragments to be scaled to 2.0 to be more easily readable
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.3))
 
 (setq reftex-default-bibliography '("~/.emacs.d/bibliography/references.bib"))
 

@@ -1,12 +1,13 @@
 ;;; mode hooks
 
-(unless (string-equal system-type "windows-nt")
-  (use-package pdf-tools
-    :ensure t
-    :config
-    (pdf-tools-install)
-    (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
-    (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-isearch-minor-mode))))
+(use-package pdf-tools
+  :ensure t
+  :config
+  (pdf-tools-install)
+  (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
+  (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-isearch-minor-mode)))
+
+(add-hook 'pdf-view-mode-hook (blink-cursor-mode -1))
 
 (use-package sass-mode
   :ensure t)
@@ -21,9 +22,8 @@
   :ensure t)
 (use-package json-mode
   :ensure t)
-
-(add-hook 'prog-mode-hook            'linum-mode)
-
+(add-hook 'prog-mode-hook '(lambda () (interactive) 
+                               (setq display-line-numbers 'relative)))
 (unless (string-equal system-type "windows-nt")
   (add-hook 'prog-mode-hook            'flycheck-mode))
 
