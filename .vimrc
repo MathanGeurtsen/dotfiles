@@ -83,7 +83,7 @@ set hlsearch
 " Use case insensitive search, except when using capital letters
 set ignorecase
 set smartcase
-
+set wildignorecase "used to ignore case in filename search
 " Allow backspacing over autoindent, line breaks and start of insert action
 set backspace=indent,eol,start
 
@@ -165,4 +165,7 @@ map Y y$
 nnoremap <C-L> :nohl<CR><C-L>
 
 "------------------------------------------------------------
-
+" avoid obliterating window setup
+nnoremap <C-W>O :echo "sucker"<CR>
+nnoremap <C-W>o :echo "sucker"<CR>
+nnoremap <C-W><C-O> :echo "sucker"<CR>

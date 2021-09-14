@@ -56,7 +56,7 @@ alias init_venv='virtualenv venv; . ./venv/bin/activate;pip install -r requireme
 alias testbox='ssh -i $TESTBOX_SSH_KEYFILE mathan@$TESTBOX_URL -p $TESTBOX_SSH_PORT -X -L $TESTBOX_VNC_PORT\:localhost:$TESTBOX_VNC_PORT'
 alias ISO8601="date +%Y%m%dT%H%M%S"
 alias python=python3
-
+alias winhome="/mnt/c/users/mathan"
 plugins=(git ssh-agent)
 
 
