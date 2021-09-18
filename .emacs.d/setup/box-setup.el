@@ -5,7 +5,11 @@
             box/alternate_editor)
 
     ;; set a default font
-    (set-face-attribute 'default nil :font "Consolas"))
+    (set-face-attribute 'default nil :font "Consolas")
+    ;; set backup fonts
+    (setq face-font-family-alternatives 
+          '(("Consolas" "FreeMono" "Symbola")))
+    (set-fontset-font t nil "Courier New" nil 'append))
  
  ((string-equal system-type "darwin")
     (warn "config not setup on mac"))
