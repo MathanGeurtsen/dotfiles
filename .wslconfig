@@ -1,0 +1,3 @@
+[wsl2]
+# empirical maximum with 8G RAM to leave enough for windows
+memory=3333M

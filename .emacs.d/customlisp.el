@@ -227,7 +227,7 @@ current nanosecond.  "
 (defun my/standard-font-size ()
   "Set the font size to standard"
   (interactive)
-  (set-face-attribute 'default nil :height 160))
+  (set-face-attribute 'default nil :height 140))
 
 (defun my/present-mode (args)
   "makes emacs use bigger font, use lightmode, and disable transparancy. "
