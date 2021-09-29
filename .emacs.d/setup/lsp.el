@@ -3,7 +3,8 @@
 (setq lsp-signature-auto-activate nil
       lsp-signature-doc-lines 1
       lsp-signature-render-documentation nil
-      lsp-eldoc-render-all nil)
+      lsp-eldoc-render-all nil
+      lsp-eldoc-hook nil)
 
 (use-package lsp-mode
   :init
