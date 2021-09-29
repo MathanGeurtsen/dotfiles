@@ -46,14 +46,14 @@ alias -g T=" > >(tee -a tee_stdout.log) 2> >(tee -a tee_stderr.log >&2)"
 
 alias gst='echo "not on windows"; git status -uno'
 alias open='xdg-open'
-alias tempdir='cd $(mktemp -d)'
+alias tempdir='pushd $(mktemp -d)'
 alias publicip='curl ifconfig.me'
 alias whatismyip=publicip
 alias copy='bash $DOTFILES_DIR/scripts/xcl.sh'
 alias startt='bash $DOTFILES_DIR/scripts/standard-tmux.sh'
 alias emnw='emacsclient -nw -a "emacs"'
 alias init_venv='virtualenv venv; . ./venv/bin/activate;pip install -r requirements.txt'
-alias testbox='ssh -i $TESTBOX_SSH_KEYFILE mathan@$TESTBOX_URL -p $TESTBOX_SSH_PORT -X -L $TESTBOX_VNC_PORT\:localhost:$TESTBOX_VNC_PORT'
+alias testbox="ssh -i $TESTBOX_SSH_KEYFILE mathan@$TESTBOX_URL -p $TESTBOX_SSH_PORT -X -L $TESTBOX_VNC_PORT\:localhost:$TESTBOX_VNC_PORT"
 alias ISO8601="date +%Y%m%dT%H%M%S"
 alias python=python3
 alias winhome="/mnt/c/users/mathan"
@@ -62,6 +62,13 @@ plugins=(git ssh-agent)
 
 export EDITOR=/usr/bin/vim
 export VISUAL=/usr/local/bin/emacsclient
+
+function figr {
+  fileRegex="$1"
+  exclusionRegex="$2"
+  stringRegex="$3"
+  find . -regex "$fileRegex" -not -regex "$exclusionRegex" -print0 | xargs -0 grep "$stringRegex"
+}
 
 function rcd {
   # ranger cd

@@ -79,8 +79,8 @@ Set-Alias ssh-add "$env:ProgramFiles\git\usr\bin\ssh-add.exe"
 
 
 Set-Alias mingw "c:/msys64/mingw64.exe"
-Set-Alias g++ "C:\msys64\mingw64\bin\g++.exe
-"
+Set-Alias g++ "C:\msys64\mingw64\bin\g++.exe"
+Set-Alias find "$env:ProgramFiles\git\usr\bin\find.exe"
 
 Set-Variable -Name "SshIsSet" -Value $FALSE -Scope Global
 function Ssh-setup {
