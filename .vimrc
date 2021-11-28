@@ -1,4 +1,4 @@
-set visualbell
+
 filetype plugin on
 set background=dark
 " URL: https://vim.wikia.com/wiki/Example_vimrc
@@ -110,10 +110,14 @@ set confirm
 " Use visual bell instead of beeping when doing something wrong
 set visualbell
 
+
+
 " And reset the terminal code for the visual bell. If visualbell is set, and
 " this line is also included, vim will neither flash nor beep. If visualbell
 " is unset, this does nothing.
 set t_vb=
+
+set belloff=all
 
 " Enable use of the mouse for all modes
 if has('mouse')
@@ -169,3 +173,18 @@ nnoremap <C-L> :nohl<CR><C-L>
 nnoremap <C-W>O :echo "sucker"<CR>
 nnoremap <C-W>o :echo "sucker"<CR>
 nnoremap <C-W><C-O> :echo "sucker"<CR>
+
+let $STOREDIR = expand('~/vim_file_storage/')
+let $HOME = expand('~')
+
+if isdirectory($STOREDIR)
+  set backupdir=$STOREDIR
+  set directory=$STOREDIR
+else
+  set backupdir=$HOME
+  set directory=$HOME
+endif
+
+
+command BufferCloseKeepWindow :bp<bar>vsp<bar>bn<bar>bd
+cnoreabbrev bq BufferCloseKeepWindow
