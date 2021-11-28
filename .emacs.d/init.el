@@ -10,7 +10,6 @@
 
 (eval-when-compile
   (require 'use-package))
-
 (load "~/.emacs.d/box") 
 (load "~/.emacs.d/customlisp")
 
@@ -150,7 +149,7 @@
      ("integers" "\\mathbb{Z}" t "&#8484" "Z" "Z" "ℤ")
      ("square" "\\square" t "&#9633" "■" "" "□")))
  '(org-format-latex-options
-   '(:foreground default :background default  :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+   '(:foreground default :background default :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\[")))
  '(org-hide-leading-stars t)
  '(org-latex-packages-alist '(("" "amsmath" nil)))
@@ -163,7 +162,7 @@
  '(org-roam-encrypt-files nil)
  '(package-check-signature 'allow-unsigned)
  '(package-selected-packages
-   '(dockerfile-mode yaml-mode ag vterm workgroups2 window-purpose which-key use-package treemacs-all-the-icons ssh-agency speed-type sass-mode ranger projectile powershell pdf-tools org-roam org-bullets omnisharp ob-async multiple-cursors minimap markdown-mode+ lsp-ui lsp-java lsp-ivy json-mode interleave highlight-parentheses hide-lines helpful helm-lsp git-gutter-fringe fish-mode evil-magit evil-collection ess emojify elpy elisp-demos elfeed-goodies ein editorconfig doom-themes doom-modeline direx dired-k dimmer counsel company-quickhelp company-lsp cmake-mode browse-url-dwim beacon atomic-chrome all-the-icons-dired))
+   '(vimrc-mode dockerfile-mode yaml-mode ag vterm workgroups2 window-purpose which-key use-package treemacs-all-the-icons ssh-agency speed-type sass-mode ranger projectile powershell pdf-tools org-roam org-bullets omnisharp ob-async multiple-cursors minimap markdown-mode+ lsp-ui lsp-java lsp-ivy json-mode interleave highlight-parentheses hide-lines helpful helm-lsp git-gutter-fringe fish-mode evil-magit evil-collection ess emojify elpy elisp-demos elfeed-goodies ein editorconfig doom-themes doom-modeline direx dired-k dimmer counsel company-quickhelp company-lsp cmake-mode browse-url-dwim beacon atomic-chrome all-the-icons-dired))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
  '(pos-tip-background-color "#FFFACE")
  '(pos-tip-foreground-color "#272822")
