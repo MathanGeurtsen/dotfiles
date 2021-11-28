@@ -67,7 +67,7 @@ function figr {
   fileRegex="$1"
   exclusionRegex="$2"
   stringRegex="$3"
-  find . -regex "$fileRegex" -not -regex "$exclusionRegex" -print0 | xargs -0 grep "$stringRegex"
+  find . -regex "$fileRegex" -not -regex "$exclusionRegex" -print0 | xargs -0 grep -i "$stringRegex"
 }
 
 function rcd {
@@ -115,23 +115,28 @@ function emc {
   if jobs | grep -q 'emacs'; then disown emacs; fi
 }
 
-function pyve {
-  if [  -e venv/ ]
-  then 
-    echo 'activating on . '
-    . venv/bin/activate
-  elif [  -e ../venv/ ]
-  then 
-    echo 'activating on .. '
-    . ../venv/bin/activate
-  elif [  -e ../../venv/ ]
-  then 
-    echo 'activating on ../.. '
-    . ../../venv/bin/activate
-  else 
-    echo "no venv found, searched three levels up"
-  fi
+function
+
+pyve() {
+  depth=$(pwd | awk '{gsub("[^/]", "", $1); print length}')
+  dir="./"
+  for i in {1..$depth}; do 
+    if [ $i -gt 1 ]; then
+      dir="$dir../"
+    fi
+
+    activate="${dir}venv/bin/activate"
+    if [  -e "$activate" ]
+    then 
+      echo "activating on $activate"
+      . "$activate"
+      return 0
+    fi
+  done
+  echo "no venv for bash found, reached root"
+  return 1
 }
+
 function psh {
   # WSL specific convenience function, starts powershell in current dir 
   windows_dir=$(wslpath -w $(pwd))
