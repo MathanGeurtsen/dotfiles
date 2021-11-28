@@ -4,13 +4,21 @@ Set-PSReadlineKeyHandler -Key Tab -Function TabCompleteNext
 
 
 # convenience functions
+
+function time-sync() {
+    write-warning "admin access via gsudo..." 
+    gsudo net start w32time
+    gsudo w32tm /resync /force
+    write-host "sync complete"
+}
+
 function emc($a) {
 & emacsclientw.exe -a emacs $a
 }
-
 function kill-handles($folder) {
     $res_pids = @()
-    $res_pids = $(handle.exe -a -u $folder  | awk '{if ($3 ~""^[0-9]+$"") print $3}')   
+    $folder = $(Resolve-Path "$folder").path
+    $res_pids = $(gsudo handle.exe -a -u $folder  | awk '{if ($3 ~""^[0-9]+$"") print $3}')   
     for ($i=0; $i -lt $res_pids.Length; $i++){
         [int]$r =  $res_pids[$i]
         echo "taskkill /f /pid $r"
@@ -81,6 +89,7 @@ Set-Alias ssh-add "$env:ProgramFiles\git\usr\bin\ssh-add.exe"
 Set-Alias mingw "c:/msys64/mingw64.exe"
 Set-Alias g++ "C:\msys64\mingw64\bin\g++.exe"
 Set-Alias find "$env:ProgramFiles\git\usr\bin\find.exe"
+Set-Alias copy "set-clipboard" -Option AllScope
 
 Set-Variable -Name "SshIsSet" -Value $FALSE -Scope Global
 function Ssh-setup {
