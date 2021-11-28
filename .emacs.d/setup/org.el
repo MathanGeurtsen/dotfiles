@@ -68,6 +68,9 @@
    (ditaa . t)
    (latex . t)))
 
+;; disable babel source blocks indenting by 2 spaces
+(setq org-edit-src-content-indentation 0)
+
 ;; allow image resizing
 (setq org-image-actual-width nil)
 

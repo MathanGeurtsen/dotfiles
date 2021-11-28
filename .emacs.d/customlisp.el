@@ -237,3 +237,7 @@ current nanosecond.  "
     (setq my/day-night-switch "doom-one-light")
     (my/set-transparency 100 100)
     (my/big-font-size)))
+(defun my/buffer-invis-spec-temp-list (orig-fun &rest args)
+  (setq buffer-invisibility-spec '("hl"))
+  (apply orig-fun args))
+(advice-add 'hide-lines-add-overlay :around #'my/buffer-invis-spec-temp-list)

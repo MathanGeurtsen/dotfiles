@@ -1,4 +1,7 @@
+
 ;; packages
+(use-package hide-lines
+  :ensure t)
 (use-package editorconfig
   :ensure t
   :config
@@ -73,8 +76,7 @@
   :ensure t)
 (use-package which-key
   :ensure t)
-(use-package hide-lines
-  :ensure t)
+
 (use-package ob-async
   :ensure t)
 (use-package flyspell
@@ -98,4 +100,6 @@
 (use-package company
   :ensure t)
 (use-package flycheck
+  :ensure t)
+(use-package vimrc-mode
   :ensure t)
