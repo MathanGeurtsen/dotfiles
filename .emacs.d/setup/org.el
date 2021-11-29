@@ -19,16 +19,18 @@
                  )))
 
 (use-package org-roam
-  :commands (org-roam org-roam-mode)
+  :init
+  (setq org-roam-v2-ack t)
   :ensure t
   :custom
-  (org-roam-directory (concat box/org-dir "roam")
+  (org-roam-directory (file-truename (concat box/org-dir "roam"))
   (add-hook 'org-capture-mode-hook (org-mode))
-  (org-roam-index-file (concat box/org-dir "roam/" "index.org"))
+  (org-roam-index-file (file-truename (concat box/org-dir "roam/" "index.org")))
   (org-roam-encrypt-files nil)
-  :bind (:map org-mode-map
-              (("C-c n i" . org-roam-insert)))))
-(org-roam-mode)
+  (org-roam-db-autosync-mode)))
+
+
+
 
 ;; org mode wrap text
 (setq org-startup-truncated nil)

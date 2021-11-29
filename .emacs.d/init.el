@@ -155,10 +155,6 @@
  '(org-latex-packages-alist '(("" "amsmath" nil)))
  '(org-list-allow-alphabetical t)
  '(org-odt-preferred-output-format "docx")
- '(org-roam-capture-templates
-   '(("d" "default" plain #'org-roam-capture--get-point "%?" :file-name "%<%Y%m%d%H%M%S>-${slug}" :head "#+title: ${title}
-#+roam_alias: 
-#+roam_tags:  " :unnarrowed t)))
  '(org-roam-encrypt-files nil)
  '(package-check-signature 'allow-unsigned)
  '(package-selected-packages

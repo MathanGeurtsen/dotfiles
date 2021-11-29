@@ -32,7 +32,7 @@ _p_: projects    _e_: show region errors _y_: insert date
 _d_: days         ^ ^                    _<tab>_: yas expand
 _f_: temp folder  ^ ^                    _u_: use url or search
 ^ ^               ^ ^                    _s_: search multi buffer
-^ ^               ^ ^                    _r_: org-roam-find-file
+^ ^               ^ ^                    _r_: org-roam-node-find
 "
         ("i" (find-file gl-sc/init))
         ("o" (find-file gl-sc/organiser))
@@ -53,7 +53,7 @@ _f_: temp folder  ^ ^                    _u_: use url or search
         ("<tab>"  (yas-expand-from-trigger-key))
         ("u"      (browse-url-dwim-guess))
         ("s"      (call-interactively 'multi-occur-in-matching-buffers))
-        ("r"      (org-roam-find-file))))
+        ("r"      (org-roam-node-find))))
 
     (define-key map (kbd "C-,")
       (defhydra my/window-hydra (:exit nil :hint nil)
