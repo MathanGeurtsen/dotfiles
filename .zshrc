@@ -2,7 +2,8 @@
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
-setopt autocd
+setopt INC_APPEND_HISTORY autocd nocaseglob
+export HISTTIMEFORMAT="[%F %T] "
 unsetopt beep extendedglob notify
 bindkey -e
 # End of lines configured by zsh-newuser-install
@@ -44,7 +45,7 @@ alias -g L="| less"
 alias -g V="| vipe"
 alias -g T=" > >(tee -a tee_stdout.log) 2> >(tee -a tee_stderr.log >&2)"
 
-alias gst='echo "not on windows"; git status -uno'
+alias gst='git status -uno'
 alias open='xdg-open'
 alias tempdir='pushd $(mktemp -d)'
 alias publicip='curl ifconfig.me'
@@ -55,8 +56,8 @@ alias emnw='emacsclient -nw -a "emacs"'
 alias init_venv='virtualenv venv; . ./venv/bin/activate;pip install -r requirements.txt'
 alias testbox="ssh -i $TESTBOX_SSH_KEYFILE mathan@$TESTBOX_URL -p $TESTBOX_SSH_PORT -X -L $TESTBOX_VNC_PORT\:localhost:$TESTBOX_VNC_PORT"
 alias ISO8601="date +%Y%m%dT%H%M%S"
-alias python=python3
 alias winhome="/mnt/c/users/mathan"
+alias mp="make -f personal.mk"
 plugins=(git ssh-agent)
 
 
@@ -150,25 +151,26 @@ function wem {
   emacsclientw.exe $windows_path
 }
 
-  function proc_running {
+function proc_running {
   # check if process is still running 
-    procID=$1
-    if [ -z "$2" ] 
-    then
-      timeout=3
+  procID=$1
+  if [ -z "$2" ] 
+  then
+    timeout=3
+  else
+    timeout=$2
+  fi
+  
+  while true;
+  do
+    ps | grep $procID > /dev/null 2>&1
+    if [ 0 -eq $? ]; then 
+      echo "$(date +%H:%M:%S): process $procID is still running" 
+      sleep $timeout;
     else
-      timeout=$2
+      echo "$(date +%H:%M:%S): process $procID has terminated"
+      break;
     fi
+  done
+}
  
-    while true;
-    do
-      ps | grep $procID > /dev/null 2>&1
-      if [ 0 -eq $? ]; then 
-        echo "$(date +%H:%M:%S): process $procID is still running" 
-        sleep $timeout;
-      else
-        echo "$(date +%H:%M:%S): process $procID has terminated"
-        break;
-      fi
-    done
-  } 
