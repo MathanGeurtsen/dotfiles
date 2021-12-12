@@ -66,6 +66,10 @@
   (global-highlight-parentheses-mode t)
   (highlight-parentheses-mode 1))
 
+(use-package stan-mode
+  :ensure t)
+(use-package ess
+  :ensure t)
 (use-package powershell
   :ensure t)
 (use-package hydra
