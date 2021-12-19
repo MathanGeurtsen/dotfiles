@@ -9,6 +9,12 @@
   (insert (format-time-string "%Y-%m-%d")))
 
 (defalias 'lowercase-word 'downcase-word)
+(defalias 'insert-kill-ring 'kill-new)
+
+(defun my/get-org-id (args)
+  "wrapper around org-id-get-create to insert the id to the kill-ring on creation"
+  (interactive "P")
+(insert-kill-ring (org-id-get-create)))
 
 (defun my/re-replace-buffer (pattern replacement)
   (goto-char (point-min))
@@ -241,3 +247,4 @@ current nanosecond.  "
   (setq buffer-invisibility-spec '("hl"))
   (apply orig-fun args))
 (advice-add 'hide-lines-add-overlay :around #'my/buffer-invis-spec-temp-list)
+

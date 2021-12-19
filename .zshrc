@@ -62,7 +62,6 @@ plugins=(git ssh-agent)
 
 
 export EDITOR=/usr/bin/vim
-export VISUAL=/usr/local/bin/emacsclient
 
 function figr {
   fileRegex="$1"
