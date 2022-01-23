@@ -63,6 +63,8 @@ plugins=(git ssh-agent)
 
 export EDITOR=/usr/bin/vim
 
+if [ -f /var/run/reboot-required ]; then cat /var/run/reboot-required; fi
+
 function figr {
   fileRegex="$1"
   exclusionRegex="$2"
