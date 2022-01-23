@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name:fun 
+# key: fun
+# --
+${1:functionname} <- function(${2:args}) {
+  $3
+}

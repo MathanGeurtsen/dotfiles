@@ -1,0 +1,6 @@
+# key: srcr
+# name: srcr
+# --
+#+BEGIN_SRC R :tangle ${1:filename.R}
+$2
+#+END_SRC
