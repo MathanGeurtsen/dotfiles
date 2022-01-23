@@ -11,11 +11,6 @@
 (defalias 'lowercase-word 'downcase-word)
 (defalias 'insert-kill-ring 'kill-new)
 
-(defun my/get-org-id (args)
-  "wrapper around org-id-get-create to insert the id to the kill-ring on creation"
-  (interactive "P")
-(insert-kill-ring (org-id-get-create)))
-
 (defun my/re-replace-buffer (pattern replacement)
   (goto-char (point-min))
   (while (re-search-forward pattern nil t)
@@ -223,7 +218,12 @@ and enters it in a dired buffer.  "
 current nanosecond.  "
   (interactive)
   (string-join (nthcdr 34 (split-string (sha1 (format-time-string "%N")) ""))))
-
+(defun my/set-font-size ()
+  "set font size interactively"
+  (interactive)
+  (set-face-attribute 'default nil :height 
+                      (* 10 ; to transform "normal" fontsize to elisps font size
+                         (string-to-number (read-string "new font size: ")))))
 
 (defun my/big-font-size ()
   "Set the font size to be big"

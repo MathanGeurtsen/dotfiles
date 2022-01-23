@@ -40,44 +40,41 @@
 (setq org-return-follows-link 't)
 (setq org-pretty-entities t)
 
+(defun my/org-confirm-babel-evaluate (lang body)
+  (not (string= lang "latex")))  ;don't ask for latex
+
 ;; org mode use [] instead of LEFT-RIGHT for better reachability
-(defun my-org-mode-config ()
+(defun my/org-mode-config ()
   "For use in `org-mode-hook'."
   (toggle-word-wrap)
   (org-display-inline-images t t)
   (org-bullets-mode)
-)
-(add-hook 'org-mode-hook 'my-org-mode-config)
+  (highlight-regexp  "\\todo\\[.*?\\]{.*?}"  'org-table-header)
+  (setq org-confirm-babel-evaluate #'my/org-confirm-babel-evaluate
+        org-hide-emphasis-markers t
+        org-catch-invisible-edits nil
+        org-src-fontify-natively t
+        org-startup-truncated nil
+        org-edit-src-content-indentation 0
+        org-image-actual-width nil))
+(add-hook 'org-mode-hook 'my/org-mode-config)
 
-(setq org-hide-emphasis-markers t)
-
-(setq org-catch-invisible-edits nil)
-
-;; (load "~/.emacs.d/setup/org-bullets")
-
-(setq org-src-fontify-natively t)
-
-;; org mode wrap text
-(setq org-startup-truncated nil)
 
 ;; languages to load for org-babel
 (org-babel-do-load-languages
  'org-babel-load-languages  
  '((emacs-lisp . t)
+   (R . t)
    (python . t)
    (dot . t)
    (haskell . t)
    (ditaa . t)
    (latex . t)))
 
-;; disable babel source blocks indenting by 2 spaces
-(setq org-edit-src-content-indentation 0)
 
-;; allow image resizing
-(setq org-image-actual-width nil)
 
 ;; set latex fragments to be scaled to 2.0 to be more easily readable
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.3))
+;; (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.3))
 
 (setq reftex-default-bibliography '("~/.emacs.d/bibliography/references.bib"))
 

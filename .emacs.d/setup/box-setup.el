@@ -23,6 +23,8 @@
     (treemacs-git-mode 'simple))
   (use-package treemacs-projectile
     :ensure t)
-   (set-face-attribute 'default nil :font "inconsolata")))
+   (set-face-attribute 'default nil :font "hack")
+    (setq face-font-family-alternatives 
+          '(("hack" "ubuntu mono" "Symbola")))))
 
 
