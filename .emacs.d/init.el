@@ -13,6 +13,8 @@
 (load "~/.emacs.d/box") 
 (load "~/.emacs.d/customlisp")
 
+(setq load-prefer-newer t) ;; in case of byte-compiled files
+
 (load "~/.emacs.d/setup/packages")
 (load "~/.emacs.d/setup/modes")
 
