@@ -56,7 +56,7 @@ alias emnw='emacsclient -nw -a "emacs"'
 alias init_venv='virtualenv venv; . ./venv/bin/activate;pip install -r requirements.txt'
 alias testbox="ssh -i $TESTBOX_SSH_KEYFILE mathan@$TESTBOX_URL -p $TESTBOX_SSH_PORT -X -L $TESTBOX_VNC_PORT\:localhost:$TESTBOX_VNC_PORT"
 alias ISO8601="date +%Y%m%dT%H%M%S"
-alias winhome="/mnt/c/users/mathan"
+
 alias mp="make -f personal.mk"
 plugins=(git ssh-agent)
 
@@ -64,6 +64,10 @@ plugins=(git ssh-agent)
 export EDITOR=/usr/bin/vim
 
 if [ -f /var/run/reboot-required ]; then cat /var/run/reboot-required; fi
+
+function wcopy {
+  echo "$@" | clip.exe
+}
 
 function figr {
   fileRegex="$1"
@@ -79,7 +83,7 @@ function rcd {
   ranger --choosedir="$tempfile" "$(echo "$(pwd)")"
   if [ "(cat -- "$tempfile")" != "(echo -n `pwd`)" ] 
      {
-       cd "$(cat "$tempfile")"
+       pushd "$(cat "$tempfile")"
      }
 }
 
@@ -144,6 +148,13 @@ function psh {
   windows_dir=$(wslpath -w $(pwd))
   
   powershell.exe -NoExit -Command cd $windows_dir
+}
+
+function wstart {
+ # WSL specific convenience function providing powershell start
+  windows_dir=$(wslpath -w $(pwd))
+  
+  powershell.exe -Command "cd $windows_dir; start $1"
 }
 
 function wem {
