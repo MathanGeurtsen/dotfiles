@@ -1,0 +1,24 @@
+# key: blocks
+# name: blocks
+# --
+functions {
+}
+
+data {
+}
+
+transformed data {
+}
+
+parameters {
+}
+
+transformed parameters {
+}
+
+model {
+  if (!prior_only) {
+  }
+}
+
+

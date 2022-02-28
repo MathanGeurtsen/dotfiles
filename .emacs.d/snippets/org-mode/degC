@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: degC
+# key: degC
+# --
+\emsp^{\deg}C
