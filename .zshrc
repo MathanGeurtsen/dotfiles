@@ -56,17 +56,19 @@ alias emnw='emacsclient -nw -a "emacs"'
 alias init_venv='virtualenv venv; . ./venv/bin/activate;pip install -r requirements.txt'
 alias testbox="ssh -i $TESTBOX_SSH_KEYFILE mathan@$TESTBOX_URL -p $TESTBOX_SSH_PORT -X -L $TESTBOX_VNC_PORT\:localhost:$TESTBOX_VNC_PORT"
 alias ISO8601="date +%Y%m%dT%H%M%S"
-
 alias mp="make -f personal.mk"
-plugins=(git ssh-agent)
 
+plugins=(git ssh-agent)
 
 export EDITOR=/usr/bin/vim
 
 if [ -f /var/run/reboot-required ]; then cat /var/run/reboot-required; fi
 
-function wcopy {
-  echo "$@" | clip.exe
+function tmuxa {
+  tmux attach
+  if [ 0 -ne $? ]; then
+    tmux
+  fi
 }
 
 function figr {
@@ -121,9 +123,7 @@ function emc {
   if jobs | grep -q 'emacs'; then disown emacs; fi
 }
 
-function
-
-pyve() {
+function pyve() {
   depth=$(pwd | awk '{gsub("[^/]", "", $1); print length}')
   dir="./"
   for i in {1..$depth}; do 
@@ -142,6 +142,12 @@ pyve() {
   echo "no venv for bash found, reached root"
   return 1
 }
+
+
+function wcopy {
+  echo "$@" | clip.exe
+}
+
 
 function psh {
   # WSL specific convenience function, starts powershell in current dir 

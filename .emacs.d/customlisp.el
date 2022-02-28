@@ -248,3 +248,40 @@ current nanosecond.  "
   (apply orig-fun args))
 (advice-add 'hide-lines-add-overlay :around #'my/buffer-invis-spec-temp-list)
 
+
+(defun my/tab-table-to-org-table ()
+  (interactive)
+  (save-excursion
+    (replace-regexp "^" "|"))
+  (save-excursion
+    (replace-regexp "	" "|"))
+  (backward-char)
+  (save-excursion
+    (replace-regexp "[[:blank:]]" " "))
+  (save-excursion 
+    (funcall (lambda () (interactive) (org-cycle)))))
+(defun my/org-table-to-csv ()
+  (interactive)
+  (save-excursion
+    (replace-regexp "^|" ""))
+  (save-excursion
+    (replace-regexp "|$" ""))
+  (save-excursion
+    (replace-regexp "|" ";")))
+
+(defun my/tab-table-to-csv ()
+  "replace org table with semicolon separated values. Does not respect region."
+  (my/tab-table-to-org-table)
+  (my/org-table-to-csv))
+
+(defun my/temp-re ()
+  (interactive)
+  (replace-regexp "\\([0-9]\.[0-9]\\{1,2\\}\\)	\\+	\\([0-9]\.[0-9]\\{1,2\\}\\)	\\(([0-9])\\)" "\\1 pm \\2 \\3" ))
+
+(defun my/org-table-del-empty ()
+  (interactive)
+  (setq i 0)
+  (while (< i 10)
+    (save-excursion (replace-regexp "|[[:blank:]]\\{3\\}|" "|" ))
+    (setq i (+ 1 i)))
+  (save-excursion (replace-regexp "^[| ]+$" "" )))
