@@ -1,12 +1,12 @@
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-setopt INC_APPEND_HISTORY autocd nocaseglob
+
+HISTFILE=~/.zsh_history
+HISTSIZE=1000000
+SAVEHIST=1000000
+setopt INC_APPEND_HISTORY HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE SHARE_HISTORY EXTENDED_HISTORY autocd nocaseglob
 export HISTTIMEFORMAT="[%F %T] "
 unsetopt beep extendedglob notify
 bindkey -e
-# End of lines configured by zsh-newuser-install
+
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/mathan/.zshrc'
 
