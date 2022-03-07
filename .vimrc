@@ -174,6 +174,11 @@ nnoremap <C-W>O :echo "sucker"<CR>
 nnoremap <C-W>o :echo "sucker"<CR>
 nnoremap <C-W><C-O> :echo "sucker"<CR>
 
+tnoremap <C-W>O <ESC>
+tnoremap <C-W>o <ESC>
+tnoremap <C-W><C-O> <ESC>
+
+
 let $STOREDIR = expand('~/vim_file_storage/')
 let $HOME = expand('~')
 
