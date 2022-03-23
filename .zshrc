@@ -7,6 +7,9 @@ export HISTTIMEFORMAT="[%F %T] "
 unsetopt beep extendedglob notify
 bindkey -e
 
+# enable glob expansion in history search
+bindkey '^R' history-incremental-pattern-search-backward
+
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/mathan/.zshrc'
 
@@ -75,7 +78,7 @@ function figr {
   fileRegex="$1"
   exclusionRegex="$2"
   stringRegex="$3"
-  find . -regex "$fileRegex" -not -regex "$exclusionRegex" -print0 | xargs -0 grep -i "$stringRegex"
+  find . -regex "$fileRegex" -not -regex "$exclusionRegex" -print0 | xargs -0 -I{} grep -inH --color=ALWAYS "$stringRegex" "{}"
 }
 
 function rcd {
@@ -83,14 +86,14 @@ function rcd {
   # adapted from the ranger github 
   tempfile=$(mktemp -t tmp.XXXXXX)
   ranger --choosedir="$tempfile" "$(echo "$(pwd)")"
-  if [ "(cat -- "$tempfile")" != "(echo -n `pwd`)" ] 
+  if [ "(cat -- \"$tempfile\")" != "(echo -n `pwd`)" ] 
      {
        pushd "$(cat "$tempfile")"
      }
 }
 
 function virustotal {
-  firefox  https://www.virustotal.com/gui/file/$(md5sum $argv | awk '{print $1}')
+  firefox  "https://www.virustotal.com/gui/file/$(md5sum $argv | awk '{print $1}')"
 }
 
 function reCmake {
@@ -115,9 +118,9 @@ function cCommands {
 function emc {
   if [ $# -eq 1 ]
   then 
-    emacsclient -n -q -c -a "emacs" $1 &
+    emacsclient -nqcta "emacs" $1 &
   else
-    emacsclient -n -q -c -a "emacs" &
+    emacsclient -nqcta "emacs" &
   fi
   
   if jobs | grep -q 'emacs'; then disown emacs; fi
