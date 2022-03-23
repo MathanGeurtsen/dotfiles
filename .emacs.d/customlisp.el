@@ -260,6 +260,7 @@ current nanosecond.  "
     (replace-regexp "[[:blank:]]" " "))
   (save-excursion 
     (funcall (lambda () (interactive) (org-cycle)))))
+
 (defun my/org-table-to-csv ()
   (interactive)
   (save-excursion
@@ -274,9 +275,19 @@ current nanosecond.  "
   (my/tab-table-to-org-table)
   (my/org-table-to-csv))
 
-(defun my/temp-re ()
+(defun my/justify-csv-table ()
   (interactive)
-  (replace-regexp "\\([0-9]\.[0-9]\\{1,2\\}\\)	\\+	\\([0-9]\.[0-9]\\{1,2\\}\\)	\\(([0-9])\\)" "\\1 pm \\2 \\3" ))
+  (save-excursion
+    (replace-regexp "^" "|"))
+  (save-excursion
+    (replace-regexp ";" "|"))
+  (backward-char)
+  (save-excursion
+    (replace-regexp "[[:blank:]]" " "))
+  (save-excursion 
+    (funcall (lambda () (interactive) (org-cycle))))
+  (my/org-table-del-empty)
+  (my/org-table-to-csv))
 
 (defun my/org-table-del-empty ()
   (interactive)

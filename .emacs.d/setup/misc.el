@@ -5,6 +5,8 @@
   (server-start))
 (setq inhibit-compacting-font-caches t)
 
+(setq shell-command-switch "-ic")
+
 ;; python
 (unless (eq system-type 'windows-nt)
   (setq python-shell-interpreter "python3"))
@@ -73,7 +75,7 @@
 (setq tramp-default-method "plink")
 (setq recentf-auto-cleanup 'never)
 
-;; stop async from opening a buffer 
+;; ;; stop async from opening a buffer 
 (defadvice async-shell-command (around hide-async-windows activate)
   (save-window-excursion
     ad-do-it))

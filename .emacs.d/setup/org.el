@@ -49,7 +49,7 @@
   (toggle-word-wrap)
   (org-display-inline-images t t)
   (org-bullets-mode)
-  (highlight-regexp  "\\todo\\[.*?\\]{.*?}"  'org-table-header)
+  (highlight-regexp  "\\todo\\[.*?\\]{.*?}"  'swiper-background-match-face-2)
   (setq org-confirm-babel-evaluate #'my/org-confirm-babel-evaluate
         org-hide-emphasis-markers t
         org-catch-invisible-edits nil

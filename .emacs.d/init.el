@@ -2,8 +2,7 @@
   (require 'package)
   (add-to-list
    'package-archives
-   '("melpa" . "http://melpa.org/packages/")
-   t))
+   '("melpa" . "http://melpa.org/packages/") t))
 
 (setq package-check-signature nil)
 (package-initialize)
@@ -121,7 +120,7 @@
  '(jdee-db-spec-breakpoint-face-colors (cons "#1B2229" "#3f444a"))
  '(js-indent-level 4)
  '(keyboard-coding-system 'utf-8)
- '(lsp-eldoc-render-all t t)
+ '(lsp-eldoc-render-all t)
  '(lsp-pyls-plugins-pycodestyle-enabled nil)
  '(lsp-pyls-plugins-pycodestyle-ignore "e231")
  '(lsp-pyls-plugins-pyflakes-enabled t)
@@ -156,7 +155,8 @@
             ("begin" "$1" "$" "$$" "\\(" "\\[")))
  '(org-hide-leading-stars t)
  '(org-latex-packages-alist '(("" "amsmath" nil)))
- '(org-latex-pdf-process '("latexmk -f -pdf -output-directory=%o %f"))
+ '(org-latex-pdf-process
+   '("latexmk -f -pdf -output-directory=%o %f && latexmk -c %f &"))
  '(org-list-allow-alphabetical t)
  '(org-odt-preferred-output-format "docx")
  '(org-roam-encrypt-files nil)
@@ -178,7 +178,7 @@
      ("html" . mhtml)))
  '(package-check-signature 'allow-unsigned)
  '(package-selected-packages
-   '(vimrc-mode dockerfile-mode yaml-mode ag vterm workgroups2 window-purpose which-key use-package treemacs-all-the-icons ssh-agency speed-type sass-mode ranger projectile powershell pdf-tools org-roam org-bullets omnisharp ob-async multiple-cursors minimap markdown-mode+ lsp-ui lsp-java lsp-ivy json-mode interleave highlight-parentheses hide-lines helpful helm-lsp git-gutter-fringe fish-mode evil-magit evil-collection ess emojify elpy elisp-demos elfeed-goodies ein editorconfig doom-themes doom-modeline direx dired-k dimmer counsel company-quickhelp company-lsp cmake-mode browse-url-dwim beacon atomic-chrome all-the-icons-dired))
+   '(org-ref org-attach-screenshot corfu general csharp-mode haskell-mode vimrc-mode dockerfile-mode yaml-mode ag vterm workgroups2 window-purpose which-key use-package treemacs-all-the-icons ssh-agency speed-type sass-mode ranger projectile powershell pdf-tools org-bullets omnisharp ob-async multiple-cursors minimap markdown-mode+ lsp-ui lsp-java lsp-ivy json-mode interleave highlight-parentheses hide-lines helpful helm-lsp git-gutter-fringe fish-mode evil-magit evil-collection ess emojify elpy elisp-demos elfeed-goodies ein editorconfig doom-themes doom-modeline direx dired-k dimmer counsel company-quickhelp company-lsp cmake-mode browse-url-dwim beacon atomic-chrome all-the-icons-dired))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
  '(pos-tip-background-color "#FFFACE")
  '(pos-tip-foreground-color "#272822")
@@ -236,10 +236,10 @@
  '(company-echo-common ((t (:foreground "gray59"))))
  '(company-preview ((t (:background "gray15" :foreground "wheat"))))
  '(company-preview-common ((t (:inherit company-preview :foreground "gray59"))))
- '(company-scrollbar-bg ((t (:background "slate gray"))))
- '(company-scrollbar-fg ((t (:background "AntiqueWhite3"))))
  '(company-template-field ((t (:background "gray38" :foreground "snow"))))
  '(company-tooltip ((t (:background "gray27" :foreground "snow"))))
+ '(company-tooltip-scrollbar-thumb ((t (:background "AntiqueWhite3"))))
+ '(company-tooltip-scrollbar-track ((t (:background "slate gray"))))
  '(company-tooltip-selection ((t (:background "DeepSkyBlue4"))))
  '(helm-selection ((t (:background "medium blue" :distant-foreground "black"))))
  '(helm-source-header ((t (:background "gray29" :foreground "white" :weight bold :height 1.3 :family "Sans Serif"))))

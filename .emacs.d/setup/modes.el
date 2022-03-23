@@ -22,6 +22,8 @@
   :ensure t)
 (use-package json-mode
   :ensure t)
+(use-package csharp-mode
+  :ensure t)
 (add-hook 'prog-mode-hook '(lambda () (interactive) 
                                (setq display-line-numbers 'relative)))
 (unless (string-equal system-type "windows-nt")
