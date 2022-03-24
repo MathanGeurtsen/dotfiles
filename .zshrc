@@ -60,7 +60,8 @@ alias init_venv='virtualenv venv; . ./venv/bin/activate;pip install -r requireme
 alias testbox="ssh -i $TESTBOX_SSH_KEYFILE mathan@$TESTBOX_URL -p $TESTBOX_SSH_PORT -X -L $TESTBOX_VNC_PORT\:localhost:$TESTBOX_VNC_PORT"
 alias ISO8601="date +%Y%m%dT%H%M%S"
 alias mp="make -f personal.mk"
-
+alias wshutdown="cmd.exe  /c shutdown /s"
+alias wreboot="cmd.exe  /c shutdown /r"
 plugins=(git ssh-agent)
 
 export EDITOR=/usr/bin/vim
