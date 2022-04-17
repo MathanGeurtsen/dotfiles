@@ -17,6 +17,17 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+
+# get man pages colored by bat, have less use case insensitive search
+if $(cat /etc/os-release | grep -q "^NAME=.*\(Debian\|Ubuntu\).*"); then
+  bat_alias="batcat"
+  else
+  baat_alias="bat"
+fi
+export MANPAGER="sh -c 'col -bx | $bat_alias -l man -p --pager=\"less -I\"'"
+
+
+
 PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{240}%1~%f%b %# ' 
 
 autoload -Uz compinit && compinit
@@ -60,13 +71,34 @@ alias init_venv='virtualenv venv; . ./venv/bin/activate;pip install -r requireme
 alias testbox="ssh -i $TESTBOX_SSH_KEYFILE mathan@$TESTBOX_URL -p $TESTBOX_SSH_PORT -X -L $TESTBOX_VNC_PORT\:localhost:$TESTBOX_VNC_PORT"
 alias ISO8601="date +%Y%m%dT%H%M%S"
 alias mp="make -f personal.mk"
+alias R="nice -n 10 R --no-save --no-restore-data"
 alias wshutdown="cmd.exe  /c shutdown /s"
 alias wreboot="cmd.exe  /c shutdown /r"
+
 plugins=(git ssh-agent)
+
 
 export EDITOR=/usr/bin/vim
 
 if [ -f /var/run/reboot-required ]; then cat /var/run/reboot-required; fi
+
+eval "$(direnv hook zsh)"
+
+function rgp {
+rg -p "$@" | less -RFX
+} 
+
+function pd {
+  if [ $# -ge 1 ]; then
+    if [ -d "$@" ]; then
+     pushd "$@"
+     else
+       pushd $(dirname "$@")
+    fi
+  else
+    popd
+  fi
+}
 
 function tmuxa {
   tmux attach
@@ -79,7 +111,7 @@ function figr {
   fileRegex="$1"
   exclusionRegex="$2"
   stringRegex="$3"
-  find . -regex "$fileRegex" -not -regex "$exclusionRegex" -print0 | xargs -0 -I{} grep -inH --color=ALWAYS "$stringRegex" "{}"
+  find . -regex "$fileRegex" -not -regex "$exclusionRegex" -print0 | xargs -0 -I{} grep -IinH --color=ALWAYS "$stringRegex" "{}" | less -RFX
 }
 
 function rcd {
@@ -119,9 +151,9 @@ function cCommands {
 function emc {
   if [ $# -eq 1 ]
   then 
-    emacsclient -nqcta "emacs" $1 &
+    emacsclient -nqca "emacs" $1 &
   else
-    emacsclient -nqcta "emacs" &
+    emacsclient -nqca "emacs" &
   fi
   
   if jobs | grep -q 'emacs'; then disown emacs; fi
