@@ -21,4 +21,5 @@ model {
   }
 }
 
-
+generated quantities {
+}

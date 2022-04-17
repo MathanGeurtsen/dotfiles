@@ -120,7 +120,7 @@
  '(jdee-db-spec-breakpoint-face-colors (cons "#1B2229" "#3f444a"))
  '(js-indent-level 4)
  '(keyboard-coding-system 'utf-8)
- '(lsp-eldoc-render-all t)
+ '(lsp-eldoc-render-all t t)
  '(lsp-pyls-plugins-pycodestyle-enabled nil)
  '(lsp-pyls-plugins-pycodestyle-ignore "e231")
  '(lsp-pyls-plugins-pyflakes-enabled t)
@@ -156,7 +156,7 @@
  '(org-hide-leading-stars t)
  '(org-latex-packages-alist '(("" "amsmath" nil)))
  '(org-latex-pdf-process
-   '("latexmk -f -pdf -output-directory=%o %f && latexmk -c %f &"))
+   '("latexmk --shell-escape -f -pdf -output-directory=%o %f && latexmk -c %f"))
  '(org-list-allow-alphabetical t)
  '(org-odt-preferred-output-format "docx")
  '(org-roam-encrypt-files nil)
@@ -246,3 +246,4 @@
  '(table-cell ((t (:background "#36273E" :inverse-video nil)))))
 
 ;;; init.el ends here
+(put 'erase-buffer 'disabled nil)

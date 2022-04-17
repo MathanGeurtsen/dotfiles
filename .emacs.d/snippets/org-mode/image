@@ -3,6 +3,6 @@
 # key: img
 # --
 #+ATTR_ORG: :width ${2:400}
-#+ATTR_LATEX: :width ${3:8cm}
+#+ATTR_LATEX: :width ${3:0.8\textwidth}
 #+NAME: fig:${4:some-figure}
 #+CAPTION: ${5:fig-caption}
