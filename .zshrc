@@ -189,7 +189,7 @@ function psh {
   # WSL specific convenience function, starts powershell in current dir 
   windows_dir=$(wslpath -w $(pwd))
   
-  powershell.exe -NoExit -Command cd $windows_dir
+  powershell.exe -NoExit -Command "cd \"$windows_dir\"; $@"
 }
 
 function wstart {
@@ -203,6 +203,27 @@ function wem {
   # WSL specific convenience function, calls windows emacsclient with argument's converted path
   windows_path=$(wslpath -w $1)
   emacsclientw.exe $windows_path
+}
+
+function wnotify {
+
+balloon='function balloon {
+Param(
+        $title,
+        $text
+    )
+    Add-Type -AssemblyName System.Windows.Forms 
+    $global:balloon = New-Object System.Windows.Forms.NotifyIcon
+    $path = (Get-Process -id $pid).Path
+    $balloon.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($path) 
+    $balloon.BalloonTipIcon = [System.Windows.Forms.ToolTipIcon]::Warning 
+    $balloon.BalloonTipText = $text
+    $balloon.BalloonTipTitle = $title
+    $balloon.Visible = $true 
+    $balloon.ShowBalloonTip(5)
+}' 
+balloon+="; balloon 'bash notification' '$@'"
+psh "$balloon; exit"
 }
 
 function proc_running {
