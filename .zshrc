@@ -24,7 +24,7 @@ if $(batcat --version > /dev/null 2>&1); then
 else
   bat_alias="bat"
 fi
-export MANPAGER="sh -c 'col -bx | $bat_alias -l man -p --pager=\"less -rI\"'"
+export MANPAGER="sh -c 'col -bx | $bat_alias -l man -p --pager=\"less -ri\"'"
 
 
 
@@ -55,7 +55,7 @@ source "$DOTFILES_DIR/scripts/pingcheck.sh"
 alias ll='ls -alF'
 
 alias -g G="| grep"
-alias -g L="| less"
+alias -g L="| less -iRFX"
 alias -g V="| vipe"
 alias -g T=" > >(tee -a tee_stdout.log) 2> >(tee -a tee_stderr.log >&2)"
 
@@ -113,7 +113,7 @@ function figr {
   fileRegex="$1"
   exclusionRegex="$2"
   stringRegex="$3"
-  find . -regex "$fileRegex" -not -regex "$exclusionRegex" -print0 | xargs -0 -I{} grep -IinH --color=ALWAYS "$stringRegex" "{}" | less -RFX
+  find . -regex "$fileRegex" -not -regex "$exclusionRegex" -print0 | xargs -0 -I{} grep -IinH --color=ALWAYS "$stringRegex" "{}" | less -iRFX
 }
 
 function rcd {
