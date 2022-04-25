@@ -296,3 +296,21 @@ current nanosecond.  "
     (save-excursion (replace-regexp "|[[:blank:]]\\{3\\}|" "|" ))
     (setq i (+ 1 i)))
   (save-excursion (replace-regexp "^[| ]+$" "" )))
+(defadvice message (after message-tail activate)
+  "goto point max after a message, sourced from https://stackoverflow.com/a/4685005/8887528"
+  (with-current-buffer "*Messages*"
+    (goto-char (point-max))
+    (walk-windows (lambda (window)
+                    (if (string-equal (buffer-name (window-buffer window)) "*Messages*")
+                        (set-window-point window (point-max))))
+                  nil
+                  t)))
+(defun my/org-id-update-org-roam-files () ; nobiot https://org-roam.discourse.group/t/org-roam-v2-org-id-id-link-resolution-problem/1491/4
+  "Update Org-ID locations for all Org-roam files."
+  (interactive)
+  (org-id-update-id-locations (org-roam-list-files)))
+
+(defun my/org-id-update-id-current-file ()
+  "Scan the current buffer for Org-ID locations and update them."
+  (interactive)
+  (org-id-update-id-locations (list (buffer-file-name (current-buffer)))))
