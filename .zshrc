@@ -19,12 +19,12 @@ compinit
 
 
 # get man pages colored by bat, have less use case insensitive search
-if $(cat /etc/os-release | grep -q "^NAME=.*\(Debian\|Ubuntu\).*"); then
+if $(batcat --version > /dev/null 2>&1); then
   bat_alias="batcat"
-  else
-  baat_alias="bat"
+else
+  bat_alias="bat"
 fi
-export MANPAGER="sh -c 'col -bx | $bat_alias -l man -p --pager=\"less -I\"'"
+export MANPAGER="sh -c 'col -bx | $bat_alias -l man -p --pager=\"less -rI\"'"
 
 
 
@@ -73,16 +73,18 @@ alias ISO8601="date +%Y%m%dT%H%M%S"
 alias mp="make -f personal.mk"
 alias R="nice -n 10 R --no-save --no-restore-data"
 alias wshutdown="cmd.exe  /c shutdown /s"
-alias wreboot="cmd.exe  /c shutdown /r"
+alias wreboot="cmd.exe  /c shutdown /r /t 0"
+alias git-root="git rev-parse --show-toplevel"
 
 plugins=(git ssh-agent)
-
+export NOTIFY_FILE="$(realpath ~/notify)"
 
 export EDITOR=/usr/bin/vim
 
 if [ -f /var/run/reboot-required ]; then cat /var/run/reboot-required; fi
 
 eval "$(direnv hook zsh)"
+
 
 function rgp {
 rg -p "$@" | less -RFX
@@ -203,6 +205,16 @@ function wem {
   # WSL specific convenience function, calls windows emacsclient with argument's converted path
   windows_path=$(wslpath -w $1)
   emacsclientw.exe $windows_path
+}
+
+send-notify() {
+  NOTIFY_FILE="${NOTIFY_FILE:-$(realpath ~/notify)}"
+  echo "done, returncode: $?" | tee "$NOTIFY_FILE"
+}
+
+wnotice-notify() {
+  NOTIFY_FILE="${NOTIFY_FILE:-$(realpath ~/notify)}"
+  nohup $(while sleep 5; do if [ -f "$NOTIFY_FILE" ]; then wnotify "$(cat "$NOTIFY_FILE")"; rm "$NOTIFY_FILE"; fi; done) &
 }
 
 function wnotify {

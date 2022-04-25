@@ -218,12 +218,19 @@ and enters it in a dired buffer.  "
 current nanosecond.  "
   (interactive)
   (string-join (nthcdr 34 (split-string (sha1 (format-time-string "%N")) ""))))
+
 (defun my/set-font-size ()
   "set font size interactively"
   (interactive)
-  (set-face-attribute 'default nil :height 
-                      (* 10 ; to transform "normal" fontsize to elisps font size
-                         (string-to-number (read-string "new font size: ")))))
+  (let 
+      ((old-font-size (internal-get-lisp-face-attribute 'default  :height 'nil))
+       (new-font-size))                                         ; to transform "normal" fontsize to elisps font size
+    (setq new-font-size (read-string (format "font size (%s):" (/ (internal-get-lisp-face-attribute 'default  :height 'nil) 10))))
+    (set-face-attribute 'default nil :height 
+                        (if (equal new-font-size "")
+                            old-font-size
+                          (* 10 
+                             (string-to-number new-font-size))))))
 
 (defun my/big-font-size ()
   "Set the font size to be big"

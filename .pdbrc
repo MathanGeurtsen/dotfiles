@@ -1,1 +1,19 @@
 alias ll u;;d;;l
+
+
+import atexit
+import os
+import readline
+
+historyPath = os.path.expanduser("~/.pyhistory")
+
+def save_history(historyPath=historyPath): import readline; readline.write_history_file(historyPath)
+
+if os.path.exists(historyPath): readline.read_history_file(historyPath)
+
+atexit.register(save_history, historyPath=historyPath)
+
+from pprint import pprint
+my_pp = lambda x: pprint(vars(x)) if "__dict__" in dir(x) else pprint(x) if not isinstance(x, list) else [my_pp(o) for o in x]
+
+lmap = lambda *args, **kwargs: list(map(*args, **kwargs))
