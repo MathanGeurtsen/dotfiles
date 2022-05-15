@@ -120,7 +120,7 @@
  '(jdee-db-spec-breakpoint-face-colors (cons "#1B2229" "#3f444a"))
  '(js-indent-level 4)
  '(keyboard-coding-system 'utf-8)
- '(lsp-eldoc-render-all t t)
+ '(lsp-eldoc-render-all t)
  '(lsp-pyls-plugins-pycodestyle-enabled nil)
  '(lsp-pyls-plugins-pycodestyle-ignore "e231")
  '(lsp-pyls-plugins-pyflakes-enabled t)

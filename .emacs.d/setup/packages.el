@@ -65,6 +65,32 @@
       (highlight-parentheses-mode t)))
   (global-highlight-parentheses-mode t)
   (highlight-parentheses-mode 1))
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
+
+(use-package multiple-cursors
+  :ensure t
+  :config
+  (setq mc/cmds-to-run-for-all '(backward-sentence
+                                 beginning-of-buffer
+                                 end-of-buffer
+                                 evil-backward-char
+                                 evil-beginning-of-line
+                                 evil-force-normal-state
+                                 evil-forward-char
+                                 evil-insert
+                                 evil-next-line
+                                 evil-normal-state
+                                 evil-previous-line
+                                 forward-sentence
+                                 indent-for-tab-command
+                                 org-beginning-of-line
+                                 org-delete-char
+                                 org-kill-line
+                                 org-self-insert-command)))
+
 
 (use-package stan-mode
   :ensure t)
@@ -74,13 +100,8 @@
   :ensure t)
 (use-package hydra
   :ensure t)
-(use-package multiple-cursors
-  :ensure t)
 (use-package helpful
   :ensure t)
-(use-package which-key
-  :ensure t)
-
 (use-package ob-async
   :ensure t)
 (use-package flyspell
