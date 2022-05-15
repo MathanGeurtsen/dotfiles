@@ -132,3 +132,10 @@ PROMPT_COMMAND='history -a;history -n'
 # disable flow control characters (Free up C-s and C_q)
 stty -ixon -ixoff
 eval "$(direnv hook bash)"
+
+function tmuxa {
+  tmux attach
+  if [ 0 -ne $? ]; then
+    tmux
+  fi
+}

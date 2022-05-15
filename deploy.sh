@@ -8,6 +8,6 @@ ln -s "$DOTFILES_DIR/.xprofile" ~/.xprofile
 ln -s "$DOTFILES_DIR/.vimrc" ~/.vimrc
 ln -s "$DOTFILES_DIR/.Rprofile" ~/.Rprofile
 ln -s "$DOTFILES_DIR/.pdbrc" ~/.pdbrc
-
+ln -s "$DOTFILES_DIR/.flake8" ~/.flake8
 mkdir -p ~/.config/ranger
 ln -s "$DOTFILES_DIR/rc.conf" ~/.config/ranger/rc.conf
