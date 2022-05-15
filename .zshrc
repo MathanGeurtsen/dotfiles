@@ -52,10 +52,12 @@ source "$DOTFILES_DIR/.env"
 source "$DOTFILES_DIR/scripts/ssh-setup.sh"
 source "$DOTFILES_DIR/scripts/pingcheck.sh"
 
+export PATH=$PATH:/home/mathan/.local/bin/
+
 alias ll='ls -alF'
 
 alias -g G="| grep"
-alias -g L="| less -iRFX"
+alias -g L="2>&1 | less -iRF"
 alias -g V="| vipe"
 alias -g T=" > >(tee -a tee_stdout.log) 2> >(tee -a tee_stderr.log >&2)"
 
@@ -85,6 +87,8 @@ if [ -f /var/run/reboot-required ]; then cat /var/run/reboot-required; fi
 
 eval "$(direnv hook zsh)"
 
+renice -n 1 $$ 2>&1 > /dev/null # trying out to prevent freezes with running out of memory during compilation etc.
+
 
 function rgp {
 rg -p "$@" | less -RFX
@@ -113,7 +117,7 @@ function figr {
   fileRegex="$1"
   exclusionRegex="$2"
   stringRegex="$3"
-  find . -regex "$fileRegex" -not -regex "$exclusionRegex" -print0 | xargs -0 -I{} grep -IinH --color=ALWAYS "$stringRegex" "{}" | less -iRFX
+  find . -regex "$fileRegex" -not -regex "$exclusionRegex" -print0 | xargs -0 -I{} grep -IinH --color=ALWAYS "$stringRegex" "{}" | less -iRFX +f
 }
 
 function rcd {
@@ -139,9 +143,11 @@ function reCmake {
   echo "running cmake..." &&
   cmake -DCMAKE_BUILD_TYPE="Debug" .. T &&
   echo "running make..." &&
-  make -j4 T ;
+  make -j4 T $@;
+  res=$?
   popd;
   echo "done";
+  return $res
 }
 
 function cCommands {
@@ -151,11 +157,11 @@ function cCommands {
 }
 
 function emc {
-  if [ $# -eq 1 ]
+  if [ $# -ne 0 ]
   then 
-    emacsclient -nqca "emacs" $1 &
+    emacsclient -na "emacs" $@ &
   else
-    emacsclient -nqca "emacs" &
+    emacsclient -na "emacs" &
   fi
   
   if jobs | grep -q 'emacs'; then disown emacs; fi
@@ -172,7 +178,7 @@ function pyve() {
     activate="${dir}venv/bin/activate"
     if [  -e "$activate" ]
     then 
-      echo "activating on $activate"
+      echo "activating on $(realpath "$dir")"
       . "$activate"
       return 0
     fi
@@ -207,10 +213,27 @@ function wem {
   emacsclientw.exe $windows_path
 }
 
-send-notify() {
+alert-notify() {
+  message="done, returncode: $?"
   NOTIFY_FILE="${NOTIFY_FILE:-$(realpath ~/notify)}"
-  echo "done, returncode: $?" | tee "$NOTIFY_FILE"
+  if [ $# -gt 0 ]; then message="$@"; fi
+  echo "$message" | tee "$NOTIFY_FILE"
 }
+
+function notice-notify () {
+  NOTIFY_FILE="${NOTIFY_FILE:-$(realpath ~/notify)}"
+  if [ $# -gt 0 ]; then
+    NOTIFY_FILE="$1"
+  fi
+
+  if [ -e ~/.notice-notify.pid ]; then
+    echo "Warning: already running under$(cat ~/.notice-notify.pid), starting new instance at $NOTIFY_FILE"
+  fi
+  nohup $(while sleep 5; do if [ -f "$NOTIFY_FILE" ]; then notify-send "$(cat "$NOTIFY_FILE")"; rm "$NOTIFY_FILE"; fi; done) &
+  disown
+  echo " $! : $NOTIFY_FILE " >> ~/.notice-notify.pid
+}
+
 
 wnotice-notify() {
   NOTIFY_FILE="${NOTIFY_FILE:-$(realpath ~/notify)}"
@@ -261,3 +284,9 @@ function proc_running {
   done
 }
  
+vbox-paste () {
+xdotool windowactivate "$(xdotool search --onlyvisible --name virtualbox | tail -n1)"
+sleep 0.3
+xdotool type $(xclip -o)
+xdotool type "$(xclip -o)"
+}

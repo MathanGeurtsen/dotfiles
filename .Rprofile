@@ -24,3 +24,16 @@ dev.cm <- function(width, height) {
 pall <- function(args) { do.call(print, append(list(args), list(n=Inf)))}
   
   eye_care <- ggplot2::theme_dark() + ggplot2::theme(plot.background = ggplot2::element_rect(fill = "grey30"), text= ggplot2::element_text(colour="grey90"), axis.text=ggplot2::element_text(colour="grey90"), legend.background = ggplot2::element_rect(fill = "grey30"))
+
+
+alert.notify <- function(text="R done") {
+
+    filename <- Sys.getenv("NOTIFY_FILE")
+    if (filename == "") {
+        filename <- path.expand("~/notify") 
+    }
+
+    fileConn<-file(filename)
+    write(text, fileConn)
+    close(fileConn)
+}
