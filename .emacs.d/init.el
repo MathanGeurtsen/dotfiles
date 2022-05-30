@@ -160,6 +160,7 @@
  '(org-list-allow-alphabetical t)
  '(org-odt-preferred-output-format "docx")
  '(org-roam-encrypt-files nil)
+ '(org-roam-node-display-template "${title} ${tags:20}")
  '(org-src-lang-modes
    '(("C" . c)
      ("C++" . c++)
