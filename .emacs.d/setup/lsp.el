@@ -55,6 +55,7 @@
 (setq lsp-ui-sideline-show-code-actions nil)
 
 (add-hook 'c++-mode-hook #'lsp)
+(add-hook 'c-mode-hook #'lsp)
 (add-hook 'python-mode-hook #'lsp)
 
 (setq lsp-ui-doc-enable nil
