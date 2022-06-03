@@ -5,11 +5,10 @@
   (server-start))
 (setq inhibit-compacting-font-caches t)
 
-;; (setq shell-command-switch "-ic")
 
-;; python
 (unless (eq system-type 'windows-nt)
-  (setq python-shell-interpreter "python3"))
+  (setq python-shell-interpreter "python3")
+  (setq shell-command-switch "-ic"))
 
 ;; latex
 (defun my/latex-mode-hook ()
