@@ -1,0 +1,13 @@
+# key: boilerplate
+# name: boilerplate
+# --
+.PHONY: build
+.SILENT: 
+
+.DELETE_ON_ERROR:
+
+build: ${1:target}
+
+${2:target}: ${3:prerequisite}
+	${4:command}
+

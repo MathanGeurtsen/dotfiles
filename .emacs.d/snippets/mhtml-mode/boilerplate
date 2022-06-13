@@ -1,0 +1,40 @@
+# -*- mode: snippet -*-
+# name:boilerplate 
+# key:boilerplate
+# --
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      h1, h2, h3 {
+        line-height: 1.2;
+      }
+
+      body {
+        margin: 40px auto;
+        max-width: 650px;
+        line-height: 1.6;
+        font-size: 18px;
+        color: #444;
+        padding: 0 10px;
+
+      }
+
+      html, body {
+        height: 100%;
+      }
+
+      .full-height {
+        height: 100%;
+      }
+
+
+    </style>
+  </head>
+  <body>
+
+    <script>
+      // js here
+    </script>
+  </body>
+</html>
