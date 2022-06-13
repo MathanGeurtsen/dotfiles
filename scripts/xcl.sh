@@ -1,6 +1,5 @@
 #!/usr/bin/bash
 
-tempfile="$(mktemp -t tmp.XXXXXX)"
-echo -n $@ > $tempfile;
-xclip -selection clipboard $tempfile;
-rm $tempfile
+echo -n $@ | xclip -sel primary
+echo -n $@ | xclip -sel secondary
+echo -n $@ | xclip -sel clipboard

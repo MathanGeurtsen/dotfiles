@@ -18,5 +18,3 @@ new-item -itemtype symboliclink -path $HOME -name ".vimrc" -value $DOTFILES_DIR\
 new-item -itemtype symboliclink -path $HOME -name ".wslconfig" -value $DOTFILES_DIR\.wslconfig
 new-item -itemtype symboliclink -path $HOME -name ".tmux.conf" -value $DOTFILES_DIR\.tmux.conf
 new-item -itemtype symboliclink -path $env:APPDATA -name ".emacs.d" -value $DOTFILES_DIR\.emacs.d
-
-new-item -itemtype symboliclink -path $env:APPDATA/ -name "Microsoft.PowerShell_profile.ps1" -value $DOTFILES_DIR\Microsoft.PowerShell_profile.ps1
