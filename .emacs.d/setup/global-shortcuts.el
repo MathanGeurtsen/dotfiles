@@ -58,14 +58,10 @@ _f_: temp folder  ^ ^                    _u_: use url or search
     (define-key map (kbd "C-,")
       (defhydra my/window-hydra (:exit nil :hint nil)
         "
-^windows size^            ^windmove^    ^misc
-^^^^^^^^-----------------------------------------------------------------
-_{_: horizontal decrease  _h_: move left  _s_: Swap windows
-_}_: horizontal increase  _j_: move down  _r_: register Window config
-_[_: vertical decrease    _k_: move up    _g_: go to registered Window config
-_]_: vertical increase    _l_: move right _o_: other window
-^ ^                      ^ ^              _e_: scroll a line down
-^ ^                      ^ ^              _y_: scroll a line up
+^windows size^  ^moving^      ^misc
+^^^^^^^^---------------------------------------------------------
+_{__}_:horizontal _h__j__k__l_: move  _s__o_: swap / other
+_[__]_:vertical   _e__y_: scroll  _r__g_: register/ goto register
 "
         ("{" (shrink-window-horizontally 4))
         ("}" (enlarge-window-horizontally 4))

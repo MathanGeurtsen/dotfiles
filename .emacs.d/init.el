@@ -119,7 +119,7 @@
  '(jdee-db-active-breakpoint-face-colors (cons "#1B2229" "#51afef"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#1B2229" "#98be65"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#1B2229" "#3f444a"))
- '(js-indent-level 4)
+ '(js-indent-level 2)
  '(keyboard-coding-system 'utf-8)
  '(lsp-eldoc-render-all t)
  '(lsp-pyls-plugins-pycodestyle-enabled nil)
@@ -127,6 +127,7 @@
  '(lsp-pyls-plugins-pyflakes-enabled t)
  '(lsp-pylsp-plugins-flake8-config "/home/mathan/.flake8")
  '(lsp-pylsp-plugins-pydocstyle-enabled nil)
+ '(lsp-treemacs-error-list-severity 2)
  '(magit-diff-use-overlays nil)
  '(midnight-mode t)
  '(minimap-hide-fringes t)
@@ -251,3 +252,4 @@
 
 ;;; init.el ends here
 (put 'erase-buffer 'disabled nil)
+(put 'list-timers 'disabled nil)
