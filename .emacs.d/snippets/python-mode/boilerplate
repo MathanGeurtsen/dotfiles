@@ -14,7 +14,7 @@ def parseCmdOpts(argv: List[str]) -> argparse.Namespace:
     return args
 
 def main(argv: List[str]) -> int:
-    args = parseCmdOpts(sys.argv)
+    args = parseCmdOpts(argv)
     return 0
 if __name__ == "__main__":
     sys.exit(main(sys.argv))

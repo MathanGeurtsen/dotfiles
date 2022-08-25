@@ -16,7 +16,12 @@
   :config
   (add-to-list 'org-emphasis-alist
                '("&" (:foreground "red")
-                 )))
+                 ))
+  ;; otherwise causes errors in tables, unknown function
+  (defun org-element-citation-parser ())
+  (setq org-element-citation-prefix-re ""))
+
+(use-package org-crypt)
 
 (use-package org-roam
   :init

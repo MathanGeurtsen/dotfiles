@@ -160,7 +160,7 @@
  '(org-hide-leading-stars t)
  '(org-latex-packages-alist '(("" "amsmath" nil)))
  '(org-latex-pdf-process
-   '("latexmk --shell-escape -f -pdf -output-directory=%o %f && latexmk -c %f"))
+   '("latexmk --shell-escape -interaction=nonstopmode -f -pdf -output-directory=%o %f && latexmk -c %f"))
  '(org-list-allow-alphabetical t)
  '(org-odt-preferred-output-format "docx")
  '(org-roam-encrypt-files nil)
@@ -183,7 +183,7 @@
      ("html" . mhtml)))
  '(package-check-signature 'allow-unsigned)
  '(package-selected-packages
-   '(ahk-mode org-ref org-attach-screenshot corfu general csharp-mode haskell-mode vimrc-mode dockerfile-mode yaml-mode ag vterm workgroups2 window-purpose which-key use-package treemacs-all-the-icons ssh-agency speed-type sass-mode ranger projectile powershell pdf-tools org-bullets omnisharp ob-async multiple-cursors minimap markdown-mode+ lsp-ui lsp-java lsp-ivy json-mode interleave highlight-parentheses hide-lines helpful helm-lsp git-gutter-fringe fish-mode evil-magit evil-collection ess emojify elpy elisp-demos elfeed-goodies ein editorconfig doom-themes doom-modeline direx dired-k dimmer counsel company-quickhelp company-lsp cmake-mode browse-url-dwim beacon atomic-chrome all-the-icons-dired))
+   '(nix-mode magit org-roam flycheck ahk-mode org-ref org-attach-screenshot corfu general csharp-mode haskell-mode vimrc-mode dockerfile-mode yaml-mode ag vterm workgroups2 window-purpose which-key use-package treemacs-all-the-icons ssh-agency speed-type sass-mode ranger projectile powershell pdf-tools org-bullets omnisharp ob-async multiple-cursors minimap markdown-mode+ lsp-ui lsp-java lsp-ivy json-mode interleave highlight-parentheses hide-lines helpful helm-lsp git-gutter-fringe fish-mode evil-magit evil-collection ess emojify elpy elisp-demos elfeed-goodies ein editorconfig doom-themes doom-modeline direx dired-k dimmer counsel company-quickhelp company-lsp cmake-mode browse-url-dwim beacon atomic-chrome all-the-icons-dired))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
  '(pos-tip-background-color "#FFFACE")
  '(pos-tip-foreground-color "#272822")
