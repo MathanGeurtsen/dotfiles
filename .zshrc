@@ -77,6 +77,7 @@ alias R="nice -n 10 R --no-save --no-restore-data"
 alias wshutdown="cmd.exe  /c shutdown /s"
 alias wreboot="cmd.exe  /c shutdown /r /t 0"
 alias git-root="git rev-parse --show-toplevel"
+alias zella="zellij attach || zellij"
 
 plugins=(git ssh-agent)
 export NOTIFY_FILE="$(realpath ~/notify)"
@@ -89,12 +90,8 @@ eval "$(direnv hook zsh)"
 
 renice -n 1 $$ 2>&1 > /dev/null # trying out to prevent freezes with running out of memory during compilation etc.
 
-
-function rgp {
-rg -p "$@" | less -RFX
-} 
-
 function pd {
+  # wrapper around pushd/popd. pushd to argument if given, popd otherwise
   if [ $# -ge 1 ]; then
     if [ -d "$@" ]; then
      pushd "$@"
@@ -167,7 +164,10 @@ function emc {
   if jobs | grep -q 'emacs'; then disown emacs; fi
 }
 
-function pyve() {
+function rootsearch() {
+  # search from cwd down to root for a file matching `filename`, eval `function` with that directory as argument
+  filename=$1
+  function=$2
   depth=$(pwd | awk '{gsub("[^/]", "", $1); print length}')
   dir="./"
   for i in {1..$depth}; do 
@@ -175,18 +175,21 @@ function pyve() {
       dir="$dir../"
     fi
 
-    activate="${dir}venv/bin/activate"
-    if [  -e "$activate" ]
+    if [  -e "${dir}${filename}" ]
     then 
-      echo "activating on $(realpath "$dir")"
-      . "$activate"
-      return 0
+      echo "running $function on $(realpath "$dir")"
+      eval "$function $dir"
+      return $?
     fi
   done
-  echo "no venv for bash found, reached root"
+  echo "couldn't find $filename, reached root"
   return 1
 }
 
+function pyve() {
+  # search for nearest python venv, then activate
+  rootsearch venv/bin/activate   'function activate() { source $1/venv/bin/activate}; activate'
+}
 
 function wcopy {
   echo "$@" | clip.exe
@@ -284,9 +287,22 @@ function proc_running {
   done
 }
  
-vbox-paste () {
-xdotool windowactivate "$(xdotool search --onlyvisible --name virtualbox | tail -n1)"
-sleep 0.3
-xdotool type $(xclip -o)
+function process-paste {
+pid="$(ps aux | awk -v pattern="$1" '$11 ~ pattern{print $2}' | tail -n1)"
+id="$(xdotool search --onlyvisible --pid $pid)"
+xdotool windowactivate "$id" &&\
+sleep 0.3 &&\
 xdotool type "$(xclip -o)"
+}
+
+function line {
+  head -n$(($1)) | tail -n1
+}
+
+function field {
+  awk -v var=$1 '{print $var}'
+}
+
+function loc {
+  line $1 | field $2
 }
