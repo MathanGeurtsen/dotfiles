@@ -1,12 +1,4 @@
-## history
-if (interactive()) {
-    try(utils::loadhistory("~/.Rhistory"))
-
-  .Last <- function() try(utils::savehistory("~/.Rhistory"))
-}
-res <- Sys.getenv("R_HISTSIZE")
-rm(res)
-Sys.setenv(R_HISTSIZE = 99999)
+## convenience functions
 
 refresh_columns <- function () {
     cols <- Sys.getenv("COLUMNS")
@@ -16,8 +8,6 @@ refresh_columns <- function () {
     options(width = cols)
 }
 
-refresh_columns()
-
 dev.cm <- function(width, height) {
     # dev.new in cm
     # I would prefer px, but that requires knowing the screen pixel density...
@@ -25,10 +15,6 @@ dev.cm <- function(width, height) {
     usa_bs_height <- height * 0.3937
     dev.new(width = usa_bs_width, height= usa_bs_height)
  }
-
-pall <- function(args) { do.call(print, append(list(args), list(n=Inf)))}
-
-eye_care <- ggplot2::theme_dark() + ggplot2::theme(plot.background = ggplot2::element_rect(fill = "grey30"), text= ggplot2::element_text(colour="grey90"), axis.text=ggplot2::element_text(colour="grey90"), legend.background = ggplot2::element_rect(fill = "grey30"))
 
 
 alert.notify <- function(text="R done") {
@@ -44,17 +30,33 @@ alert.notify <- function(text="R done") {
 }
 
 pprint <- function(obj) {
-  if (is.list(obj) || is.vector(obj)) {
-    if(!is.null(names(obj))) {
-      print(obj)      
-    } else {
-      cat(obj, sep="\n")
+    is_tibble <- function(obj) {
+        tryCatch(return(tibble::is_tibble(obj)),
+        error=function(arg) return(FALSE))
     }
-  } else {
-    print(obj)
-  }
+    if (is.data.frame(obj)) {
+        if (is_tibble(obj)) {
+        print(obj, n=Inf)
+        } else {
+        print(obj, max_row=Inf)
+        }
+    } else if (is.list(obj)) {
+        if (is.null(names(obj))) {
+            cat(unlist(obj), sep="\n")
+        } else {
+            
+            print(obj, width=10)
+        }
+    } else if (is.vector(obj)) {
+        if (is.null(names(obj))) {
+            cat(obj, sep="\n")
+        } else {
+            print(obj, width=10)
+        } 
+    } else {
+        print(obj)
+    }
 }
-
 
 obj_type <- function(obj) {
   if (isS4(obj)) {
@@ -87,3 +89,50 @@ dir <- function(obj) {
     cat("type: refclass\n")
   }
 }
+
+unload <- function(package) {
+    package <- paste0("package:", substitute(package))
+    tryCatch( {
+        do.call(detach, list(package, unload=T))
+    },
+    error=function(arg) {
+        if ("invalid 'name' argument" %in% arg) {
+            cat(paste0("Package '", package, "' not loaded.\n"))
+        } else {
+            cat(paste0("caught error: \n" ,arg, "\n"))
+        }
+    })
+}
+
+libs <- function() {
+    library("tidyverse")
+    library("magrittr")
+    library("DBI")
+    library("ggplot2")
+}
+
+## definitions
+eye_care <- ggplot2::theme_dark() + ggplot2::theme(plot.background = ggplot2::element_rect(fill = "grey30"), text= ggplot2::element_text(colour="grey90"), axis.text=ggplot2::element_text(colour="grey90"), legend.background = ggplot2::element_rect(fill = "grey30"))
+
+
+## execution
+refresh_columns()
+
+## Default repo
+local({r <- getOption("repos")
+       r["CRAN"] <- "https://cloud.r-project.org"
+       options(repos=r)
+})
+
+## set cores for building
+options(Ncpus = parallel::detectCores())
+
+## history
+if (interactive()) {
+    try(utils::loadhistory("~/.Rhistory"))
+
+  .Last <- function() try(utils::savehistory("~/.Rhistory"))
+}
+res <- Sys.getenv("R_HISTSIZE")
+rm(res)
+Sys.setenv(R_HISTSIZE = 99999)
