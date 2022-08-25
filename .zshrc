@@ -26,9 +26,14 @@ else
 fi
 export MANPAGER="sh -c 'col -bx | $bat_alias -l man -p --pager=\"less -ri\"'"
 
+if $(which zsh | grep -q "^/nix"); then
+  nix=" (n)"
+else
+  nix=""
+fi
 
 
-PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{240}%1~%f%b %# ' 
+PROMPT='%(?.%F{green}√.%F{red}?%?)%f'"$nix"' %B%F{240}%1~%f%b %# ' 
 
 autoload -Uz compinit && compinit
 
@@ -191,6 +196,12 @@ function pyve() {
   rootsearch venv/bin/activate   'function activate() { source $1/venv/bin/activate}; activate'
 }
 
+function nixe() {
+  # search for nearest nix shell definition, then attempt to run zsh in it
+  rootsearch "default.nix" "nix-shell --command 'zsh' $@"
+}
+
+
 function wcopy {
   echo "$@" | clip.exe
 }
@@ -230,7 +241,7 @@ function notice-notify () {
   fi
 
   if [ -e ~/.notice-notify.pid ]; then
-    echo "Warning: already running under$(cat ~/.notice-notify.pid), starting new instance at $NOTIFY_FILE"
+    echo "Warning: already running under\n$(cat ~/.notice-notify.pid), starting new instance at $NOTIFY_FILE"
   fi
   nohup $(while sleep 5; do if [ -f "$NOTIFY_FILE" ]; then notify-send "$(cat "$NOTIFY_FILE")"; rm "$NOTIFY_FILE"; fi; done) &
   disown
