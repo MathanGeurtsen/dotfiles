@@ -26,14 +26,13 @@ else
 fi
 export MANPAGER="sh -c 'col -bx | $bat_alias -l man -p --pager=\"less -ri\"'"
 
-if $(which zsh | grep -q "^/nix"); then
-  nix=" (n)"
+if $(test -n "$nixshell"); then
+  nixPS=" (n)"
 else
-  nix=""
+  nixPS=""
 fi
 
-
-PROMPT='%(?.%F{green}√.%F{red}?%?)%f'"$nix"' %B%F{240}%1~%f%b %# ' 
+PROMPT='%(?.%F{green}√.%F{red}?%?)%f'"$nixPS"' %B%F{240}%1~%f%b %# ' 
 
 autoload -Uz compinit && compinit
 
@@ -81,9 +80,10 @@ alias mp="make -f personal.mk"
 alias R="nice -n 10 R --no-save --no-restore-data"
 alias wshutdown="cmd.exe  /c shutdown /s"
 alias wreboot="cmd.exe  /c shutdown /r /t 0"
+alias wnosleep="Powercfg.exe /Change standby-timeout-ac 0"
 alias git-root="git rev-parse --show-toplevel"
-alias zella="zellij attach || zellij"
-
+alias zella='zellij attach $(zellij list-sessions | head -n1) || zellij'
+alias whereami='hostname'
 plugins=(git ssh-agent)
 export NOTIFY_FILE="$(realpath ~/notify)"
 
@@ -145,7 +145,7 @@ function reCmake {
   echo "running cmake..." &&
   cmake -DCMAKE_BUILD_TYPE="Debug" .. T &&
   echo "running make..." &&
-  make -j4 T $@;
+  make -j T $@;
   res=$?
   popd;
   echo "done";
@@ -183,7 +183,7 @@ function rootsearch() {
     if [  -e "${dir}${filename}" ]
     then 
       echo "running $function on $(realpath "$dir")"
-      eval "$function $dir"
+      eval "$function ${dir}${filename}"
       return $?
     fi
   done
@@ -193,12 +193,12 @@ function rootsearch() {
 
 function pyve() {
   # search for nearest python venv, then activate
-  rootsearch venv/bin/activate   'function activate() { source $1/venv/bin/activate}; activate'
+  rootsearch venv/bin/activate 'source'
 }
 
 function nixe() {
   # search for nearest nix shell definition, then attempt to run zsh in it
-  rootsearch "default.nix" "nix-shell --command 'zsh' $@"
+  rootsearch "shell.nix" "nix-shell --command 'zsh' $@"
 }
 
 
@@ -306,14 +306,46 @@ sleep 0.3 &&\
 xdotool type "$(xclip -o)"
 }
 
-function line {
+function col {
+  # select column from output. 0 for every column
+  if [ $1 -ne 0 ]; then
   head -n$(($1)) | tail -n1
+  else
+    cat
+  fi
 }
 
-function field {
+function row {
+  # select row from output. 0 for every row
+  if [ $1 -ne 0 ]; then
   awk -v var=$1 '{print $var}'
+  else
+    cat
+  fi
 }
 
 function loc {
-  line $1 | field $2
+  # select column and row from output. 0 for all rows/cols
+  col $1 | row $2
+}
+
+redraw_output() {
+  # clear screen and draw `function` output over itself in a loop
+  # preserves scrollback buffer by only clearing previous output
+  # assumes `function` output draws in the same place
+  function="$1"
+  if [ "$2" ]; then
+    time="$2"
+  else
+    time=1
+  fi
+    clear -x
+  while sleep $time; do
+    output="$(eval $function)"
+    N=$(echo $output | wc -l)
+    for i in $(seq $N); do
+      echo -e "\r\033["$i"A\033[0K";
+    done
+    echo -e "\r\033["$N"A\033[0K$output";
+  done
 }
