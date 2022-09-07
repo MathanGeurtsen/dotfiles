@@ -5,7 +5,7 @@
   (server-start))
 (setq inhibit-compacting-font-caches t)
 
-(setq shell-command-switch "-ic")
+;; (setq shell-command-switch "-ic")
 
 ;; python
 (unless (eq system-type 'windows-nt)
