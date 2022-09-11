@@ -58,7 +58,7 @@ source "$DOTFILES_DIR/scripts/pingcheck.sh"
 
 export PATH=$PATH:/home/mathan/.local/bin/
 
-alias ll='ls -alF'
+alias ll='ls -hAltr --color=auto'
 
 alias -g G="| grep"
 alias -g L="2>&1 | less -iRF"
@@ -87,7 +87,7 @@ alias whereami='hostname'
 plugins=(git ssh-agent)
 export NOTIFY_FILE="$(realpath ~/notify)"
 
-export EDITOR=/usr/bin/vim
+export EDITOR=vim
 
 if [ -f /var/run/reboot-required ]; then cat /var/run/reboot-required; fi
 
@@ -241,11 +241,17 @@ function notice-notify () {
   fi
 
   if [ -e ~/.notice-notify.pid ]; then
-    echo "Warning: already running under\n$(cat ~/.notice-notify.pid), starting new instance at $NOTIFY_FILE"
+    kill $(cat ~/.notice-notify.pid)
   fi
-  nohup $(while sleep 5; do if [ -f "$NOTIFY_FILE" ]; then notify-send "$(cat "$NOTIFY_FILE")"; rm "$NOTIFY_FILE"; fi; done) &
+  nohup $(while sleep 5; do 
+            if [ -f "$NOTIFY_FILE" ]; then 
+              notify-send "$(cat "$NOTIFY_FILE")"
+              rm "$NOTIFY_FILE"
+            fi
+          done) &
   disown
-  echo " $! : $NOTIFY_FILE " >> ~/.notice-notify.pid
+  echo "$!" >> ~/.notice-notify.pid
+
 }
 
 
@@ -348,4 +354,123 @@ redraw_output() {
     done
     echo -e "\r\033["$N"A\033[0K$output";
   done
+}
+
+function active_window {
+  if [ "$1" ]; then
+    time="$1"
+  else
+    time=1
+  fi
+  ps aux | loc 1 0
+  sleep $time; ps aux | grep "$(xdotool getactivewindow getwindowpid)"
+}
+
+function spinner {
+ while true; do
+   strings="- \\ | /"; 
+   for f in ${=strings}; do 
+     sleep 1; 
+     tput sc;tput cup 0 0;echo - "$f";tput rc;
+   done; 
+ done &
+
+}
+
+function pibox {
+  if (ssh -i ~/.ssh/testbox2 -o ConnectTimeout=3 -p 8022 mathan@192.168.0.10 hostname | grep -q "raspberrypi"); then
+    echo running ssh session locally
+    ssh -i ~/.ssh/testbox2 -p 8022 mathan@192.168.0.10 
+  elif (ssh -i ~/.ssh/testbox2  -o ConnectTimeout=3 -p 8022 mathan@happy.mathangeurtsen.nl hostname | grep -q "raspberrypi"); then
+    echo running ssh session over internet
+    ssh -i ~/.ssh/testbox2 -p 8022 mathan@happy.mathangeurtsen.nl
+  elif (ssh -i ~/.ssh/testbox2 -o ConnectTimeout=3 -p 8022 mathan@10.8.0.1 hostname | grep -q "raspberrypi"); then
+    echo running ssh session over vpn
+    ssh -i ~/.ssh/testbox2 -p 8022 mathan@10.8.0.1 
+  fi
+}
+
+function pi-status {
+  if ! (hostname | grep -q "raspberrypi"); then
+    echo "only run on pi"
+    return 1
+  fi
+  pihole status
+
+  sudo wg show
+  res=0
+  if (curl  localhost:80 2> /dev/null  | grep -q "html></html>"); then 
+    echo "nginx up"; 
+  else
+    echo "nginx down"; 
+    res=1
+  fi
+
+  if (sudo ufw status | head -n1 | grep -q "Status: active"); then 
+    echo "ufw up"; 
+  else
+    echo "ufw down"; 
+    res=1
+  fi
+
+  return $res
+}
+
+restart-services() {
+  if ! (hostname | grep -q "raspberrypi"); then
+    echo "only run on pi"
+    return 1
+  fi
+
+  sudo systemctl enable --now ufw
+  sudo ufw -f enable
+  sudo systemctl enable --now nginx
+  sudo systemctl restart nginx
+  sudo systemctl enable --now ssh.service
+  sudo systemctl restart ssh.service
+
+  wg-quick down wg1
+  sleep 5
+  wg-quick up wg1
+
+  pihole enable
+  pihole restartdns
+  pi-status
+}
+
+function client-pi-status {
+  # run on client
+
+  # wifi/dns _frequently_ cause issues, so just always flush and restart for the test
+  sudo systemctl restart systemd-resolved.service
+  nmcli radio wifi off; nmcli radio wifi on 
+  sleep 8
+  res=0
+  if (dig +short vpn.pibox.app | grep -q "10.8.0.1"); then
+    echo "dns hit for vpn.pibox.app";
+  else
+    echo "can't resolve vpn.pibox.app";
+    res=1
+  fi
+
+  if (dig +short local.pibox.app | grep -q "192.168.0.10"); then
+    echo "dns hit for local.pibox.app";
+  else
+    echo "can't resolve local.pibox.app";
+    res=1
+  fi
+
+  if (wget --tries=2 --connect-timeout=3 --output-document=/tmp/wget-out vpn.pibox.app 2> /dev/null >/dev/null && grep -q '<!DOCTYPE html></html>' /tmp/wget-out); then
+    echo "vpn.pibox.app up";
+  else
+    echo "vpn.pibox.app down, did you connect to vpn?";
+    res=1
+  fi
+  if (wget --tries=2 --connect-timeout=3  --output-document=/tmp/wget-out local.pibox.app 2> /dev/null >/dev/null && grep -q '<!DOCTYPE html></html>' /tmp/wget-out); then
+    echo "local.pibox.app up";
+  else
+    echo "local.pibox.app down, are you on local network?";
+    res=1
+  fi
+  return $res
 }
