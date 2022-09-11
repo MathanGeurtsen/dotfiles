@@ -474,3 +474,8 @@ function client-pi-status {
   fi
   return $res
 }
+
+
+function why {
+  echo -e "hostname: $(hostname)\nusername: $(whoami)\npwd: $(pwd)"
+}
