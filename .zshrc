@@ -55,7 +55,7 @@ source "$DOTFILES_DIR/.env"
 
 source "$DOTFILES_DIR/scripts/ssh-setup.sh"
 source "$DOTFILES_DIR/scripts/pingcheck.sh"
-
+source "$DOTFILES_DIR/scripts/pi-scripts.sh"
 export PATH=$PATH:/home/mathan/.local/bin/
 
 alias ll='ls -hAltr --color=auto'
@@ -376,105 +376,6 @@ function spinner {
  done &
 
 }
-
-function pibox {
-  if (ssh -i ~/.ssh/testbox2 -o ConnectTimeout=3 -p 8022 mathan@192.168.0.10 hostname | grep -q "raspberrypi"); then
-    echo running ssh session locally
-    ssh -i ~/.ssh/testbox2 -p 8022 mathan@192.168.0.10 
-  elif (ssh -i ~/.ssh/testbox2  -o ConnectTimeout=3 -p 8022 mathan@happy.mathangeurtsen.nl hostname | grep -q "raspberrypi"); then
-    echo running ssh session over internet
-    ssh -i ~/.ssh/testbox2 -p 8022 mathan@happy.mathangeurtsen.nl
-  elif (ssh -i ~/.ssh/testbox2 -o ConnectTimeout=3 -p 8022 mathan@10.8.0.1 hostname | grep -q "raspberrypi"); then
-    echo running ssh session over vpn
-    ssh -i ~/.ssh/testbox2 -p 8022 mathan@10.8.0.1 
-  fi
-}
-
-function pi-status {
-  if ! (hostname | grep -q "raspberrypi"); then
-    echo "only run on pi"
-    return 1
-  fi
-  pihole status
-
-  sudo wg show
-  res=0
-  if (curl  localhost:80 2> /dev/null  | grep -q "html></html>"); then 
-    echo "nginx up"; 
-  else
-    echo "nginx down"; 
-    res=1
-  fi
-
-  if (sudo ufw status | head -n1 | grep -q "Status: active"); then 
-    echo "ufw up"; 
-  else
-    echo "ufw down"; 
-    res=1
-  fi
-
-  return $res
-}
-
-restart-services() {
-  if ! (hostname | grep -q "raspberrypi"); then
-    echo "only run on pi"
-    return 1
-  fi
-
-  sudo systemctl enable --now ufw
-  sudo ufw -f enable
-  sudo systemctl enable --now nginx
-  sudo systemctl restart nginx
-  sudo systemctl enable --now ssh.service
-  sudo systemctl restart ssh.service
-
-  wg-quick down wg1
-  sleep 5
-  wg-quick up wg1
-
-  pihole enable
-  pihole restartdns
-  pi-status
-}
-
-function client-pi-status {
-  # run on client
-
-  # wifi/dns _frequently_ cause issues, so just always flush and restart for the test
-  sudo systemctl restart systemd-resolved.service
-  nmcli radio wifi off; nmcli radio wifi on 
-  sleep 8
-  res=0
-  if (dig +short vpn.pibox.app | grep -q "10.8.0.1"); then
-    echo "dns hit for vpn.pibox.app";
-  else
-    echo "can't resolve vpn.pibox.app";
-    res=1
-  fi
-
-  if (dig +short local.pibox.app | grep -q "192.168.0.10"); then
-    echo "dns hit for local.pibox.app";
-  else
-    echo "can't resolve local.pibox.app";
-    res=1
-  fi
-
-  if (wget --tries=2 --connect-timeout=3 --output-document=/tmp/wget-out vpn.pibox.app 2> /dev/null >/dev/null && grep -q '<!DOCTYPE html></html>' /tmp/wget-out); then
-    echo "vpn.pibox.app up";
-  else
-    echo "vpn.pibox.app down, did you connect to vpn?";
-    res=1
-  fi
-  if (wget --tries=2 --connect-timeout=3  --output-document=/tmp/wget-out local.pibox.app 2> /dev/null >/dev/null && grep -q '<!DOCTYPE html></html>' /tmp/wget-out); then
-    echo "local.pibox.app up";
-  else
-    echo "local.pibox.app down, are you on local network?";
-    res=1
-  fi
-  return $res
-}
-
 
 function why {
   echo -e "hostname: $(hostname)\nusername: $(whoami)\npwd: $(pwd)"
