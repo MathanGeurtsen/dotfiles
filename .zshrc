@@ -83,7 +83,6 @@ alias wreboot="cmd.exe  /c shutdown /r /t 0"
 alias wnosleep="Powercfg.exe /Change standby-timeout-ac 0"
 alias git-root="git rev-parse --show-toplevel"
 alias zella='zellij attach $(zellij list-sessions | head -n1) || zellij'
-alias whereami='hostname'
 plugins=(git ssh-agent)
 export NOTIFY_FILE="$(realpath ~/notify)"
 
@@ -377,6 +376,6 @@ function spinner {
 
 }
 
-function why {
+function whereami {
   echo -e "hostname: $(hostname)\nusername: $(whoami)\npwd: $(pwd)"
 }
