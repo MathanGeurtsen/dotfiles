@@ -2,13 +2,13 @@
 pibox() {
   if (ssh -i ~/.ssh/testbox2 -o ConnectTimeout=3 -p 8022 mathan@192.168.0.10 hostname | grep -q "raspberrypi"); then
     echo running ssh session locally
-    ssh -i ~/.ssh/testbox2 -p 8022 mathan@192.168.0.10 
+    ssh -i ~/.ssh/testbox2 -p 8022 mathan@192.168.0.10 $@
   elif (ssh -i ~/.ssh/testbox2  -o ConnectTimeout=3 -p 8022 mathan@happy.mathangeurtsen.nl hostname | grep -q "raspberrypi"); then
     echo running ssh session over internet
-    ssh -i ~/.ssh/testbox2 -p 8022 mathan@happy.mathangeurtsen.nl
+    ssh -i ~/.ssh/testbox2 -p 8022 mathan@happy.mathangeurtsen.nl $@
   elif (ssh -i ~/.ssh/testbox2 -o ConnectTimeout=3 -p 8022 mathan@10.8.0.1 hostname | grep -q "raspberrypi"); then
     echo running ssh session over vpn
-    ssh -i ~/.ssh/testbox2 -p 8022 mathan@10.8.0.1 
+    ssh -i ~/.ssh/testbox2 -p 8022 mathan@10.8.0.1 $@
   fi
 }
 
