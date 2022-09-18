@@ -57,7 +57,7 @@ pi_restart_services() {
 
   pihole enable
   pihole restartdns
-  pi-status
+  pi_status
 }
 
 client_pi_status (){

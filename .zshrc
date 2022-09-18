@@ -19,20 +19,26 @@ compinit
 
 
 # get man pages colored by bat, have less use case insensitive search
+if [ ! -z "$batpager" ]; then
 if $(batcat --version > /dev/null 2>&1); then
   bat_alias="batcat"
 else
   bat_alias="bat"
 fi
 export MANPAGER="sh -c 'col -bx | $bat_alias -l man -p --pager=\"less -ri\"'"
-
+fi
 if $(test -n "$nixshell"); then
   nixPS=" (n)"
 else
   nixPS=""
 fi
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+ hostPS="@$(hostname | head -c5) "
+else
+ hostPS=""
+fi
 
-PROMPT='%(?.%F{green}√.%F{red}?%?)%f'"$nixPS"' %B%F{240}%1~%f%b %# ' 
+PROMPT='%(?.%F{green}√.%F{red}?%?)%f'"$nixPS $hostPS"' %B%F{240}%1~%f%b %# ' 
 
 autoload -Uz compinit && compinit
 
