@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+[ -z "$BASH_VERSION" ] && [ -z "ZSH_VERSION" ] && echo >2 "I require bash to run" && exit 1
 
 pibox() {
   if (ssh -i ~/.ssh/testbox2 -o ConnectTimeout=3 -p 8022 mathan@192.168.0.10 hostname | grep -q "raspberrypi"); then
@@ -44,12 +46,12 @@ pi_restart_services() {
     return 1
   fi
 
-  sudo systemctl enable --now ufw
   sudo ufw -f enable
-  sudo systemctl enable --now nginx
+  sudo systemctl enable ufw
   sudo systemctl restart nginx
-  sudo systemctl enable --now ssh.service
+  sudo systemctl enable nginx
   sudo systemctl restart ssh.service
+  sudo systemctl enable ssh.service
 
   wg-quick down wg1
   sleep 5
@@ -64,7 +66,7 @@ client_pi_status (){
   # run on client
 
   # wifi/dns _frequently_ cause issues
-  if [ "$1" = "flush" ]; then
+  if [ "$1" = "--flush" ]; then
     sudo systemctl restart systemd-resolved.service
     nmcli radio wifi off; nmcli radio wifi on 
     sleep 8
@@ -99,22 +101,67 @@ client_pi_status (){
   return $res
 }
 
-main() {
-  func=$1
-  if [ -z "$func" ]; then
-    return 0
-  elif [ "$func" = "pibox" ]; then
-    pibox
-  elif [ "$func" = "pi_status" ]; then
-    pi_status
-  elif [ "$func" = "pi_restart_services" ]; then
-    pi_restart_services
-  elif [ "$func" = "client_pi_status" ]; then
-    client_pi_status
-  else 
-    echo "argument '$1' not recognized"
-    return 1
-  fi
+#!/usr/bin/env bash
+
+help() {
+  echo "Usage: pi-scripts [-hv] function [function...]
+various pi scripts. 
+options:
+-h, --help          : print this message
+-v, --verbose       : enable trace
+-f, --flush         : flush dns and restart wifi (only applicable to client-pi-status)
+client-pi-status    : basic check dns hits and site availability
+pibox               : ssh into pi, try locally first
+pi-status           : check status of various pi services
+pi-restart-services : restart pi services
+"
+  exit $1
 }
 
-main "$@"
+parse_args() {
+  flush=""
+  funcs=()
+  while :; do
+    case "${1-}" in
+      -h | --help)    help 0 ;;
+      -v | --verbose) set -x ;;
+      -f | --flush)   flush="--flush" ;;
+
+      --) shift; break ;; 
+      -?*) echo "Unknown option: '$1'" >&2; help 1 ;;
+      *) break;;
+    esac
+    shift
+  done
+
+  while :; do
+    case "${1-}" in
+      client-pi-status) funcs+=("client_pi_status $flush") ;;
+      pibox) funcs+=("pibox") ;;
+      pi-status) funcs+=("pi_status") ;;
+      pi-restart-services) funcs+=("pi_restart_services") ;;
+
+      *) if [ -n "$1" ]; then echo "Unknown function: '$1'" >&2; help 1; fi; break ;;
+    esac
+    shift
+  done
+
+  if [ ${#funcs} -eq 0 ]; then
+    help 1;
+  fi
+
+  return 0
+}
+
+main() {
+  parse_args "$@"
+  for ((i=0; i < ${#funcs[@]}; i++)); do
+    echo "executing: '${funcs[$i]}'"
+    eval "${funcs[$i]}"
+  done
+}
+
+( # check if sourced, otherwise execute main https://stackoverflow.com/a/28776166
+  [ -n $ZSH_VERSION ] && echo "$ZSH_EVAL_CONTEXT" | grep "/:file$/" ||
+    [ -n $BASH_VERSION ] && (return 0 2>/dev/null)
+) || main $@
