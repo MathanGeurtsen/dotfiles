@@ -17,6 +17,9 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+zstyle :omz:plugins:ssh-agent lazy yes
+plugins=(git ssh-agent)
+
 
 # get man pages colored by bat, have less use case insensitive search
 if [ ! -z "$batpager" ]; then
@@ -89,9 +92,9 @@ alias wreboot="cmd.exe  /c shutdown /r /t 0"
 alias wnosleep="Powercfg.exe /Change standby-timeout-ac 0"
 alias git-root="git rev-parse --show-toplevel"
 alias zella='zellij attach $(zellij list-sessions | head -n1) || zellij'
-plugins=(git ssh-agent)
-export NOTIFY_FILE="$(realpath ~/notify)"
 
+
+export NOTIFY_FILE="$(realpath ~/notify)"
 export EDITOR=vim
 
 if [ -f /var/run/reboot-required ]; then cat /var/run/reboot-required; fi
@@ -124,7 +127,7 @@ function figr {
   fileRegex="$1"
   exclusionRegex="$2"
   stringRegex="$3"
-  find . -regex "$fileRegex" -not -regex "$exclusionRegex" -print0 | xargs -0 -I{} grep -IinH --color=ALWAYS "$stringRegex" "{}" | less -iRFX +f
+  find . -type f -regex "$fileRegex" -not -regex "$exclusionRegex" -print0 | xargs -0 -I{} grep -IinH --color=ALWAYS "$stringRegex" "{}" 2>&1 | less -iRF
 }
 
 function rcd {
