@@ -90,6 +90,7 @@ alias R="nice -n 10 R --no-save --no-restore-data"
 alias wshutdown="cmd.exe  /c shutdown /s"
 alias wreboot="cmd.exe  /c shutdown /r /t 0"
 alias wnosleep="Powercfg.exe /Change standby-timeout-ac 0"
+alias wtop='powershell.exe -c "C:\Python38\python.exe -m glances"'
 alias git-root="git rev-parse --show-toplevel"
 alias zella='zellij attach $(zellij list-sessions | head -n1) || zellij'
 
