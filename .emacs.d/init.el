@@ -124,7 +124,7 @@
  '(lsp-eldoc-render-all t)
  '(lsp-pyls-plugins-pycodestyle-enabled nil)
  '(lsp-pyls-plugins-pycodestyle-ignore "e231")
- '(lsp-pyls-plugins-pyflakes-enabled t)
+ '(lsp-pyls-plugins-pyflakes-enabled t t)
  '(lsp-pylsp-plugins-flake8-config "/home/mathan/.flake8")
  '(lsp-pylsp-plugins-pydocstyle-enabled nil)
  '(lsp-treemacs-error-list-severity 2)

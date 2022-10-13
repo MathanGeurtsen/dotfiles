@@ -94,6 +94,7 @@ alias wtop='powershell.exe -c "C:\Python38\python.exe -m glances"'
 alias wsleep="cmd.exe /c shutdown /h"
 alias git-root="git rev-parse --show-toplevel"
 alias zella='zellij attach $(zellij list-sessions | head -n1) || zellij'
+alias pitube='noglob pitube'
 
 
 export NOTIFY_FILE="$(realpath ~/notify)"
@@ -389,4 +390,8 @@ function spinner {
 
 function whereami {
   echo -e "hostname: $(hostname)\nusername: $(whoami)\npwd: $(pwd)"
+}
+
+function pitube {
+  ssh pibox ~/yt-dlp/yt-dlp -S "height:720" -o '"~/sambashare/media/youtube/%(title)s.%(ext)s"' "$1"&
 }

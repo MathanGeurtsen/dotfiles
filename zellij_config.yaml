@@ -273,7 +273,7 @@ keybinds:
         - action: [Resize: Decrease,]
           key: [ Alt: '-']
     scroll:
-        - action: [EditScrollback, SwitchToMode: Normal]
+        - action: [EditScrollback, SwitchToMode: Locked]
           key: [Char: 'e']
         - action: [SwitchToMode: Normal,]
           key: [Ctrl: 's', Char: ' ', Char: "\n", Esc]
@@ -490,6 +490,8 @@ keybinds:
         - action: [Resize: Decrease,]
           key: [ Alt: '-']
     tmux:
+        - action: [EditScrollback, SwitchToMode: Locked]
+          key: [Char: 'e']
         - action: [SwitchToMode: Locked,]
           key: [Ctrl: 'g']
         - action: [SwitchToMode: Resize,]
