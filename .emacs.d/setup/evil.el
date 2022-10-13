@@ -29,4 +29,9 @@
   :config
   (evil-collection-init))
 
-
+(use-package evil-snipe
+  :after evil
+  :ensure t 
+  :config 
+  (evil-snipe-override-mode +1)
+  (setq evil-snipe-scope 'visible))

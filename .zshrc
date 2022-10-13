@@ -92,10 +92,9 @@ alias wreboot="cmd.exe  /c shutdown /r /t 0"
 alias wnosleep="Powercfg.exe /Change standby-timeout-ac 0"
 alias wtop='powershell.exe -c "C:\Python38\python.exe -m glances"'
 alias wsleep="cmd.exe /c shutdown /h"
-alias git-root="git rev-parse --show-toplevel"
 alias zella='zellij attach $(zellij list-sessions | head -n1) || zellij'
 alias pitube='noglob pitube'
-
+alias ssh="noglob ssh"
 
 export NOTIFY_FILE="$(realpath ~/notify)"
 export EDITOR=vim
