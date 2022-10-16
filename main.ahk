@@ -26,10 +26,6 @@ resetReadMode() {
 ; keys
 
 
-F1:: ; reset script
-Reload
-return
-
 F7:: ; prefix key
 if (readMode == "" or readMode == 0){
   readModeTimeout := 1000
@@ -40,3 +36,8 @@ if (readMode == "" or readMode == 0){
   readMode:=0
 }
 return
+#if readMode
+F1:: ; reset script
+Reload
+return
+#If

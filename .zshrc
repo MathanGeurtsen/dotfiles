@@ -87,14 +87,17 @@ alias testbox="ssh -i $TESTBOX_SSH_KEYFILE mathan@$TESTBOX_URL -p $TESTBOX_SSH_P
 alias ISO8601="date +%Y%m%dT%H%M%S"
 alias mp="make -f personal.mk"
 alias R="nice -n 10 R --no-save --no-restore-data"
+alias zella='zellij attach $(zellij list-sessions | head -n1) || zellij'
+alias pitube='noglob pitube'
+alias ssh="noglob ssh"
+alias docker-desktop="/mnt/c/Program\ Files/Docker/Docker/Docker\ Desktop.exe"
+
 alias wshutdown="cmd.exe  /c shutdown /s"
 alias wreboot="cmd.exe  /c shutdown /r /t 0"
 alias wnosleep="Powercfg.exe /Change standby-timeout-ac 0"
 alias wtop='powershell.exe -c "C:\Python38\python.exe -m glances"'
 alias wsleep="cmd.exe /c shutdown /h"
-alias zella='zellij attach $(zellij list-sessions | head -n1) || zellij'
-alias pitube='noglob pitube'
-alias ssh="noglob ssh"
+alias wpython="/mnt/c/Python38/python.exe"
 
 export NOTIFY_FILE="$(realpath ~/notify)"
 export EDITOR=vim

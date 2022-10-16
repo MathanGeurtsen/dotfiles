@@ -37,12 +37,14 @@ setHighVis() {
 #if readMode
 
 F9:: ; toggle setting nvidia settings between high brightness and standard
-if (%highVisibility% != 0) {
-  resetNvidiaCtrlpanel()
-  highVisibility:=0
-} else {
-  setHighVis()
-  highVisibility:=1
+if WinActive("NVIDIA Control Panel") {
+  if (%highVisibility% != 0) {
+    resetNvidiaCtrlpanel()
+    highVisibility:=0
+  } else {
+    setHighVis()
+    highVisibility:=1
+}
 }
 return
 #If
