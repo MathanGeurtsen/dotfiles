@@ -66,7 +66,7 @@ source "$DOTFILES_DIR/scripts/ssh-setup.sh"
 source "$DOTFILES_DIR/scripts/pingcheck.sh"
 source "$DOTFILES_DIR/scripts/pi-scripts.sh"
 export PATH=$PATH:/home/mathan/.local/bin/
-
+set +e
 alias ll='ls -hAltr --color=auto'
 
 alias -g G="| grep"
@@ -238,6 +238,12 @@ function wem {
   # WSL specific convenience function, calls windows emacsclient with argument's converted path
   windows_path=$(wslpath -w $1)
   emacsclientw.exe $windows_path
+}
+
+ntfy() {
+  message="done, returncode: $?" 
+  curl -H "Priority: high" -d "$message" ntfy.sh/882cfb4a-597b-11ed-97dd-b3ffc1ecb22d
+  echo "$message"
 }
 
 alert-notify() {
