@@ -240,7 +240,7 @@ function wem {
   emacsclientw.exe $windows_path
 }
 
-ntfy() {
+ntfy-now() {
   message="done, returncode: $?" 
   curl -H "Priority: high" -d "$message" ntfy.sh/882cfb4a-597b-11ed-97dd-b3ffc1ecb22d
   echo "$message"

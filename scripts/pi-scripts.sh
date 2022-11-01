@@ -88,7 +88,7 @@ pi_restart_services() {
     wg-quick up wg1
   fi
 
-  pkill syncthing
+  pkill syncthing || echo "can't stop syncthing, might not be running"
   sleep 3
   nohup syncthing > ~/syncthing.log &
   disown
