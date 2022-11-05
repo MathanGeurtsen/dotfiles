@@ -1,3 +1,8 @@
+export ZSH="$HOME/.oh-my-zsh"
+zstyle :omz:plugins:ssh-agent lazy yes
+plugins=(ssh-agent)
+source $ZSH/oh-my-zsh.sh
+
 
 HISTFILE=~/.zsh_history
 HISTSIZE=1000000
@@ -7,9 +12,6 @@ export HISTTIMEFORMAT="[%F %T] "
 unsetopt beep extendedglob notify
 bindkey -e
 
-# enable glob expansion in history search
-bindkey '^R' history-incremental-pattern-search-backward
-
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/mathan/.zshrc'
 
@@ -17,9 +19,8 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
-zstyle :omz:plugins:ssh-agent lazy yes
-plugins=(git ssh-agent)
-
+# enable glob expansion in history search
+bindkey '^R' history-incremental-pattern-search-backward
 
 # get man pages colored by bat, have less use case insensitive search
 if [ ! -z "$batpager" ]; then
