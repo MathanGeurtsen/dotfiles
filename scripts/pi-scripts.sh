@@ -47,7 +47,7 @@ pi_start_qbittorrent() {
   pi_stop_qbittorrent
   sleep 5
   echo "restarting mullvad vpn"
-  wg-quick up wg0
+  wg-quick up wgmullvad
 
   echo "starting qbittorrent"
   qbittorrent-nox -d --sequential --webui-port=8080 
@@ -57,7 +57,7 @@ pi_start_qbittorrent() {
 
 pi_stop_qbittorrent() {
   echo "stopping mullvad vpn"
-  wg-quick down wg0 || echo "can't stop, wg0 not up"
+  wg-quick down wgmullvad || echo "can't stop, wgmullvad not up"
 
   echo "killing qbittorrent"
   pkill qbittorrent-nox || echo "can't kill, qbittorrent not running"
