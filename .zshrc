@@ -96,7 +96,7 @@ alias docker-desktop="/mnt/c/Program\ Files/Docker/Docker/Docker\ Desktop.exe"
 alias wshutdown="cmd.exe  /c shutdown /s"
 alias wreboot="cmd.exe  /c shutdown /r /t 0"
 alias wnosleep="Powercfg.exe /Change standby-timeout-ac 0"
-alias wtop='powershell.exe -c "C:\Python38\python.exe -m glances"'
+alias wtop='spinner; powershell.exe -c "C:\Python38\python.exe -m glances"'
 alias wsleep="cmd.exe /c shutdown /h"
 alias wpython="/mnt/c/Python38/python.exe"
 
@@ -403,4 +403,23 @@ function whereami {
 
 function pitube {
   ssh pibox ~/yt-dlp/yt-dlp -S "height:720" -o '"~/sambashare/media/youtube/%(title)s.%(ext)s"' "$1"&
+}
+
+wssh-wake (){
+# TODO: move to powershell to be run on login
+  _wake () {
+    LOG="/mnt/c/users/mathan/tmp/wssh-wake.log"
+    echo "$(date +%H:%M:%S) starting wssh-wake, refusing sleep..." | tee -a "$LOG"
+    Powercfg.exe /Change standby-timeout-ac 0
+    while sleep 2; do
+      connections="$(powershell.exe -c '(netstat -n | Select-String -Pattern ':22\\b' | Select-String -Pattern 'ESTABLISHED' | Measure-Object -line).Lines' | tr -d '\r')"
+      if [ "$connections" -eq 0 ]; then 
+        echo "$(date +%H:%M:%S) no ssh connections detected, allowing sleep and exiting..." | tee -a "$LOG"
+        Powercfg.exe /Change standby-timeout-ac 10
+        return 0
+      fi
+    done
+  }
+  _wake > /dev/null &
+  echo "$!" | tee ~/.wake.pid | xargs -I{} echo "pid: {}" | tee -a "$LOG"
 }
