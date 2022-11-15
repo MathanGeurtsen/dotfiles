@@ -412,19 +412,20 @@ function pitube {
 
 wssh-wake (){
 # TODO: move to powershell to be run on login
+  LOG="/mnt/c/users/mathan/tmp/wssh-wake.log"
   _wake () {
-    LOG="/mnt/c/users/mathan/tmp/wssh-wake.log"
     echo "$(date +%H:%M:%S) starting wssh-wake, refusing sleep..." | tee -a "$LOG"
     Powercfg.exe /Change standby-timeout-ac 0
     while sleep 2; do
       connections="$(powershell.exe -c '(netstat -n | Select-String -Pattern ':22\\b' | Select-String -Pattern 'ESTABLISHED' | Measure-Object -line).Lines' | tr -d '\r')"
       if [ "$connections" -eq 0 ]; then 
         echo "$(date +%H:%M:%S) no ssh connections detected, allowing sleep and exiting..." | tee -a "$LOG"
-        Powercfg.exe /Change standby-timeout-ac 10
+        Powercfg.exe /Change standby-timeout-ac 30
         return 0
       fi
     done
   }
+  touch ~/.wake.pid
   _wake > /dev/null &
   echo "$!" | tee ~/.wake.pid | xargs -I{} echo "pid: {}" | tee -a "$LOG"
 }
