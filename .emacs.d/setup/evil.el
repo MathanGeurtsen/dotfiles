@@ -34,4 +34,5 @@
   :ensure t 
   :config 
   (evil-snipe-override-mode +1)
-  (setq evil-snipe-scope 'visible))
+  (setq evil-snipe-scope 'visible)
+  (evil-snipe-mode 1))

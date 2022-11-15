@@ -124,7 +124,7 @@
  '(lsp-eldoc-render-all t)
  '(lsp-pyls-plugins-pycodestyle-enabled nil)
  '(lsp-pyls-plugins-pycodestyle-ignore "e231")
- '(lsp-pyls-plugins-pyflakes-enabled t t)
+ '(lsp-pyls-plugins-pyflakes-enabled t)
  '(lsp-pylsp-plugins-flake8-config "/home/mathan/.flake8")
  '(lsp-pylsp-plugins-pydocstyle-enabled nil)
  '(lsp-treemacs-error-list-severity 2)
@@ -183,7 +183,7 @@
      ("html" . mhtml)))
  '(package-check-signature 'allow-unsigned)
  '(package-selected-packages
-   '(nix-mode magit org-roam flycheck ahk-mode org-ref org-attach-screenshot corfu general csharp-mode haskell-mode vimrc-mode dockerfile-mode yaml-mode ag vterm workgroups2 window-purpose which-key use-package treemacs-all-the-icons ssh-agency speed-type sass-mode ranger projectile powershell pdf-tools org-bullets omnisharp ob-async multiple-cursors minimap markdown-mode+ lsp-ui lsp-java lsp-ivy json-mode interleave highlight-parentheses hide-lines helpful helm-lsp git-gutter-fringe fish-mode evil-magit evil-collection ess emojify elpy elisp-demos elfeed-goodies ein editorconfig doom-themes doom-modeline direx dired-k dimmer counsel company-quickhelp company-lsp cmake-mode browse-url-dwim beacon atomic-chrome all-the-icons-dired))
+   '(zzz-to-char nix-mode magit org-roam flycheck ahk-mode org-ref org-attach-screenshot corfu general csharp-mode haskell-mode vimrc-mode dockerfile-mode yaml-mode ag vterm workgroups2 window-purpose which-key use-package treemacs-all-the-icons ssh-agency speed-type sass-mode ranger projectile powershell pdf-tools org-bullets omnisharp ob-async multiple-cursors minimap markdown-mode+ lsp-ui lsp-java lsp-ivy json-mode interleave highlight-parentheses hide-lines helpful helm-lsp git-gutter-fringe fish-mode evil-magit evil-collection ess emojify elpy elisp-demos elfeed-goodies ein editorconfig doom-themes doom-modeline direx dired-k dimmer counsel company-quickhelp company-lsp cmake-mode browse-url-dwim beacon atomic-chrome all-the-icons-dired))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
  '(pos-tip-background-color "#FFFACE")
  '(pos-tip-foreground-color "#272822")

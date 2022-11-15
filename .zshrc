@@ -24,25 +24,31 @@ bindkey '^R' history-incremental-pattern-search-backward
 
 # get man pages colored by bat, have less use case insensitive search
 if [ ! -z "$batpager" ]; then
-if $(batcat --version > /dev/null 2>&1); then
-  bat_alias="batcat"
-else
-  bat_alias="bat"
-fi
-export MANPAGER="sh -c 'col -bx | $bat_alias -l man -p --pager=\"less -ri\"'"
-fi
-if $(test -n "$nixshell"); then
-  nixPS=" (n)"
-else
-  nixPS=""
-fi
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
- hostPS="@$(hostname | head -c5) "
-else
- hostPS=""
+  if $(batcat --version > /dev/null 2>&1); then
+    bat_alias="batcat"
+  else
+    bat_alias="bat"
+  fi
+  export MANPAGER="sh -c 'col -bx | $bat_alias -l man -p --pager=\"less -ri\"'"
 fi
 
-PROMPT='%(?.%F{green}√.%F{red}?%?)%f'"$nixPS $hostPS"' %B%F{240}%1~%f%b %# ' 
+process_prompt() {
+  if $(test -n "$nixshell"); then
+    nixPS=" (n)"
+  else
+    nixPS=""
+  fi
+
+  if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    hostPS="@$(hostname | head -c5) "
+  else
+    hostPS=""
+  fi
+
+  PROMPT='%(?.%F{green}√.%F{red}?%?)%f'"$nixPS $hostPS"' %B%F{240}%1~%f%b %# '
+}
+
+process_prompt
 
 autoload -Uz compinit && compinit
 
@@ -95,7 +101,6 @@ alias docker-desktop="/mnt/c/Program\ Files/Docker/Docker/Docker\ Desktop.exe"
 
 alias wshutdown="cmd.exe  /c shutdown /s"
 alias wreboot="cmd.exe  /c shutdown /r /t 0"
-alias wnosleep="Powercfg.exe /Change standby-timeout-ac 0"
 alias wtop='spinner; powershell.exe -c "C:\Python38\python.exe -m glances"'
 alias wsleep="cmd.exe /c shutdown /h"
 alias wpython="/mnt/c/Python38/python.exe"
@@ -113,9 +118,9 @@ function pd {
   # wrapper around pushd/popd. pushd to argument if given, popd otherwise
   if [ $# -ge 1 ]; then
     if [ -d "$@" ]; then
-     pushd "$@"
-     else
-       pushd $(dirname "$@")
+      pushd "$@"
+    else
+      pushd $(dirname "$@")
     fi
   else
     popd
@@ -154,12 +159,12 @@ function virustotal {
 function reCmake {
   echo "creating build dir"
   rm -rf ./build/ &&
-  mkdir ./build &&
-  pushd ./build &&
-  echo "running cmake..." &&
-  cmake -DCMAKE_BUILD_TYPE="Debug" .. T &&
-  echo "running make..." &&
-  make -j T $@;
+    mkdir ./build &&
+    pushd ./build &&
+    echo "running cmake..." &&
+    cmake -DCMAKE_BUILD_TYPE="Debug" .. T &&
+    echo "running make..." &&
+    make -j T $@;
   res=$?
   popd;
   echo "done";
@@ -167,7 +172,7 @@ function reCmake {
 }
 
 function cCommands {
-  	cmake -H. -BDebug -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES
+  cmake -H. -BDebug -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES
 	if [  -e compile_commands.json ]; then rm -r compile_commands.json;	fi
 	ln -s Debug/compile_commands.json .
 }
@@ -229,7 +234,7 @@ function psh {
 }
 
 function wstart {
- # WSL specific convenience function providing powershell start
+  # WSL specific convenience function providing powershell start
   windows_dir=$(wslpath -w $(pwd))
   
   powershell.exe -Command "cd $windows_dir; start $1"
@@ -282,7 +287,7 @@ wnotice-notify() {
 
 function wnotify {
 
-balloon='function balloon {
+  balloon='function balloon {
 Param(
         $title,
         $text
@@ -297,8 +302,8 @@ Param(
     $balloon.Visible = $true 
     $balloon.ShowBalloonTip(5)
 }' 
-balloon+="; balloon 'bash notification' '$@'"
-psh "$balloon; exit"
+  balloon+="; balloon 'bash notification' '$@'"
+  psh "$balloon; exit"
 }
 
 function proc_running {
@@ -323,19 +328,19 @@ function proc_running {
     fi
   done
 }
- 
+
 function process-paste {
-pid="$(ps aux | awk -v pattern="$1" '$11 ~ pattern{print $2}' | tail -n1)"
-id="$(xdotool search --onlyvisible --pid $pid)"
-xdotool windowactivate "$id" &&\
-sleep 0.3 &&\
-xdotool type "$(xclip -o)"
+  pid="$(ps aux | awk -v pattern="$1" '$11 ~ pattern{print $2}' | tail -n1)"
+  id="$(xdotool search --onlyvisible --pid $pid)"
+  xdotool windowactivate "$id" &&\
+    sleep 0.3 &&\
+    xdotool type "$(xclip -o)"
 }
 
 function col {
   # select column from output. 0 for every column
   if [ $1 -ne 0 ]; then
-  head -n$(($1)) | tail -n1
+    head -n$(($1)) | tail -n1
   else
     cat
   fi
@@ -344,7 +349,7 @@ function col {
 function row {
   # select row from output. 0 for every row
   if [ $1 -ne 0 ]; then
-  awk -v var=$1 '{print $var}'
+    awk -v var=$1 '{print $var}'
   else
     cat
   fi
@@ -365,7 +370,7 @@ redraw_output() {
   else
     time=1
   fi
-    clear -x
+  clear -x
   while sleep $time; do
     output="$(eval $function)"
     N=$(echo $output | wc -l)
@@ -387,13 +392,13 @@ function active_window {
 }
 
 function spinner {
- while true; do
-   strings="- \\ | /"; 
-   for f in ${=strings}; do 
-     sleep 1; 
-     tput sc;tput cup 0 0;echo - "$f";tput rc;
-   done; 
- done &
+  while true; do
+    strings="- \\ | /"; 
+    for f in ${=strings}; do 
+      sleep 1; 
+      tput sc;tput cup 0 0;echo - "$f";tput rc;
+    done; 
+  done &
 
 }
 
@@ -423,3 +428,43 @@ wssh-wake (){
   _wake > /dev/null &
   echo "$!" | tee ~/.wake.pid | xargs -I{} echo "pid: {}" | tee -a "$LOG"
 }
+
+extract() {
+  # I don't wanna remember what extracts what, and why should I
+  # partially based on u/MaybeAshleyIdk's comment in https://old.reddit.com/r/linuxmemes/comments/yu55lo
+  if [ ! -f "$1" ]; then
+    echo "'$1' is not a valid file" >&2
+    return 1
+  fi
+
+  while :; do
+    case "${1-}" in
+      *.7z)      7z x "$1"       ;;
+      *.Z)       uncompress "$1" ;;
+      *.bz2)     bunzip2 "$1"    ;;
+      *.gz)      gunzip "$1"     ;;
+      *.rar)     rar x "$1"      ;;
+      *.tar)     tar xvf "$1"    ;;
+      *.tar.bz2) tar xvjf "$1"   ;;
+      *.tar.gz)  tar xvzf "$1"   ;;
+      *.tbz)     tar xvjf "$1"   ;;
+      *.tbz2)    tar xvjf "$1"   ;;
+      *.tgz)     tar xvzf "$1"   ;;
+      *.zip)     unzip "$1"      ;;
+      *) if [ "$1" ]; then 
+           echo "'$1' cannot be extracted via extract()" >&2
+           return 1
+         fi; break                ;;
+    esac
+    shift
+  done
+}
+
+psgrep () {
+  ps aux | head -n1
+  ps aux | grep $@
+}
+
+alias wnosleep="Powercfg.exe /Change standby-timeout-ac 0"
+
+

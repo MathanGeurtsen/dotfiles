@@ -16,6 +16,9 @@ dev.cm <- function(width, height) {
     dev.new(width = usa_bs_width, height= usa_bs_height)
  }
 
+list.filter.na <- function(list) {
+    list[! is.na(list)]
+}
 
 alert.notify <- function(text="R done") {
 
