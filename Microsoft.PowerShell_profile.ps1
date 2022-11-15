@@ -1,9 +1,4 @@
 
-#region conda initialize
-# !! Contents within this block are managed by 'conda init' !!
-(& "C:\Users\mathan\anaconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
-#endregion
-
 Set-PSReadlineOption -EditMode Emacs
 Set-PSReadlineKeyHandler -Key Tab -Function TabCompleteNext
 
