@@ -100,6 +100,9 @@ pi_restart_services() {
 
   pihole enable
   pihole restartdns
+
+  pi_start_qbittorrent
+
   pi_status
 }
 

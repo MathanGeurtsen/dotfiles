@@ -76,7 +76,7 @@ export PATH=$PATH:/home/mathan/.local/bin/
 set +e
 alias ll='ls -hAltr --color=auto'
 
-alias -g G="| grep"
+alias -g G="| grep -IinH --color=ALWAYS"
 alias -g L="2>&1 | less -iRF"
 alias -g V="| vipe"
 alias -g T=" > >(tee -a tee_stdout.log) 2> >(tee -a tee_stderr.log >&2)"
@@ -98,6 +98,7 @@ alias zella='zellij attach $(zellij list-sessions | head -n1) || zellij'
 alias pitube='noglob pitube'
 alias ssh="noglob ssh"
 alias docker-desktop="/mnt/c/Program\ Files/Docker/Docker/Docker\ Desktop.exe"
+alias btop="btop --utf-force"
 
 alias wshutdown="cmd.exe  /c shutdown /s"
 alias wreboot="cmd.exe  /c shutdown /r /t 0"
@@ -128,9 +129,9 @@ function pd {
 }
 
 function tmuxa {
-  tmux attach
+  tmux -u attach
   if [ 0 -ne $? ]; then
-    tmux
+    tmux -u
   fi
 }
 
