@@ -466,6 +466,26 @@ psgrep () {
   ps aux | grep $@
 }
 
-alias wnosleep="Powercfg.exe /Change standby-timeout-ac 0"
+ipleak () { 
+  # dns requires multiple calls with a randomly decided session 
+  n=10
+  if [ -n "$1" ]; then n=$1; fi
 
-
+  session="$(date | sha1sum | head -c40)" 
+  ips="" 
+  for (( i=0; i < n; i++ )); do 
+    ip="$(curl -L "https://$session-$i.ipleak.net/dnsdetection/" 2>/dev/null | jq -r '.ip | keys | .[0]')" 
+    ips="$ips\n$ip" 
+  done 
+  echo "dns info:" 
+  echo $ips | tail -n +2 | uniq | xargs -I{} curl 'http://ip-api.com/json/{}' 2>/dev/null | jq '{"ip":.query, "country":.country, "region": .regionName, "organization":.org}'
+  # ip 
+  echo "ip info:" 
+  curl -L ipleak.net/json 2>/dev/null | jq '{
+  "isp_name": .isp_name,
+  "country_name": .country_name,
+  "region_name": .region_name,
+  "continent_name": .continent_name,
+  "city_name": .city_name,
+  "ip": .ip}'
+}
