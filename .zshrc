@@ -447,6 +447,7 @@ extract() {
       *.gz)      gunzip "$1"     ;;
       *.rar)     rar x "$1"      ;;
       *.tar)     tar xvf "$1"    ;;
+      *.xz)      tar xvf "$1"    ;;
       *.tar.bz2) tar xvjf "$1"   ;;
       *.tar.gz)  tar xvzf "$1"   ;;
       *.tbz)     tar xvjf "$1"   ;;
