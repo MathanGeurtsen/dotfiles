@@ -194,31 +194,6 @@ and enters it in a dired buffer.  "
     
     (find-file (concat location (substring tmp prefix-length (- (length tmp) 1)) "/" ))))
 
-(defun endless/fill-or-unfill ()
-  "Like `fill-paragraph', but unfill if used twice."
-  ;; from http://endlessparentheses.com/fill-and-unfill-paragraphs-with-a-single-key.html
-  (interactive)
-  (let ((fill-column
-         (if (eq last-command 'endless/fill-or-unfill)
-             (progn (setq this-command nil)
-                    (point-max))
-           fill-column)))
-    (call-interactively #'fill-paragraph)))
-
-(defun my/unfill-paragraph ()
-  "unfills a paragraph, the opposite of `fill-paragraph'.  "
-  (interactive)
-  (let ((fill-column
-         (progn (setq this-command nil)
-                (point-max)
-                fill-column)))
-    (call-interactively #'fill-paragraph)))
-
-(defun my/rand-chars ()
-  "Create a small random set of chars based on the sha1 of
-current nanosecond.  "
-  (interactive)
-  (string-join (nthcdr 34 (split-string (sha1 (format-time-string "%N")) ""))))
 
 (defun my/set-font-size ()
   "set font size interactively"
@@ -304,6 +279,7 @@ current nanosecond.  "
     (save-excursion (replace-regexp "|[[:blank:]]\\{3\\}|" "|" ))
     (setq i (+ 1 i)))
   (save-excursion (replace-regexp "^[| ]+$" "" )))
+
 (defadvice message (after message-tail activate)
   "goto point max after a message, sourced from https://stackoverflow.com/a/4685005/8887528"
   (with-current-buffer "*Messages*"
@@ -328,7 +304,7 @@ current nanosecond.  "
 
 
 (defun my/org-region-is-filled ()
-  "Uses `org-fill-paragraph` to check if a region is filled. "
+  "Uses `org-fill-paragraph' to check if a region is filled. "
   (save-excursion
     (save-window-excursion 
 
@@ -352,7 +328,7 @@ current nanosecond.  "
 
 
 (defun my/unfill-region (&optional run nocheck)
-  "Opposite of fill region: if a region is filled, unfill it (have paragraphs on a single line)"
+  "Opposite of `fill-paragraph': if a region is filled, unfill it (have paragraphs on a single line)"
   (interactive)
   (if (not (and run nocheck))
       (setq run (my/region-is-filled)))
@@ -368,7 +344,7 @@ current nanosecond.  "
             (replace-match "\n\n"))))))
 
 (defun my/unfill-org-region ()
-  "unfill for org"
+  "Opposite of `org-fill-paragraph'"
   (interactive)
   (my/unfill-region (my/org-region-is-filled) t))
 
