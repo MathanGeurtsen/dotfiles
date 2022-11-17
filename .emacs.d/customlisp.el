@@ -10,6 +10,7 @@
 
 (defalias 'lowercase-word 'downcase-word)
 (defalias 'insert-kill-ring 'kill-new)
+(defalias 'breakpoint 'debug)
 
 (defun my/re-replace-buffer (pattern replacement)
   (goto-char (point-min))
@@ -312,6 +313,66 @@ current nanosecond.  "
                         (set-window-point window (point-max))))
                   nil
                   t)))
+
+(defun my/region-is-filled ()
+  "Checks if a region is below fill-column."
+  (interactive)
+  (let ((region-end (region-end))
+        (paragraph-is-filled t))
+    (goto-char (region-beginning))
+    (while (< (point) region-end)
+      (if (> (- (line-end-position) (line-beginning-position)) fill-column)
+          (progn (setq paragraph-is-filled nil)))
+      (forward-line 1))
+    paragraph-is-filled))
+
+
+(defun my/org-region-is-filled ()
+  "Uses `org-fill-paragraph` to check if a region is filled. "
+  (save-excursion
+    (save-window-excursion 
+
+      (let* ((buffer-modified (buffer-modified-p))
+             (regionp (region-active-p))
+             (beg (and regionp (region-beginning)))
+             (end (and regionp (region-end)))
+             (buf (current-buffer))
+             (filled nil))
+        (with-temp-buffer
+          (switch-to-buffer (current-buffer) nil t)
+          (rename-buffer "*temp*" t)
+          (insert-buffer-substring buf beg end)
+          (set-buffer-modified-p nil)
+          (org-fill-paragraph)
+          (setq filled (buffer-modified-p))
+          (set-buffer-modified-p buffer-modified)
+          (not filled))
+        ))))
+
+
+
+(defun my/unfill-region (&optional run nocheck)
+  "Opposite of fill region: if a region is filled, unfill it (have paragraphs on a single line)"
+  (interactive)
+  (if (not (and run nocheck))
+      (setq run (my/region-is-filled)))
+  (if run 
+      (let ((region-begin (region-beginning))
+            (region-end (region-end)))
+        (save-excursion 
+          (goto-char region-begin)
+          (while (re-search-forward "\\([^\n]\\)\n" region-end t)
+            (replace-match "\\1 "))
+          (goto-char region-begin)
+          (while (re-search-forward "\n" region-end t)
+            (replace-match "\n\n"))))))
+
+(defun my/unfill-org-region ()
+  "unfill for org"
+  (interactive)
+  (my/unfill-region (my/org-region-is-filled) t))
+
+
 (defun my/org-id-update-org-roam-files () ; nobiot https://org-roam.discourse.group/t/org-roam-v2-org-id-id-link-resolution-problem/1491/4
   "Update Org-ID locations for all Org-roam files."
   (interactive)

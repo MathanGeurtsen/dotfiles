@@ -96,6 +96,8 @@ _[__]_:vertical   _e__y_: scroll  _r__g_: register/ goto register
     (define-key map (kbd "C-c <C-tab>") 'yas-expand-from-trigger-key)
     (define-key map (kbd "<C-tab>")     'company-complete)
     (define-key map (kbd "C-x C-f")     'counsel-find-file)
+
+    (define-key map (kbd "M-q")     'my/unfill-region)
     map)
   "My-keys-minor-mode keymap.")
 
