@@ -1,7 +1,12 @@
 #!/bin/env bash
 DOTFILES_DIR=$(dirname $(realpath ${BASH_SOURCE[0]}))
+
+rm ~/.bashrc
+rm ~/.zshrc
+
 ln -s "$DOTFILES_DIR/.bashrc" ~/.bashrc
 ln -s "$DOTFILES_DIR/.zshrc" ~/.zshrc
+
 ln -s "$DOTFILES_DIR/.tmux.conf" ~/.tmux.conf
 ln -s "$DOTFILES_DIR/.emacs.d" ~/.emacs.d
 ln -s "$DOTFILES_DIR/.xprofile" ~/.xprofile
