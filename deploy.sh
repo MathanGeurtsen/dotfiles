@@ -20,4 +20,4 @@ mkdir -p ~/.config/gdb
 ln -s "$DOTFILES_DIR/gdbinit" ~/.gdbinit
 ln -s "$DOTFILES_DIR/.sqliterc" ~/.sqliterc
 mkdir -p ~/.config/zellij
-ln -s "$DOTFILES_DIR/zellij_config.yaml" ~/.config/zellij/config.yaml
+ln -s "$DOTFILES_DIR/zellij_config.kdl" ~/.config/zellij/config.kdl

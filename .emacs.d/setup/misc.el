@@ -6,10 +6,6 @@
 (setq inhibit-compacting-font-caches t)
 
 
-(unless (eq system-type 'windows-nt)
-  (setq python-shell-interpreter "python3")
-  (setq shell-command-switch "-ic"))
-
 ;; latex
 (defun my/latex-mode-hook ()
   (add-to-list 'company-backends '(company-reftex-labels))
