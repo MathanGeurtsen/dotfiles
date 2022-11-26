@@ -465,7 +465,8 @@ extract() {
 
 psgrep () {
   ps aux | head -n1
-  ps aux | grep $@
+  output="$(ps aux)"
+  echo $output | grep -IinH --color=ALWAYS "$@" 2>&1 | less -iRF 
 }
 
 ipleak () { 
