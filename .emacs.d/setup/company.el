@@ -8,3 +8,5 @@
 (use-package company-quickhelp
   :ensure t)
 (company-quickhelp-mode)
+
+(setq company-global-modes '(not gud-mode))

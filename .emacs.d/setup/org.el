@@ -74,6 +74,7 @@
    (dot . t)
    (haskell . t)
    (ditaa . t)
+   (shell . t)
    (latex . t)))
 
 
