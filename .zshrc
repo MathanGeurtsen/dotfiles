@@ -158,9 +158,21 @@ function virustotal {
 }
 
 function reCmake {
+  clean=1
+  while :; do
+    case "${1-}" in
+      -c | --clean)   clean=0 ;;
+      --) shift; break ;; 
+      *) break;;
+    esac
+    shift
+  done
+
   echo "creating build dir"
-  rm -rf ./build/ &&
-    mkdir ./build &&
+  if (return "$clean"); then 
+    rm -rf ./build/ &&
+      mkdir ./build &&
+  fi &&
     pushd ./build &&
     echo "running cmake..." &&
     cmake -DCMAKE_BUILD_TYPE="Debug" .. T &&
@@ -168,7 +180,6 @@ function reCmake {
     make -j T $@;
   res=$?
   popd;
-  echo "done";
   return $res
 }
 
