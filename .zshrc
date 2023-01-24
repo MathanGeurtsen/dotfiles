@@ -228,8 +228,9 @@ function pyve() {
 }
 
 function nixe() {
-  # search for nearest nix shell definition, then attempt to run zsh in it
-  rootsearch "shell.nix" "nix-shell --command 'zsh' $@"
+  # search for nearest shell.nix definition, then attempt to run zsh in it
+  # if this fails, attempt default.nix instead
+  rootsearch "shell.nix" "nix-shell --command 'zsh' $@" ||   rootsearch "default.nix" "nix-shell --command 'zsh' $@"
 }
 
 

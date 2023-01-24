@@ -2,7 +2,8 @@
 # name: image
 # key: img
 # --
-#+ATTR_ORG: :width ${2:400}
-#+ATTR_LATEX: :width ${3:0.8\textwidth}
-#+NAME: fig:${4:some-figure}
-#+CAPTION: ${5:fig-caption}
+#+ATTR_ORG: :width 400
+#+ATTR_HTML: :width 100%
+#+ATTR_LATEX: :width 0.8\textwidth
+#+NAME: fig:some-fig
+#+CAPTION: A caption for this figure
