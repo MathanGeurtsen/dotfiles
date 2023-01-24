@@ -21,3 +21,5 @@ ln -s "$DOTFILES_DIR/gdbinit" ~/.gdbinit
 ln -s "$DOTFILES_DIR/.sqliterc" ~/.sqliterc
 mkdir -p ~/.config/zellij
 ln -s "$DOTFILES_DIR/zellij_config.kdl" ~/.config/zellij/config.kdl
+mkdir -p ~/.config/nix
+ln -s "$DOTFILES_DIR/nix.conf" ~/.config/nix/nix.conf
