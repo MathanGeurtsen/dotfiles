@@ -4,6 +4,6 @@
 # --
 #+ATTR_ORG: :width 400
 #+ATTR_HTML: :width 100%
-#+ATTR_LATEX: :width 0.8\textwidth
+#+ATTR_LATEX: :placement [H] :width 0.8\textwidth
 #+NAME: fig:some-fig
 #+CAPTION: A caption for this figure

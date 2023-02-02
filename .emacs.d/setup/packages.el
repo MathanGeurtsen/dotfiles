@@ -10,7 +10,9 @@
 (use-package magit
   :ensure t
   :init
-  (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1))
+  (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
+  (add-hook 'magit-status-mode-hook 'menu-bar--wrap-long-lines-window-edge))
+
 
 (use-package git-gutter
   :ensure t
