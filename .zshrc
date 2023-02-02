@@ -504,3 +504,23 @@ ipleak () {
   "city_name": .city_name,
   "ip": .ip}'
 }
+
+
+function nix-cache-search {
+  # search nix packages like nix-env -qaP, 
+  # except with a cache that lasts approx 1 day
+
+  searchTerm="$1"
+  resetCache=1
+  if [ -n "$2" ]; then
+    resetCache=0
+  fi
+
+  curdate=$(date +%s)
+  filedate="$(stat -c %Y ~/.cache/nix_package_cache 2>/dev/null || echo 0)"
+  if [ $((curdate - filedate)) -gt 100000 ] || $(return $resetCache); then
+    nix-env -qaP > ~/.cache/nix_package_cache
+  fi
+
+  grep -Ii --color=ALWAYS "$searchTerm" ~/.cache/nix_package_cache 2>&1 | less -iRF
+}
