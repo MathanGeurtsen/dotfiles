@@ -1,4 +1,4 @@
-personal_ws-1.1 en 279 
+personal_ws-1.1 en 322 
 ATTR
 Acteocina
 Alvania
@@ -13,10 +13,17 @@ Castile
 Cibicides
 Cibicidoides
 Coolhouse
+DDD
 Dentalium
+EPD
+ETL
 Eratoidea
 Evision
+FTE
 Functioneel
+GDPR
+Gantt
+Greyed
 Gödel's
 HMC
 HMC's
@@ -28,6 +35,8 @@ JMeter
 Kolmogorov
 LKJ
 LKJcorr
+LLM
+LLMs
 Lavinsky
 Leidus
 MCMC
@@ -38,15 +47,21 @@ Mathan
 McCrea
 Melanella
 Moreso
+NLP
+Nlpcloud
 Nuttallides
 OLS
 Oc
 Octavite
 PDB
+POC
 Pantoja
 Planulina
 RMA
+RabbitMQ
 SMOW
+SOEP
+SOTA
 SRC
 Sanja
 Scaphopods
@@ -55,6 +70,10 @@ Striatum
 TIWARI
 Terraform
 Turbonilla
+UI
+UMCU
+UU
+UX
 Uvigerina
 VPDB
 VSMOW
@@ -71,7 +90,11 @@ adjustbox
 agraphical
 algo's
 analytics
+anonymization
+anonymize
+anonymized
 anticorrelation
+april
 aragonite
 aragonitic
 arg
@@ -79,6 +102,7 @@ ariminensis
 autocorrelated
 autocorrelation
 autoregression
+backend
 backpropagation
 bahama
 baselinestretch
@@ -112,8 +136,10 @@ datapoint
 datapoints
 dataset
 datasets
+deanonymization
 deliverables
 deming
+devops
 df
 diag
 dimensionally
@@ -122,11 +148,14 @@ duplessy
 ee
 elegans
 elpd
+emacs
 epstein
 ess
 fbe
 fe
 fef
+finetuned
+finetuning
 flintii
 florida
 fontsize
@@ -138,6 +167,9 @@ frac
 fractionation
 framesep
 frequentist
+frontend
+frontends
+gantt
 gelman
 generalizable
 geostrophic
@@ -154,6 +186,7 @@ hierarch
 hoeglundina
 hoffman
 hoorcollege
+html
 hyperprior
 hyperpriors
 iRocks
@@ -165,6 +198,7 @@ jpg
 kan
 kim
 kortste
+kubernetes
 kyr
 le
 lik
@@ -185,7 +219,11 @@ mathbf
 maximaal
 mccrea
 mcelreath
+md
+microservice
+microservices
 midrule
+minimalistic
 modelling
 multicores
 mya
@@ -197,6 +235,7 @@ noexport
 nr
 occuring
 ok
+orchestrator
 outsized
 overlayed
 overwhem
@@ -206,6 +245,7 @@ paleoceanography
 paleoclimate
 paleotemperature
 pareto
+pdf
 peregrina
 permil
 phylums
@@ -235,6 +275,7 @@ rightleftharpoons
 rng
 rss
 rstan
+scalability
 sd
 se
 shackleton
@@ -248,6 +289,7 @@ spectrometry
 stan
 stanr
 stanuserguide
+summarization
 teleporting
 tex
 textblock
@@ -256,6 +298,7 @@ textdegree
 textperthousand
 texttt
 textwidth
+th
 todo
 toprule
 traceplot

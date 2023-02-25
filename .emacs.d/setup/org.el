@@ -19,7 +19,9 @@
                  ))
   ;; otherwise causes errors in tables, unknown function
   (defun org-element-citation-parser ())
-  (setq org-element-citation-prefix-re ""))
+  (setq org-element-citation-prefix-re "")
+  (add-hook 'org-mode-hook (lambda () (org-num-mode))))
+
 
 (use-package org-crypt)
 

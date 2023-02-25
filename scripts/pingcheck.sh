@@ -1,116 +1,108 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
+[ -z "$BASH_VERSION" ] && [ -z "ZSH_VERSION" ] && echo >2 "I require bash to run" && exit 1
 
-ext-reb () {
-  RET=0
-  while [ $RET -eq 0 ]; do
-    echo $(date +%H:%M:%S) trying again
-    curl https://extinctionrebellion.nl/ 2>&1 | tee ~/extinctionrebellion.html | grep "Failed to connect"
-  RET=$?
-  sleep 10
-  done
-  echo downloaded
+set -e
+
+help() {
+  echo "Usage: script_name [-hv] arg
+
+options:
+-h, --help    : print this message
+-v, --verbose : verbose output
+-u, --up      : send notification if it is up
+-d, --down    : send notification if it is down
+-s, --server  : host to ping, defaults to 1.1.1.1
+-c            : number of pings to send, defaults to 5
+-C            : continuous mode
+ 
+"
+  exit $1
 }
 
-function background-verify-connection {
-  # notify when connection is down. defaults to DNS, else $1
-  if [ -z "$1" ] 
-  then
-    host="8.8.8.8"
-  else
-    host=$1
-  fi
-  
+send_ping() {
   while true
   do
-    ping $host -c 1 > /tmp/pingcheck_output 2>&1
-    if test 0 = $(grep -c "64 bytes from" /tmp/pingcheck_output); then
-      message="$(date +%H:%M:%S): connection seems down!"
-      notify-send "$message"
-      echo "$message"
+    if test "$verbose" == 0; then
+      echo -en "\n-- "
+      ping $host -c "$count" | tee /tmp/pingcheck
+      echo -e "--\n"
     else
-      echo "$(date +%H:%M:%S): connection up"
-      sleep 5
-    fi
-    sleep 2
-  done
-}
+      ping $host -c "$count" | tee /tmp/pingcheck > /dev/null
 
-function background-note-connection {
-  # notify when connection is up. defaults to DNS, else $1
-  if [ -z "$1" ] 
-  then
-    host="8.8.8.8"
-  else
-    host=$1
-  fi
-  
-  while true
-  do
-    ping $host -c 1 > /tmp/pingcheck_output 2>&1
-    if test 0 = $(grep -c "64 bytes from" /tmp/pingcheck_output); then
-      echo "$(date +%H:%M:%S): connection still down" 
+    fi
+
+    output="$(cat "/tmp/pingcheck")"
+
+    re_loss="([0-9]+)% packet loss"; 
+    re_rtt="rtt min/avg/max/mdev = .+?/([0-9]+).+?/([0-9]+).+?/([0-9]+).+? ms"; 
+
+    avg=0
+    max=0
+    mdev=0
+    loss=100
+    print=""
+
+    [[ $output =~ $re_loss ]] && loss="${BASH_REMATCH[1]}"
+
+    if [[ $output =~ $re_rtt ]]; then
+      avg="${BASH_REMATCH[1]}"
+      max="${BASH_REMATCH[2]}"
+      mdev="${BASH_REMATCH[3]}"
+
+      title="$(date +%H:%M:%S): connection up!"
+      body="packet loss: $loss%, rtt: $avg ms (+- $mdev) (n=$count)"
+
+      if test "$up" == 0; then
+        notify-send "$title" "$body"
+      fi
+
+      echo -e "$title" "$body"
     else
-      message="$(date +%H:%M:%S): connection up! "
-      notify-send "$message"
-      echo "$message"
-
-      sleep 5
+      title="$(date +%H:%M:%S): connection seems down!"
+      echo "$title"
+      if test "$down" == 0; then notify-send "$title"; fi
     fi
-    sleep 2
+
+    if test "$continuous" == 1; then break; fi
   done
 }
 
-int_from_col() {
-  # Extract integer from space separated value assignments, only outputs if the cell contains the correct variable name. 
-  # example: 
-  # > int_from_col 2 "a=1 b=3.23" "b"
-  # 3
-  column=$1
-  var_name=$3
-  echo "$2" | awk -v column="$column" -v var_name="$var_name" '{
-    cell = $column; 
-    start_ind = match(cell, "=") + 1;
-    end_ind = match(cell,"\\.");
-    if (end_ind == 0)
-      end_ind = length(cell);
-  
-    if(cell ~ var_name)
-    {
-      print(substr(cell, start_ind, end_ind - start_ind))
-      exit 0
-    } 
-    exit 1
-  }'
-  return $?
-}
+parse_args() {
+  myvar=""
+  args=()
+  up=1
+  down=1
+  host="1.1.1.1"
+  count=5
+  continuous=1  
+  verbose=1  
+  # parse flag arguments
+  while :; do
 
-ping_time() {
-  site="$1"
-  ping_output="$(ping -c 1 -v "$site")"
-  echo "$ping_output" | while IFS= read -r line ; do
-    temp="$(int_from_col 8 "$line" "time")"
-    if [ "$?" -eq 0 ]; then
-      echo "$temp"
-      break
-    fi
-  done | cat
-}
-
-ping_avg() {
-  site="$1"
-  if [ -z "$2" ]; then n=10; else n="$2"; fi
-  if [ "$3" = "true" ]; then inline=true;  echo ""; else inline=false; fi  
-  i=0
-  avg=0
-  while [ "$i" -le "$n" ]; do
-    cur_ping="$(ping_time "$site")"
-    avg=$(( (avg * i + cur_ping) / (i+1)))
-    if $inline; then
-      echo -e '\e[1A\r\e[K'"avg ping time: $avg"
-    fi
-    i=$((i + 1))
+    case "${1-}" in
+      -h | --help)    help 0 ;;
+      -v | --verbose) set -x; verbose=0 ;;
+      -u | --up) up=0 ;;
+      -d | --down) down=0 ;;
+      -s | --server) shift; host="$1" ;;
+      -c ) shift; count="$1" ;;
+      -C ) continuous=0 ;;
+      --) shift; break ;; 
+      -?*) echo "Unknown option: '$1'" >&2; help 1 ;;
+      *) break;;
+    esac
+    shift
   done
-  if ! $inline; then
-      echo "$avg"
-  fi
+
+  return 0
 }
+
+main() {
+  parse_args "$@"
+  send_ping
+}
+
+( # check if sourced, otherwise execute main https://stackoverflow.com/a/28776166
+  [ -n $ZSH_VERSION ] && echo "$ZSH_EVAL_CONTEXT" | grep "/:file$/" ||
+      [ -n $BASH_VERSION ] && (return 0 2>/dev/null)
+) || main $@

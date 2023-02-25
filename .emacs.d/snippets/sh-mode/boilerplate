@@ -1,0 +1,61 @@
+# key: boilerplate
+# name: boilerplate
+# --
+#!/usr/bin/env bash
+[ -z "\$BASH_VERSION" ] && [ -z "ZSH_VERSION" ] && echo >2 "I require bash to run" && exit 1
+
+set -e
+
+help() {
+  echo "Usage: script_name [-hv] arg
+
+options:
+-h, --help           : print this message
+-v, --verbose        : enable trace
+arg                  : arg description
+"
+  exit \$1
+}
+
+parse_args() {
+  myvar=""
+  args=()
+  
+  # parse flag arguments
+  while :; do
+    case "\${1-}" in
+      -h | --help)    help 0 ;;
+      -v | --verbose) set -x ;;
+      -a | --arg) shift; myvar="\$1" ;;
+      --) shift; break ;; 
+      -?*) echo "Unknown option: '\$1'" >&2; help 1 ;;
+      *) break;;
+    esac
+    shift
+  done
+
+  # parse further arguments that are supposed to be from a known list of values
+  while :; do
+    case "\${1-}" in
+      arg1) args+=("arg1") ;;
+      *) if [ -n "\$1" ]; then echo "Unknown arg: '\$1'" >&2; help 1; fi; break ;;
+    esac
+    shift
+  done
+
+  if [ \${#args} -eq 0 ]; then
+    help 1;
+  fi
+
+  return 0
+}
+
+main() {
+  parse_args "\$@"
+
+}
+
+( # check if sourced, otherwise execute main https://stackoverflow.com/a/28776166
+  [ -n \$ZSH_VERSION ] && echo "\$ZSH_EVAL_CONTEXT" | grep "/:file\$/" ||
+      [ -n \$BASH_VERSION ] && (return 0 2>/dev/null)
+) || main \$@

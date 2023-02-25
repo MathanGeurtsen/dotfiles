@@ -6,6 +6,7 @@
 
 from typing import List
 import argparse
+import sys
 
 def parseCmdOpts(argv: List[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser()

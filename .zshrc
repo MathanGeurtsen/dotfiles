@@ -117,11 +117,12 @@ renice -n 1 $$ 2>&1 > /dev/null # trying out to prevent freezes with running out
 
 function pd {
   # wrapper around pushd/popd. pushd to argument if given, popd otherwise
+  args="$@"
   if [ $# -ge 1 ]; then
-    if [ -d "$@" ]; then
-      pushd "$@"
+    if [ -d "$args" ]; then
+      pushd "$args"
     else
-      pushd $(dirname "$@")
+      pushd $(dirname "$args")
     fi
   else
     popd
@@ -523,4 +524,9 @@ function nix-cache-search {
   fi
 
   grep -Ii --color=ALWAYS "$searchTerm" ~/.cache/nix_package_cache 2>&1 | less -iRF
+}
+
+function py {
+pyve || true
+python || python3
 }
