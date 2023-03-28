@@ -7,6 +7,10 @@
  ((string-equal system-type "windows-nt")
   (setq gl-sc/temp     "~/AppData/Local/Temp/")
   (setq gl-sc/open-dir "start .")
+  (setq gl-sc/init     "~/.emacs.d/init.el"))
+ ((string-equal system-type "darwin")
+  (setq gl-sc/temp     "/tmp/")
+  (setq gl-sc/open-dir "open .")
   (setq gl-sc/init     "~/.emacs.d/init.el")))
 
 (defvar my-keys-minor-mode-map
