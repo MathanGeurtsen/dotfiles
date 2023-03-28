@@ -43,7 +43,8 @@
   :pin melpa
   :bind (:map vterm-mode-map ("C-y" . vterm-yank))
   :config (setq vterm-max-scrollback 100000)
-  (add-hook 'vterm-mode-hook (lambda () (interactive) (rename-buffer "vterm" t))))
+  (add-hook 'vterm-mode-hook (lambda () (interactive) (rename-buffer "vterm" t)
+                               (turn-off-evil-mode))))
 
 (use-package dimmer
   :ensure t

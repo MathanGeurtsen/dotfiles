@@ -22,14 +22,22 @@ compinit
 # enable glob expansion in history search
 bindkey '^R' history-incremental-pattern-search-backward
 
+
 # get man pages colored by bat, have less use case insensitive search
-if [ ! -z "$batpager" ]; then
+if [ "$USE_BAT" = 0 ]; then 
   if $(batcat --version > /dev/null 2>&1); then
     bat_alias="batcat"
   else
     bat_alias="bat"
   fi
   export MANPAGER="sh -c 'col -bx | $bat_alias -l man -p --pager=\"less -ri\"'"
+
+  if $(which zsh | grep -q "^/nix"); then
+    nix=" (n)"
+  else
+    nix=""
+
+  fi
 fi
 
 process_prompt() {
@@ -82,11 +90,9 @@ alias -g V="| vipe"
 alias -g T=" > >(tee -a tee_stdout.log) 2> >(tee -a tee_stderr.log >&2)"
 
 alias gst='git status -uno'
-alias open='xdg-open'
 alias tempdir='pushd $(mktemp -d)'
 alias publicip='curl ifconfig.me'
 alias whatismyip=publicip
-alias copy='bash $DOTFILES_DIR/scripts/xcl.sh'
 alias startt='bash $DOTFILES_DIR/scripts/standard-tmux.sh'
 alias emnw='emacsclient -nw -a "emacs"'
 alias init_venv='virtualenv venv; . ./venv/bin/activate;pip install -r requirements.txt'
@@ -529,4 +535,8 @@ function nix-cache-search {
 function py {
 pyve || true
 python || python3
+}
+
+function copy {
+echo "$@" | pbcopy
 }
