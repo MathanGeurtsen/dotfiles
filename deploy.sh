@@ -19,6 +19,7 @@ ln -s "$DOTFILES_DIR/rc.conf" ~/.config/ranger/rc.conf
 mkdir -p ~/.config/gdb
 ln -s "$DOTFILES_DIR/gdbinit" ~/.gdbinit
 ln -s "$DOTFILES_DIR/.sqliterc" ~/.sqliterc
+ln -s "$DOTFILES_DIR/.ideavimrc" ~/.ideavimrc
 mkdir -p ~/.config/zellij
 ln -s "$DOTFILES_DIR/zellij_config.kdl" ~/.config/zellij/config.kdl
 mkdir -p ~/.config/nix
