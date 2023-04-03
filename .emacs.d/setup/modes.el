@@ -60,6 +60,6 @@
                 ("\\.pdf\\'" . pdf-view-mode)
                 ("\\.js\\'" . js-mode)
                 ("\\.css\\'" . css-mode)
-                ("\\.php\\'" . php-mode))
+                ("\\.php\\'" . php-mode)
+                ("\\.csproj\\'" . xml-mode))
               auto-mode-alist))
-
