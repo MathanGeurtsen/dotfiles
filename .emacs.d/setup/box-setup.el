@@ -11,9 +11,6 @@
           '(("Consolas" "FreeMono" "Symbola")))
     (set-fontset-font t nil "Courier New" nil 'append))
  
- ((string-equal system-type "darwin")
-    (warn "config not setup on mac"))
- 
  ((string-equal system-type "gnu/linux")
     ;; treemacs
   (use-package treemacs
