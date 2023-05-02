@@ -19,7 +19,6 @@ keybinds clear-defaults=true {
     bind "Alt -" { Resize "Decrease"; }
   }
   locked {
-    bind "Ctrl g" { SwitchToMode "normal"; }
     bind "Ctrl v" { SwitchToMode "tmux"; }
   }
   pane {
@@ -257,12 +256,13 @@ keybinds clear-defaults=true {
   }
   tmux {
     bind "e" { EditScrollback; SwitchToMode "locked"; }
-    bind "Ctrl g" { SwitchToMode "locked"; }
+    bind "Ctrl g" "Esc" { SwitchToMode "locked"; }
+    bind "f" { ToggleFloatingPanes; SwitchToMode "locked"; }
     bind "Ctrl n" { SwitchToMode "resize"; }
     bind "Ctrl p" { SwitchToMode "pane"; }
     bind "Ctrl h" { SwitchToMode "move"; }
     bind "Ctrl t" { SwitchToMode "tab"; }
-    bind "Ctrl o" "Enter" "Space" "Esc" { SwitchToMode "normal"; }
+    bind "Ctrl o" { SwitchToMode "normal"; }
     bind "Ctrl s" { SwitchToMode "scroll"; }
     bind "[" { SwitchToMode "scroll"; }
     bind "Ctrl q" { Quit; }
@@ -303,7 +303,7 @@ plugins {
 }
 
 
-copy_command "xclip -selection clipboard" // x11
+copy_command "pbcopy" // x11
 default_mode "locked"
 default_shell "zsh"
 scroll_buffer_size 100000

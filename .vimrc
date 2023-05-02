@@ -193,3 +193,4 @@ endif
 
 command BufferCloseKeepWindow :bp<bar>vsp<bar>bn<bar>bd
 cnoreabbrev bq BufferCloseKeepWindow
+set clipboard=unnamed

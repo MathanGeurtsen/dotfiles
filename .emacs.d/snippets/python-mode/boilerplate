@@ -33,7 +33,7 @@ def parseCmdOpts(argv: List[str]) -> argparse.Namespace:
     return args
 
 def main(argv: List[str]) -> int:
-    args = parseCmdOpts(argv[1:])
+    args = parseCmdOpts(argv[:])
     return 0
 
 if __name__ == "__main__":

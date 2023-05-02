@@ -112,6 +112,10 @@ alias wtop='spinner; powershell.exe -c "C:\Python38\python.exe -m glances"'
 alias wsleep="cmd.exe /c shutdown /h"
 alias wpython="/mnt/c/Python38/python.exe"
 
+alias mfind="$(brew --prefix)/opt/findutils/libexec/gnubin/find"
+
+alias vipe="tee /tmp/vipeout >/dev/null; $EDITOR /tmp/vipeout; cat /tmp/vipeout"
+
 export NOTIFY_FILE="$(realpath ~/notify)"
 export EDITOR=vim
 
